@@ -7,10 +7,10 @@ const Home = () => {
       <div className="container mx-auto flex flex-col items-center justify-center max-w-full sm:max-w-xl md:max-w-3xl lg:max-w-4xl flex-grow text-center"> {/* Adjusted max-width for responsiveness */}
         {/* Text content, centered */}
         <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight mb-4 sm:mb-6 text-gray-900"> {/* Adjusted font sizes for responsiveness */}
-          Web Developer <br /> & Automation Builder
+          Software & Python <br /> Development
         </h2>
         <p className="text-base sm:text-lg md:text-xl leading-relaxed text-gray-700 max-w-sm sm:max-w-md mx-auto"> {/* Adjusted font sizes and max-width for responsiveness */}
-          Building stunning websites and smart bots that automate your workflow. Crafting seamless digital experiences — from pixel — perfect frontends to powerful web automations.
+          Crafting responsive web experiences and leveraging AI/ML to build scalable solutions. Eager to contribute my Python, JavaScript, and web framework expertise.
         </p>
       </div>
 
