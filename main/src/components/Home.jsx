@@ -2,27 +2,19 @@ import React from 'react';
 
 const Home = () => {
   return (
-    <section id="home" className="min-h-screen flex flex-col items-center justify-between p-8 pt-24 bg-[#DFEAF6]"> {/* Light blue background, changed to flex-col and justify-between */}
-      <div className="container mx-auto flex flex-col lg:flex-row items-center justify-between max-w-6xl flex-grow"> {/* Added flex-grow */}
-        {/* Left Content - Updated to center the text and changed content */}
-        <div className="lg:w-1/2 text-center mb-10 lg:mb-0">
-          <p className="text-5xl md:text-6xl font-extrabold leading-tight mb-4 text-gray-900">
-            Ayush Kumar
-          </p>
-        </div>
-
-        {/* Right Graphic (CSS-only Concentric Circles) - REMOVED */}
-        {/* <div className="lg:w-1/2 flex justify-center items-center relative w-64 h-64 md:w-80 md:h-80">
-          <div className="absolute w-full h-full rounded-full border-2 border-gray-400 opacity-60"></div>
-          <div className="absolute w-5/6 h-5/6 rounded-full border-2 border-blue-400 opacity-70"></div>
-          <div className="absolute w-4/6 h-4/6 rounded-full border-2 border-blue-600 opacity-80"></div>
-          <div className="absolute w-3/6 h-3/6 rounded-full border-2 border-blue-800 opacity-90"></div>
-          <div className="absolute w-2/6 h-2/6 rounded-full border-2 border-gray-900"></div>
-        </div> */}
+    <section id="home" className="min-h-screen flex flex-col items-center justify-between p-4 sm:p-8 md:p-12 pt-24 bg-[#DFEAF6]"> {/* Adjusted padding for all screen sizes */}
+      <div className="container mx-auto flex flex-col items-center justify-center max-w-full sm:max-w-xl md:max-w-3xl lg:max-w-4xl flex-grow text-center"> {/* Adjusted max-width for responsiveness */}
+        {/* Text content, centered */}
+        <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight mb-4 sm:mb-6 text-gray-900"> {/* Adjusted font sizes for responsiveness */}
+          Web Developer <br /> & Automation Builder
+        </h2>
+        <p className="text-base sm:text-lg md:text-xl leading-relaxed text-gray-700 max-w-sm sm:max-w-md mx-auto"> {/* Adjusted font sizes and max-width for responsiveness */}
+          Building stunning websites and smart bots that automate your workflow. Crafting seamless digital experiences — from pixel — perfect frontends to powerful web automations.
+        </p>
       </div>
 
       {/* Email text at the bottom */}
-      <div className="w-full text-center py-4 border-t border-gray-300">
+      <div className="w-full text-center py-3 sm:py-4 border-t border-gray-300 text-sm sm:text-base"> {/* Adjusted padding and text size for responsiveness */}
         <p className="text-gray-600">Email: <a href="mailto:ayushkumar47834@gmail.com" className="text-gray-800 hover:underline">ayushkumar47834@gmail.com</a></p>
       </div>
     </section>
