@@ -1,7 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { ThemeContext } from '../context/ThemeContext';
 
 const Skills = () => {
-  // Define your tech stack with icons and adjusted colors
+  const { theme } = useContext(ThemeContext);
+  const sectionClasses = theme === 'dark' ? 'bg-gray-900 text-gray-100' : 'bg-[#DFEAF6] text-gray-800';
+  const badgeClasses = theme === 'dark'
+    ? 'bg-gray-700 text-gray-100'
+    : 'bg-[#D1D9E6] text-[#34495E]';
+  const badgeCircleClasses = theme === 'dark' ? 'bg-blue-400' : 'bg-blue-500';
+
   const techStack = [
     { name: 'Python', icon: '🐍' },
     { name: 'JavaScript', icon: '💻' },
@@ -42,27 +49,27 @@ const Skills = () => {
   ];
 
   return (
-    <section id="skills" className="min-h-screen flex flex-col items-center justify-center p-4 sm:p-8 pt-24 bg-[#DFEAF6] text-gray-800">
+    <section id="skills" className={`min-h-screen flex flex-col items-center justify-center p-4 sm:p-8 pt-24 ${sectionClasses}`}>
       <div className="container mx-auto max-w-full sm:max-w-2xl md:max-w-4xl lg:max-w-6xl text-center">
-        <h2 className="text-4xl sm:text-5xl font-bold mb-8 text-gray-900">Tech Stack</h2>
+        <h2 className="text-4xl sm:text-5xl font-bold mb-8">Tech Stack</h2>
 
-        {/* Wrapper for all skills in a single row, wrapping */}
-        <div className="flex flex-wrap justify-center gap-x-3 gap-y-2 sm:gap-x-4 sm:gap-y-3 mb-10"> {/* Reduced gaps */}
+        <div className="flex flex-wrap justify-center gap-x-3 gap-y-2 sm:gap-x-4 sm:gap-y-3 mb-10">
           {techStack.map((tech, index) => (
             <div
               key={index}
-              className="flex items-center justify-center space-x-1.5 bg-[#D1D9E6] px-3 py-1.5 rounded-full shadow-md text-xs sm:text-sm font-medium text-[#34495E]
-                         min-w-[120px] min-h-[40px]" // Reduced min-width and min-height
+              className={`flex items-center justify-center space-x-1.5 px-3 py-1.5 rounded-full shadow-md text-xs sm:text-sm font-medium ${badgeClasses} min-w-[120px] min-h-[40px]`}
             >
-              <span className="text-base text-[#34495E]">{tech.icon}</span> {/* Reduced icon size slightly */}
+              <span className="text-base">{tech.icon}</span>
               <span className="flex-grow text-center">{tech.name}</span>
-              <span className="w-1.5 h-1.5 bg-blue-500 rounded-full flex-shrink-0"></span> {/* Reduced circle size */}
+              <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${badgeCircleClasses}`}></span>
             </div>
           ))}
         </div>
 
-        {/* The "20+" box */}
-        
+        <div className={`p-6 sm:p-8 rounded-lg shadow-lg max-w-xs sm:max-w-sm mx-auto mt-12 ${badgeClasses}`}>
+          <p className="text-4xl sm:text-5xl font-extrabold text-blue-700 mb-2">20+</p>
+          <p className="text-sm sm:text-base">Tech I Use to Build Magic—Next Yours</p>
+        </div>
       </div>
     </section>
   );

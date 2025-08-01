@@ -1,21 +1,24 @@
-import React from 'react';
-import Button from './Button'; // Import Button component
+import React, { useContext } from 'react';
+import Button from './Button';
+import { ThemeContext } from '../context/ThemeContext';
 
 const Home = () => {
+  const { theme } = useContext(ThemeContext);
+  const sectionClasses = theme === 'dark' ? 'bg-gray-900 text-gray-100' : 'bg-[#DFEAF6] text-gray-800';
+  const dividerClasses = theme === 'dark' ? 'border-gray-700' : 'border-gray-300';
+  
   return (
-    <section id="home" className="min-h-screen flex flex-col items-center justify-between p-4 sm:p-8 md:p-12 pt-24 bg-[#DFEAF6]"> {/* Adjusted padding for all screen sizes */}
-      <div className="container mx-auto flex flex-col items-center justify-center max-w-full sm:max-w-xl md:max-w-3xl lg:max-w-4xl flex-grow text-center"> {/* Adjusted max-width for responsiveness */}
-        {/* Text content, centered */}
-        <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight mb-4 sm:mb-6 text-gray-900"> {/* Adjusted font sizes for responsiveness */}
+    <section id="home" className={`min-h-screen flex flex-col items-center justify-between p-4 sm:p-8 md:p-12 pt-24 ${sectionClasses}`}>
+      <div className="container mx-auto flex flex-col items-center justify-center max-w-full sm:max-w-xl md:max-w-3xl lg:max-w-4xl flex-grow text-center">
+        <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight mb-4 sm:mb-6">
           Software & Python <br /> Development
         </h2>
-        <p className="text-base sm:text-lg md:text-xl leading-relaxed text-gray-700 max-w-sm sm:max-w-md mx-auto"> {/* Adjusted font sizes and max-width for responsiveness */}
+        <p className="text-base sm:text-lg md:text-xl leading-relaxed max-w-sm sm:max-w-md mx-auto">
           Crafting responsive web experiences and leveraging AI/ML to build scalable solutions. Eager to contribute my Python, JavaScript, and web framework expertise.
         </p>
       </div>
 
-      {/* Social Media Buttons at the bottom */}
-      <div className="w-full text-center py-3 sm:py-4 border-t border-gray-300 flex justify-center space-x-4">
+      <div className={`w-full text-center py-3 sm:py-4 border-t ${dividerClasses} flex justify-center space-x-4`}>
         <Button href="https://www.linkedin.com/in/ayushhhhhh/" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-2">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
             <path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.381 1.11-2.5 2.48-2.5s2.48 1.119 2.48 2.5zM.02 24h4.97V8H.02V24zM9.82 8h-4.97v16h4.97V8zm-2.48 0c-1.381 0-2.5 1.119-2.5 2.5s1.119 2.5 2.5 2.5 2.5-1.119 2.5-2.5c0-1.381-1.119-2.5-2.5-2.5zM24 24h-4.97v-8.39c0-1.98-.04-4.51-2.75-4.51-2.75 0-3.17 2.15-3.17 4.37V24H8.13V8h4.74v2.16h.07c.66-1.26 2.27-2.51 4.69-2.51 5.03 0 5.96 3.32 5.96 7.68V24z"/>
