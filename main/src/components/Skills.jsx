@@ -9,6 +9,7 @@ const Skills = () => {
     : 'bg-[#D1D9E6] text-[#34495E]';
   const badgeCircleClasses = theme === 'dark' ? 'bg-blue-400' : 'bg-blue-500';
 
+  // Define your tech stack with emojis to match the image's style
   const techStack = [
     { name: 'Python', icon: '🐍' },
     { name: 'JavaScript', icon: '💻' },
@@ -47,28 +48,32 @@ const Skills = () => {
     { name: 'SVM', icon: '📊' },
     { name: 'CNN', icon: '🖼️' },
   ];
-
   return (
-    <section id="skills" className={`min-h-screen flex flex-col items-center justify-center p-4 sm:p-8 pt-24 ${sectionClasses}`}>
-      <div className="container mx-auto max-w-full sm:max-w-2xl md:max-w-4xl lg:max-w-6xl text-center">
-        <h2 className="text-4xl sm:text-5xl font-bold mb-8">Tech Stack</h2>
-
-        <div className="flex flex-wrap justify-center gap-x-3 gap-y-2 sm:gap-x-4 sm:gap-y-3 mb-10">
-          {techStack.map((tech, index) => (
-            <div
-              key={index}
-              className={`flex items-center justify-center space-x-1.5 px-3 py-1.5 rounded-full shadow-md text-xs sm:text-sm font-medium ${badgeClasses} min-w-[120px] min-h-[40px]`}
-            >
-              <span className="text-base">{tech.icon}</span>
-              <span className="flex-grow text-center">{tech.name}</span>
-              <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${badgeCircleClasses}`}></span>
-            </div>
-          ))}
+    <section id="skills" className={`min-h-screen flex items-center justify-center p-4 sm:p-8 pt-24 ${sectionClasses}`}>
+      <div className="container mx-auto flex flex-col md:flex-row items-center md:items-center justify-center max-w-full sm:max-w-2xl md:max-w-4xl lg:max-w-6xl text-center md:text-left">
+        {/* Tech Stack Heading on the left */}
+        <div className="md:w-1/3 mb-8 md:mb-0">
+          <h2 className="text-4xl sm:text-5xl font-bold md:text-left">Tech Stack</h2>
         </div>
 
-        <div className={`p-6 sm:p-8 rounded-lg shadow-lg max-w-xs sm:max-w-sm mx-auto mt-12 ${badgeClasses}`}>
-          <p className="text-4xl sm:text-5xl font-extrabold text-blue-700 mb-2">20+</p>
-          <p className="text-sm sm:text-base">Tech I Use to Build Magic—Next Yours</p>
+        {/* Skills Grid on the right */}
+        <div className="md:w-2/3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-2 gap-y-2 sm:gap-x-3 sm:gap-y-3 mb-10 mx-auto">
+            {techStack.map((tech, index) => (
+              <div
+                key={index}
+                className={`flex items-center justify-between space-x-2 px-3 py-2 rounded-xl shadow-md text-xs sm:text-sm font-medium min-w-[100px] min-h-[40px] ${badgeClasses}`}
+              >
+                <div className="flex items-center space-x-2">
+                  <div className={`h-4 w-4 flex items-center justify-center ${theme === 'dark' ? 'text-gray-100' : 'text-[#34495E]'}`}>
+                    {tech.icon}
+                  </div>
+                  <span className="flex-grow text-left">{tech.name}</span>
+                </div>
+                {/* Removed the blue dot */}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
