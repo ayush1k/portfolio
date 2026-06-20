@@ -1,139 +1,134 @@
 import React, { useContext, useState, useRef, useEffect } from 'react';
 import { ThemeContext } from '../context/ThemeContext';
-import Button from './Button'; // Import Button from its new location
 
-const Navbar = ({ setCurrentPage }) => { // setCurrentPage now expects a section ID
-  const { theme, toggleTheme, setTheme } = useContext(ThemeContext);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const dropdownRef = useRef(null);
+const NAV_LINKS = [
+  { id: 'home',         label: 'Home',         color: 'text-blue-500'   },
+  { id: 'about',        label: 'About',        color: 'text-violet-500' },
+  { id: 'experience',   label: 'Experience',   color: 'text-amber-500'  },
+  { id: 'projects',     label: 'Projects',     color: 'text-orange-500' },
+  { id: 'skills',       label: 'Skills',       color: 'text-emerald-500'},
+  { id: 'education',    label: 'Education',    color: 'text-cyan-500'   },
+  { id: 'certificates', label: 'Certificates', color: 'text-pink-500'   },
+  { id: 'contact',      label: 'Contact',      color: 'text-rose-500'   },
+];
 
-  // Classes for the main nav container (the rounded rectangle)
-  const outerNavContainerClasses = theme === 'dark'
-    ? 'bg-gray-800/80 border border-black' // Translucent dark background
-    : 'bg-[#DFEAF6]/80 border border-black'; // Changed to page background color with 80% opacity
+const MoonIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" />
+  </svg>
+);
 
-  // Classes for navigation links (now styled as buttons)
-  const navLinkButtonClasses = theme === 'dark'
-    ? 'bg-gray-700 hover:bg-gray-600 text-white'
-    : 'bg-[#E0E0E0] hover:bg-[#D0D0D0] text-gray-800';
+const SunIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="4" />
+    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+  </svg>
+);
 
-  // Specific class for the Contact button
-  const contactButtonClasses = theme === 'dark'
-    ? 'bg-blue-700 hover:bg-blue-800 text-white'
-    : 'bg-[#34495E] hover:bg-[#2C3E50] text-white';
+const Navbar = ({ setCurrentPage, currentPage }) => {
+  const { theme, toggleTheme } = useContext(ThemeContext);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef(null);
 
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsDropdownOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
+  const glass = theme === 'dark'
+    ? 'bg-[#1a1a18]/80 border-[#2a2a28] shadow-[inset_0_1.5px_0_rgba(255,255,255,0.06),0_1px_18px_rgba(0,0,0,0.48)]'
+    : 'bg-white/70 border-white/50 shadow-[inset_0_1.5px_0_rgba(255,255,255,0.75),0_1px_14px_rgba(0,0,0,0.05)]';
 
-  const handleDropdownItemClick = (selectedTheme) => {
-    setTheme(selectedTheme);
-    setIsDropdownOpen(false); // Close dropdown after selection
+  const divider = theme === 'dark' ? 'bg-[#2a2a28]' : 'bg-gray-200';
+  const logoGrad = theme === 'dark' ? 'from-orange-500 to-amber-600' : 'from-[#179cf0] to-[#0f7fd4]';
+  const nameColor = theme === 'dark' ? 'text-[#e8e6e1]' : 'text-gray-800';
+
+  const navLinkClass = (id) => {
+    const active = currentPage === id;
+    const base = 'flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium cursor-pointer whitespace-nowrap transition-all duration-150 active:scale-[0.97] border';
+    if (theme === 'dark') {
+      return `${base} border-[#2a2a28] ${active ? 'bg-[#2a2a28] text-[#e8e6e1] border-orange-500/40' : 'text-[#857f72] hover:text-[#e8e6e1] hover:bg-[#2a2a28] hover:border-orange-500/40'}`;
+    }
+    return `${base} border-gray-200 ${active ? 'bg-blue-50 text-blue-600 border-blue-300' : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50 hover:border-blue-300'}`;
   };
 
+  useEffect(() => {
+    const handle = (e) => { if (menuRef.current && !menuRef.current.contains(e.target)) setMenuOpen(false); };
+    document.addEventListener('mousedown', handle);
+    return () => document.removeEventListener('mousedown', handle);
+  }, []);
+
   return (
-    <nav className="fixed w-full z-10 top-0 p-2 sm:p-4"> {/* Adjusted overall padding for responsiveness */}
-      {/* Outer rounded container for the entire navbar */}
-      <div className={`container mx-auto p-1 sm:p-2 rounded-full flex justify-between items-center ${outerNavContainerClasses} max-w-full sm:max-w-xl md:max-w-3xl`}> {/* Adjusted inner padding and max-width for responsiveness */}
-        {/* Left: Logo/Name */}
-        <div className="flex items-center space-x-1 sm:space-x-2"> {/* Adjusted space-x for responsiveness */}
-          <img
-            src="/favicon.png"
-            alt="Ayush Kumar Logo"
-            className="w-6 h-6 sm:w-7 sm:h-7 rounded-full object-cover" // Adjusted size for responsiveness
-            onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/28x28/000000/FFFFFF?text=A'; }}
-          />
-          <h1 className="text-base sm:text-lg font-bold cursor-pointer" onClick={() => setCurrentPage('home')}>Ayush Kumar</h1> {/* Adjusted font size for responsiveness */}
-        </div>
+    <nav className="fixed top-0 left-0 right-0 z-20 flex justify-center sm:mt-2 sm:px-2">
+      <div className="w-full max-w-6xl" ref={menuRef}>
+        <div className={`relative overflow-hidden sm:rounded-2xl border backdrop-blur-[44px] backdrop-saturate-[160%] ${glass}`}>
 
-        {/* Center: Navigation Links (now styled as buttons) */}
-        <ul className="hidden sm:flex space-x-1 sm:space-x-2"> {/* Hidden on small, flex on sm+ */}
-          <li>
-            <Button onClick={() => setCurrentPage('home')} className="px-2 py-0.5 sm:px-3 sm:py-1 text-xs sm:text-sm"> {/* Adjusted padding and text size */}
-              Home
-            </Button>
-          </li>
-          <li>
-            <Button onClick={() => setCurrentPage('about')} className="px-2 py-0.5 sm:px-3 sm:py-1 text-xs sm:text-sm"> {/* Adjusted padding and text size */}
-              About
-            </Button>
-          </li>
-          <li>
-            <Button onClick={() => setCurrentPage('skills')} className="px-2 py-0.5 sm:px-3 sm:py-1 text-xs sm:text-sm"> {/* Added Skills link */}
-              Skills
-            </Button>
-          </li>
-          <li>
-            <Button onClick={() => setCurrentPage('projects')} className="px-2 py-0.5 sm:px-3 sm:py-1 text-xs sm:text-sm">
-              Projects
-            </Button>
-          </li>
-        </ul>
-
-        {/* Right: Theme Button with Dropdown & Contact Button */}
-        <div className="flex items-center space-x-1 sm:space-x-2" ref={dropdownRef}> {/* Adjusted space-x for responsiveness */}
-          <div className="relative">
-            <div className={`flex items-center rounded-full ${navLinkButtonClasses} cursor-pointer`}>
-              <button
-                onClick={toggleTheme}
-                className="flex items-center space-x-0.5 px-2 py-0.5 sm:px-3 sm:py-1 focus:outline-none" // Adjusted padding for responsiveness
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 sm:h-4 sm:w-4" viewBox="0 0 20 20" fill="currentColor"> {/* Adjusted icon size */}
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 102 0V6z" clipRule="evenodd" />
-                </svg>
-                <span className="text-xs sm:text-sm">Theme</span> {/* Adjusted text size */}
+          {/* DESKTOP */}
+          <div className="hidden lg:flex items-center gap-2 px-4 py-1.5">
+            <div className="flex items-center gap-2 shrink-0">
+              <div className={`w-7 h-7 rounded-lg bg-gradient-to-br ${logoGrad} flex items-center justify-center shadow-lg`}>
+                <span className="text-white text-[10px] font-bold tracking-tight select-none">AK</span>
+              </div>
+              <span className={`text-[13px] font-semibold tracking-tight ${nameColor}`}>Ayush Kumar</span>
+            </div>
+            <div className={`w-px h-5 mx-1 shrink-0 ${divider}`} />
+            <div className="flex items-center gap-1 flex-1 overflow-x-auto no-scrollbar py-1">
+              {NAV_LINKS.map(link => (
+                <button key={link.id} type="button" onClick={() => setCurrentPage(link.id)} className={navLinkClass(link.id)}>
+                  <span className={`${link.color} text-[8px]`}>&#9679;</span>
+                  {link.label}
+                </button>
+              ))}
+            </div>
+            <div className={`w-px h-5 mx-1 shrink-0 ${divider}`} />
+            <div className="flex items-center gap-2 shrink-0">
+              <button onClick={toggleTheme} className={`cursor-pointer rounded-md p-1.5 transition-colors ${theme === 'dark' ? 'text-[#857f72] hover:text-[#e8e6e1]' : 'text-gray-500 hover:text-gray-800'}`} aria-label="Toggle theme">
+                {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
               </button>
-              <button
-                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="px-0.5 py-0.5 sm:px-1 sm:py-1 focus:outline-none rounded-r-full" // Adjusted padding for responsiveness
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-2 w-2 sm:h-3 sm:w-3 ml-0.5" viewBox="0 0 20 20" fill="currentColor"> {/* Adjusted icon size */}
-                  <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                </svg>
+              <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-medium ${
+                theme === 'dark' ? 'bg-orange-500/10 border-orange-500/40 text-orange-400' : 'bg-blue-50 border-blue-200 text-[#179cf0]'
+              }`}>
+                <span className="relative flex h-2 w-2">
+                  <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${theme === 'dark' ? 'bg-orange-400' : 'bg-[#179cf0]'}`} />
+                  <span className={`relative inline-flex rounded-full h-2 w-2 ${theme === 'dark' ? 'bg-orange-500' : 'bg-[#179cf0]'}`} />
+                </span>
+                Open to Work
+              </div>
+            </div>
+          </div>
+
+          {/* MOBILE */}
+          <div className="flex lg:hidden items-center justify-between px-3 py-2">
+            <div className="flex items-center gap-2">
+              <div className={`w-7 h-7 rounded-lg bg-gradient-to-br ${logoGrad} flex items-center justify-center shadow-lg`}>
+                <span className="text-white text-[10px] font-bold select-none">AK</span>
+              </div>
+              <span className={`text-[13px] font-semibold ${nameColor}`}>Ayush Kumar</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <button onClick={toggleTheme} className={`p-1.5 rounded-md ${theme === 'dark' ? 'text-[#857f72]' : 'text-gray-500'}`} aria-label="Toggle theme">
+                {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
+              </button>
+              <button type="button" onClick={() => setMenuOpen(!menuOpen)} className={`w-8 h-8 flex items-center justify-center rounded-xl border transition-all ${
+                theme === 'dark' ? 'border-[#2a2a28] text-[#857f72] hover:bg-[#2a2a28]' : 'border-gray-200 text-gray-600 hover:bg-gray-100'
+              }`} aria-label="Toggle menu">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 5h16M4 12h16M4 19h16" /></svg>
               </button>
             </div>
-
-            {isDropdownOpen && (
-              <div className={`absolute right-0 mt-2 w-32 sm:w-36 rounded-md shadow-lg z-20
-                ${theme === 'dark' ? 'bg-gray-700' : 'bg-white'} ring-1 ring-black ring-opacity-5 focus:outline-none`}> {/* Adjusted width for responsiveness */}
-                <div className="py-1">
-                  <a
-                    href="#"
-                    className={`block px-3 py-1.5 text-xs sm:px-4 sm:py-2 text-sm ${theme === 'dark' ? 'text-gray-100 hover:bg-gray-600' : 'text-gray-700 hover:bg-gray-100'}`} // Adjusted padding and text size
-                    onClick={() => handleDropdownItemClick('light')}
-                  >
-                    Light
-                  </a>
-                  <a
-                    href="#"
-                    className={`block px-3 py-1.5 text-xs sm:px-4 sm:py-2 text-sm ${theme === 'dark' ? 'text-gray-100 hover:bg-gray-600' : 'text-gray-700 hover:bg-gray-100'}`} // Adjusted padding and text size
-                    onClick={() => handleDropdownItemClick('dark')}
-                  >
-                    Dark
-                  </a>
-                  <a
-                    href="#"
-                    className={`block px-3 py-1.5 text-xs sm:px-4 sm:py-2 text-sm ${theme === 'dark' ? 'text-gray-100 hover:bg-gray-600' : 'text-gray-700 hover:bg-gray-100'}`} // Adjusted padding and text size
-                    onClick={() => handleDropdownItemClick('system')}
-                  >
-                    System Default
-                  </a>
-                </div>
-              </div>
-            )}
           </div>
-          <Button onClick={() => setCurrentPage('contact')} className="px-3 py-1 sm:px-4 sm:py-1 text-xs sm:text-sm">
-            Contact
-          </Button>
+
+          {/* Mobile dropdown */}
+          {menuOpen && (
+            <div className={`lg:hidden border-t px-3 pb-3 pt-2 flex flex-col gap-1 ${
+              theme === 'dark' ? 'border-[#2a2a28]' : 'border-gray-200'
+            }`}>
+              {NAV_LINKS.map(link => (
+                <button key={link.id} type="button"
+                  onClick={() => { setCurrentPage(link.id); setMenuOpen(false); }}
+                  className={`flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-medium text-left transition-all ${
+                    theme === 'dark' ? 'text-[#857f72] hover:bg-[#2a2a28] hover:text-[#e8e6e1]' : 'text-gray-700 hover:bg-gray-100'
+                  }`}>
+                  <span className={`${link.color} text-[8px]`}>&#9679;</span>
+                  {link.label}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </nav>

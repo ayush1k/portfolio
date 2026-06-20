@@ -1,106 +1,157 @@
-import React, { useContext } from 'react';
-import Button from './Button';
+import React, { useState, useContext } from 'react';
 import { ThemeContext } from '../context/ThemeContext';
 
-// Project Card Component
+/* ── Project data — fill with your real projects ── */
+const projectsData = [
+  {
+    id: 1,
+    title: '[Project Name]',
+    liveUrl: '#',
+    githubUrl: '#',
+    bullets: [
+      'Describe what this project does and the problem it solves.',
+      'Mention the core architecture, models, or algorithms used.',
+      'Include measurable results (accuracy, latency, users, etc.).',
+    ],
+    technologies: ['Python', 'PyTorch', 'FastAPI'],
+  },
+  {
+    id: 2,
+    title: '[Project Name]',
+    liveUrl: '',
+    githubUrl: '#',
+    bullets: [
+      'Describe what this project does and the problem it solves.',
+      'Mention the core architecture, models, or algorithms used.',
+    ],
+    technologies: ['Python', 'TensorFlow', 'OpenCV'],
+  },
+  {
+    id: 3,
+    title: '[Project Name]',
+    liveUrl: '',
+    githubUrl: '#',
+    bullets: [
+      'Describe what this project does and the problem it solves.',
+      'Mention the core architecture, models, or algorithms used.',
+    ],
+    technologies: ['LangChain', 'RAG', 'FastAPI', 'React.js'],
+  },
+];
+
+/* ── Expandable project card (accordion) ── */
 const ProjectCard = ({ project }) => {
   const { theme } = useContext(ThemeContext);
-  const cardClasses = theme === 'dark'
-    ? 'bg-gray-800 hover:bg-gray-700 text-white'
-    : 'bg-white hover:bg-gray-100 text-gray-800';
+  const [open, setOpen] = useState(false);
 
-  const buttonLinkClasses = theme === 'dark'
-    ? 'bg-blue-600 hover:bg-blue-700 text-white'
-    : 'bg-[#007bff] hover:bg-[#0056b3] text-white';
-
-  const descriptionClasses = theme === 'dark' ? 'text-gray-400' : 'text-gray-600';
+  const cardBorder  = theme === 'dark' ? 'border-[#2a2a28]'  : 'border-gray-200';
+  const titleColor  = theme === 'dark' ? 'text-[#5b9bd5]'    : 'text-[#179cf0]';
+  const chevronColor= theme === 'dark' ? 'text-[#857f72]'    : 'text-gray-500';
+  const bulletText  = theme === 'dark' ? 'text-[#857f72]'    : 'text-gray-600';
+  const dotColor    = theme === 'dark' ? 'bg-[#5b9bd5]'      : 'bg-[#179cf0]';
+  const techBadge   = theme === 'dark' ? 'bg-[#242420] border-[#2a2a28] text-[#857f72]' : 'bg-gray-50 border-gray-200 text-gray-600';
+  const hoverRow    = theme === 'dark' ? 'hover:bg-[#1f1f1c]' : 'hover:bg-gray-50';
 
   return (
-    <div className={`rounded-lg shadow-xl p-6 transition duration-300 ease-in-out transform hover:-translate-y-1 ${cardClasses}`}>
-      <div className={`w-full h-48 rounded-md mb-4 flex items-center justify-center text-center text-sm ${theme === 'dark' ? 'bg-gray-600 text-gray-400' : 'bg-gray-300 text-gray-600'}`}>
-        {project.title} Image Placeholder
-      </div>
-      <h3 className="text-2xl font-semibold mb-2">{project.title}</h3>
-      <p className={`mb-4 ${descriptionClasses}`}>{project.description}</p>
-      <div className="flex flex-wrap gap-2 mb-4">
-        {project.technologies && project.technologies.map((tech, index) => (
-          <span key={index} className="bg-blue-600 px-3 py-1 rounded-full text-xs font-medium text-white">
-            {tech}
-          </span>
-        ))}
-      </div>
-      <div className="flex justify-between">
-        {project.liveUrl && (
-          <Button href={project.liveUrl} target="_blank" rel="noopener noreferrer" className={buttonLinkClasses}>
-            Live Demo
-          </Button>
-        )}
-        {project.githubUrl && (
-          <Button href={project.githubUrl} target="_blank" rel="noopener noreferrer" className={buttonLinkClasses}>
-            GitHub
-          </Button>
-        )}
-      </div>
+    <div className={`border rounded-lg overflow-hidden transition-all hover:shadow-sm ${cardBorder}`}>
+      {/* Header row — always visible */}
+      <button
+        type="button"
+        onClick={() => setOpen(!open)}
+        className={`w-full flex justify-between items-center text-left p-3 cursor-pointer transition-colors ${hoverRow}`}
+      >
+        <div className="flex items-center gap-2 min-w-0">
+          {/* Dot avatar */}
+          <span className={`w-4 h-4 rounded-full flex-shrink-0 ${theme === 'dark' ? 'bg-[#2a2a28]' : 'bg-gray-200'}`} />
+          <h3 className={`font-medium text-xs truncate ${titleColor}`}>{project.title}</h3>
+          {project.liveUrl && project.liveUrl !== '#' && project.liveUrl !== '' && (
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={e => e.stopPropagation()}
+              className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-medium text-orange-500 border border-orange-300 bg-orange-50 hover:bg-orange-100 transition-colors leading-none flex-shrink-0"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
+              Live
+            </a>
+          )}
+        </div>
+        <div className="flex items-center gap-2 flex-shrink-0 ml-2">
+          {project.githubUrl && project.githubUrl !== '#' && project.githubUrl !== '' && (
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={e => e.stopPropagation()}
+              className={`text-xs font-medium border cursor-pointer px-2 py-0.5 rounded transition-colors ${
+                theme === 'dark'
+                  ? 'text-[#5b9bd5] border-[#3a4f6a] hover:bg-[#1a2535]'
+                  : 'text-[#179cf0] border-[#2fa7ff] hover:bg-blue-50'
+              }`}
+            >
+              GitHub
+            </a>
+          )}
+          <svg
+            stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24"
+            strokeLinecap="round" strokeLinejoin="round"
+            className={`transition-transform duration-200 ${chevronColor} ${open ? 'rotate-180' : ''}`}
+            height="14" width="14"
+          >
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </div>
+      </button>
+
+      {/* Expandable body */}
+      {open && (
+        <div className="px-4 pb-4">
+          {/* Bullets */}
+          <ul className="space-y-1.5 mb-3">
+            {project.bullets.map((b, i) => (
+              <li key={i} className="flex items-start gap-2">
+                <span className={`w-1 h-1 rounded-full flex-shrink-0 mt-1.5 ${dotColor}`} />
+                <span className={`text-xs leading-relaxed ${bulletText}`}>{b}</span>
+              </li>
+            ))}
+          </ul>
+
+          {/* Tech badges */}
+          {project.technologies && project.technologies.length > 0 && (
+            <div className="flex flex-wrap gap-1">
+              {project.technologies.map((tech) => (
+                <span
+                  key={tech}
+                  className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] border font-medium ${techBadge}`}
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };
 
-// Projects Section
+/* ── Projects section (right column) ── */
 const Projects = () => {
   const { theme } = useContext(ThemeContext);
-  const sectionClasses = theme === 'dark' ? 'bg-gray-900 text-gray-100' : 'bg-[#DFEAF6] text-gray-800';
 
-  // Static project data for now
-  const projects = [
-    {
-      id: 1,
-      title: "E-commerce Store",
-      description: "A full-stack e-commerce platform with user authentication, product listings, and a shopping cart.",
-      technologies: ["React", "Node.js", "Express.js", "MongoDB"],
-      liveUrl: "#", // Placeholder URL
-      githubUrl: "#" // Placeholder URL
-    },
-    {
-      id: 2,
-      title: "Task Management App",
-      description: "A simple task management application with drag-and-drop functionality and real-time updates.",
-      technologies: ["React", "Firebase", "Tailwind CSS"],
-      liveUrl: "#",
-      githubUrl: "#"
-    },
-    {
-      id: 3,
-      title: "Weather Dashboard",
-      description: "A responsive weather application fetching real-time weather data from an external API.",
-      technologies: ["HTML", "CSS", "JavaScript", "OpenWeather API"],
-      liveUrl: "#",
-      githubUrl: "#"
-    },
-    {
-      id: 4,
-      title: "AI Chatbot",
-      description: "A conversational AI chatbot built using natural language processing and machine learning.",
-      technologies: ["Python", "TensorFlow", "Flask"],
-      liveUrl: "#",
-      githubUrl: "#"
-    }
-  ];
+  const headingColor = theme === 'dark' ? 'text-[#e8e6e1]' : 'text-gray-800';
+  const divider      = theme === 'dark' ? 'border-[#2a2a28]': 'border-gray-200';
 
   return (
-    <section id="projects" className={`min-h-screen p-4 sm:p-8 pt-24 ${sectionClasses}`}>
-      <div className="container mx-auto">
-        <h2 className="text-4xl sm:text-5xl font-bold mb-10 text-center">My Projects</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.length > 0 ? (
-            projects.map((project) => (
-              <ProjectCard key={project.id} project={project} />
-            ))
-          ) : (
-            <div className="col-span-full text-center">
-              <p className="text-lg mb-4">No projects found. You can add them manually in this component.</p>
-            </div>
-          )}
-        </div>
+    <section id="projects" className="scroll-mt-20 space-y-2">
+      <h2 className={`text-base font-semibold border-b-2 border-dashed pb-2 mb-3 ${headingColor} ${divider}`}>
+        Projects
+      </h2>
+      <div className="space-y-2">
+        {projectsData.map((p) => (
+          <ProjectCard key={p.id} project={p} />
+        ))}
       </div>
     </section>
   );
