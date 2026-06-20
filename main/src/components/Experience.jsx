@@ -1,22 +1,103 @@
 import React, { useContext } from 'react';
 import { ThemeContext } from '../context/ThemeContext';
 
-/* ── Placeholder experience entries — user will fill with real data ── */
 const experienceData = [
   {
     id: 1,
-    company: '[Company Name]',
-    logo: null, // Add company logo URL here
+    company: 'Indian Institute of Technology, Roorkee',
+    logo: null,
     roles: [
       {
-        title: '[Your Role Title]',
-        period: '[Start Date] – [End Date]',
-        location: '[City, Country · Remote/On-site]',
+        title: 'Intern',
+        period: 'Mar 2026 - Present · 4 mos',
+        location: 'Remote · Internship',
         bullets: [
-          'Add your key achievement or responsibility here. Include metrics where possible (e.g. improved X by Y%).',
-          'Describe a major project or system you built, with technologies used.',
-          'Highlight any leadership, mentoring, or cross-team collaboration.',
-          'Note any performance improvements, cost savings, or user growth you contributed to.',
+          'Details of ongoing research and projects are confidential.',
+        ],
+      },
+    ],
+  },
+  {
+    id: 2,
+    company: 'Institute of Engineering and Technology',
+    logo: null,
+    roles: [
+      {
+        title: 'Teaching Assistant (Full-time)',
+        period: 'Jan 2026 - Present · 6 mos',
+        location: 'Lucknow, Uttar Pradesh, India · On-site',
+        bullets: [
+          'ICS 453 - Object oriented programming using Python',
+          'ICS 452 - Object oriented programming using Java',
+        ],
+      },
+      {
+        title: 'Teaching Assistant',
+        period: 'Aug 2025 - Dec 2025 · 5 mos',
+        location: 'Lucknow, Uttar Pradesh, India · On-site',
+        bullets: [
+          'ICS 354 - Mini Project',
+        ],
+      },
+    ],
+  },
+  {
+    id: 3,
+    company: 'Infosys Springboard',
+    logo: null,
+    roles: [
+      {
+        title: 'Intern',
+        period: 'Sep 2025 - Nov 2025 · 3 mos',
+        location: 'Remote · Internship',
+        bullets: [
+          'Completed technical training modules and project work under the Infosys Springboard program.',
+        ],
+      },
+    ],
+  },
+  {
+    id: 4,
+    company: 'Rajkiya Engineering College, Kannauj',
+    logo: null,
+    roles: [
+      {
+        title: 'Training and Placement Cell Co-ordinator (Full-time)',
+        period: 'May 2023 - May 2025 · 2 yrs 1 mo',
+        location: 'Kannauj, Uttar Pradesh, India · On-site',
+        bullets: [
+          'Managed the Training and Placement Cell website and social media presence.',
+        ],
+      },
+    ],
+  },
+  {
+    id: 5,
+    company: 'CDAC, Noida',
+    logo: null,
+    roles: [
+      {
+        title: 'Intern',
+        period: 'Jul 2024 - Sep 2024 · 3 mos',
+        location: 'Remote · Internship',
+        bullets: [
+          'Gained hands-on experience in ethical hacking and penetration testing using advanced cybersecurity tools.',
+          'Worked in a virtual environment, utilizing virtual machines accessed through Remote Desktop Protocol (RDP).',
+        ],
+      },
+    ],
+  },
+  {
+    id: 6,
+    company: 'Oasis Infobyte',
+    logo: null,
+    roles: [
+      {
+        title: 'Web Development and Designing Intern',
+        period: 'Jun 2024 - Jul 2024 · 2 mos',
+        location: 'Remote · Internship',
+        bullets: [
+          'Worked on multiple web development projects, strengthening front-end development and design skills.',
         ],
       },
     ],
@@ -65,18 +146,22 @@ const Experience = () => {
             {entry.roles.map((role, ri) => (
               <div key={ri} className="mt-2">
                 <div className="flex items-center gap-2">
-                  <h4 className={`text-base ${roleColor}`}>{role.title}</h4>
+                  <h4 className={`text-sm ${roleColor}`}>{role.title}</h4>
                 </div>
-                <p className={`text-xs ${metaColor}`}>{role.period} · {role.location}</p>
+                <p className={`text-xs ${metaColor}`}>
+                  {role.period}{role.location ? ` · ${role.location}` : ''}
+                </p>
 
-                <ul className="mt-2 space-y-1.5">
-                  {role.bullets.map((b, bi) => (
-                    <li key={bi} className="flex items-start gap-2">
-                      <span className={`w-1 h-1 rounded-full flex-shrink-0 mt-1.5 ${dotColor}`} />
-                      <span className={`text-xs leading-relaxed ${bulletText}`}>{b}</span>
-                    </li>
-                  ))}
-                </ul>
+                {role.bullets && role.bullets.length > 0 && (
+                  <ul className="mt-2 space-y-1.5">
+                    {role.bullets.map((b, bi) => (
+                      <li key={bi} className="flex items-start gap-2">
+                        <span className={`w-1 h-1 rounded-full flex-shrink-0 mt-1.5 ${dotColor}`} />
+                        <span className={`text-xs leading-relaxed ${bulletText}`}>{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
 
                 {/* Divider between roles */}
                 {ri < entry.roles.length - 1 && (

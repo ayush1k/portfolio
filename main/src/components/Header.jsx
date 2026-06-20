@@ -80,6 +80,15 @@ const Header = () => {
             ayushkumar47834@gmail.com
           </a>
 
+          <a href="tel:+918318530390"
+            className={`flex items-center gap-2 transition-colors ${linkHover}`}>
+            <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24"
+              strokeLinecap="round" strokeLinejoin="round" className="text-emerald-500 shrink-0" height="14" width="14">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+            </svg>
+            +91-8318530390
+          </a>
+
           {/* Social icons */}
           <div className="flex flex-wrap gap-3 pt-1">
             <a href="https://www.linkedin.com/in/ayushhhhhh/" target="_blank" rel="noopener noreferrer" title="LinkedIn">

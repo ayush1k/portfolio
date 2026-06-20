@@ -1,23 +1,38 @@
 import React, { useContext } from 'react';
 import { ThemeContext } from '../context/ThemeContext';
 
-/* ── Placeholder certificate entries — replace with your real data ── */
 const certificatesData = [
   {
     id: 1,
-    title: '[Certificate Title]',
-    issuer: '[Issuing Organization — e.g. Coursera, DeepLearning.AI]',
-    date: '[Month Year]',
-    credentialUrl: '#',
-    skills: ['Machine Learning', 'Python'],
+    title: 'OCI 2025 Certified Data Science Professional',
+    issuer: 'Oracle Cloud Infrastructure',
+    date: '2025',
+    credentialUrl: null,
+    skills: ['Data Science', 'OCI', 'Machine Learning'],
   },
   {
     id: 2,
-    title: '[Certificate Title]',
-    issuer: '[Issuing Organization]',
-    date: '[Month Year]',
-    credentialUrl: '#',
-    skills: ['Deep Learning', 'TensorFlow'],
+    title: 'Machine Learning Engineer Learning Path',
+    issuer: 'Google Cloud Skills Boost',
+    date: '2025',
+    credentialUrl: null,
+    skills: ['Machine Learning', 'Google Cloud', 'MLOps'],
+  },
+  {
+    id: 3,
+    title: 'Summer Analytics 2025',
+    issuer: 'IIT Guwahati',
+    date: '2025',
+    credentialUrl: null,
+    skills: ['Data Analysis', 'Python', 'Machine Learning'],
+  },
+  {
+    id: 4,
+    title: 'Passed LinkedIn Python Assessment',
+    issuer: 'LinkedIn',
+    date: '2025',
+    credentialUrl: null,
+    skills: ['Python'],
   },
 ];
 

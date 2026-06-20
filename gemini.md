@@ -99,12 +99,12 @@ Fixed Glassmorphism Navbar
 |---|---|---|---|
 | **App** | — | — | Root wrapper. Owns `currentPage`. Wraps in `<ThemeProvider>`. Renders `<Header>` + `<main>` two-column grid. |
 | **Navbar** | — | — | Fixed glassmorphism pill. 8 nav links. Desktop: logo \| divider \| links \| divider \| theme toggle + status badge. Mobile: hamburger dropdown. |
-| **Header** | `home` | Full-width | Name + "ML Engineer" title, animated "Open to Work" + "Interview Ready" badges (pulse dot), headline tagline, email, social icons (LinkedIn, GitHub, X, Instagram). |
+| **Header** | `home` | Full-width | Name + "ML Engineer" title, animated "Open to Work" + "Interview Ready" badges (pulse dot), headline tagline, email, phone number, social icons (LinkedIn, GitHub, X, Instagram). |
 | **About** | `about` | Left | Dashed `<h2>` heading. Orange highlight banner with left accent bar. 6 blue-dot bullet points about Ayush's ML background. |
-| **Experience** | `experience` | Left | Company logo + name, role title (blue), date + location (gray), blue-dot bullet points. Placeholder content ready to fill. |
+| **Experience** | `experience` | Left | Company logo + name, role title (blue), date + location (gray), blue-dot bullet points. Contains real work history (IIT Roorkee, IET, Infosys Springboard, REC Kannauj, CDAC, Oasis Infobyte). |
 | **Projects** | `projects` | Right | Dashed heading. Accordion cards: collapsed = title + Live badge + GitHub button + chevron; expanded = bullet list + tech tag pills. |
 | **Skills** | `skills` | Right | Dashed heading "Tech Stack". 6 categories (Languages, ML, Deep Learning & CV, Generative AI & NLP, Frameworks, Tools & MLOps). Each: dot label + flex-wrap pill badges. |
-| **Education** | `education` | Right | Institution logo + name, degree (blue), date + location + grade, bullet highlights. Placeholder ready. |
+| **Education** | `education` | Right | Institution logo + name, degree (blue), date + location + grade, bullet highlights. Updated with real academic history (IET, REC Kannauj, St. Xavier's). |
 | **Certificates** | `certificates` | Right | Cards with title (blue), issuer + date, "View ↗" link, skill tag pills. Placeholder ready. |
 | **Contact** | `contact` | Right | Quick links (Email, LinkedIn, GitHub), then compact 3-field form (Name, Email, Message) with submit button. Submission simulated. |
 
@@ -239,12 +239,13 @@ const skillCategories = [
 | **Design overhaul** | Full visual migration to princesinghai.com aesthetic: glassmorphism navbar, card layout, orange/blue token system, dashed dividers, compact typography |
 | **Two-column grid layout** | `grid-cols-1 lg:grid-cols-3` — left col-span-2 (About + Experience), right col (all other sections) |
 | **Navbar** | Glassmorphism pill, 8 nav links with colored dots, "Open to Work" pulse badge, Sun/Moon theme toggle, mobile hamburger dropdown with outside-click close |
-| **Header** | Resume-style full-width header: name, title, animated badges (Open to Work + Interview Ready), tagline, email, LinkedIn/GitHub/X/Instagram socials |
+| **Header** | Resume-style full-width header: name, title, animated badges (Open to Work + Interview Ready), tagline, email, phone number, LinkedIn/GitHub/X/Instagram socials |
 | **About** | Orange highlight banner with left accent bar + 6 blue-dot bullet points (real Ayush content) |
+| **Experience** | Left-column section, updated with real professional experiences & internships (IIT Roorkee, IET, Infosys Springboard, REC Kannauj, CDAC, Oasis Infobyte) |
 | **Skills** | 6 categories, 46 real skills, no emojis, flex-wrap pills, colored dot category labels |
 | **Projects** | Accordion expand/collapse cards with Live badge, GitHub button, bullets, tech tags |
-| **Education** | Right-column section, placeholder structure ready to fill |
-| **Certificates** | Right-column section, placeholder structure ready to fill |
+| **Education** | Right-column section, updated with real academic history (IET, REC Kannauj, St. Xavier's) |
+| **Certificates** | Right-column section, updated with real credentials (OCI, Google Cloud Skills Boost, IIT Guwahati, LinkedIn Python assessment) |
 | **Contact** | Right-column, compact form + quick links |
 | **Inter font** | Loaded via Google Fonts `<link>` in `index.html` |
 | **SEO** | `<title>`, `<meta name="description">` updated in `index.html` |
@@ -254,10 +255,7 @@ const skillCategories = [
 
 | Section | What's Missing |
 |---|---|
-| **Experience** | Real company entries (company name, logo URL, role, date, location, bullet points) |
 | **Projects** | Real project entries (title, liveUrl, githubUrl, bullet descriptions, tech tags) |
-| **Education** | Real institution (name, logo, degree, period, location, grade, highlights) |
-| **Certificates** | Real certificates (title, issuer, date, credentialUrl, skills) |
 | **Contact form** | Real email service (EmailJS / Formspree) — currently simulated with `setTimeout` |
 
 ---

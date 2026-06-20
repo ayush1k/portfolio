@@ -1,20 +1,38 @@
 import React, { useContext } from 'react';
 import { ThemeContext } from '../context/ThemeContext';
 
-/* ── Placeholder education entries — replace with your real data ── */
 const educationData = [
   {
     id: 1,
-    institution: '[University / College Name]',
-    logo: null, // Add institution logo URL here
-    degree: '[Degree — e.g. B.Tech in Computer Science]',
-    period: '[Start Year] – [End Year]',
-    location: '[City, Country]',
-    grade: '[CGPA / Percentage — optional]',
+    institution: 'Institute of Engineering and Technology',
+    logo: null,
+    degree: 'Master of Technology - MTech, Artificial Intelligence and Data Science',
+    period: 'Aug 2025 – Oct 2027',
+    location: '',
+    grade: '',
+    highlights: [],
+  },
+  {
+    id: 2,
+    institution: 'Rajkiya Engineering College, Kannauj',
+    logo: null,
+    degree: 'Bachelor of Technology - BTech, CSE',
+    period: 'Nov 2021 – 2025',
+    location: '',
+    grade: '',
     highlights: [
-      'Relevant coursework: Machine Learning, Data Structures, Algorithms, DBMS, Computer Networks.',
-      'Add any academic achievements, projects, or clubs.',
+      'This is where I actually learned the skill of survival.',
     ],
+  },
+  {
+    id: 3,
+    institution: "St. Xavier's High School - India",
+    logo: null,
+    degree: 'PCM+CS',
+    period: 'Apr 2006 – Mar 2020',
+    location: '',
+    grade: 'XII: 76.6% · X: 80.4%',
+    highlights: [],
   },
 ];
 
@@ -50,7 +68,7 @@ const Education = () => {
                 />
               ) : (
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-bold border ${logoBorder} ${logoFallback}`}>
-                  {entry.institution.charAt(1)}
+                  {entry.institution.charAt(0)}
                 </div>
               )}
               <h3 className={`text-sm font-semibold ${instColor}`}>{entry.institution}</h3>
@@ -59,7 +77,7 @@ const Education = () => {
             {/* Degree + meta */}
             <h4 className={`text-sm ${degreeColor}`}>{entry.degree}</h4>
             <p className={`text-xs mt-0.5 ${metaColor}`}>
-              {entry.period} · {entry.location}
+              {entry.period}{entry.location ? ` · ${entry.location}` : ''}
               {entry.grade && <span className="ml-2 font-medium">{entry.grade}</span>}
             </p>
 
