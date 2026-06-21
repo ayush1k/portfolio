@@ -91,7 +91,8 @@ Fixed Glassmorphism Navbar
              │        ├── <Education id="education">
              │        ├── <Certificates id="certificates">
              │        └── <Contact id="contact">
-             └── <Projects id="projects"> (Full Width)
+             ├── <Projects id="projects"> (Full Width)
+             └── <GithubStats id="github"> (Full Width)
 ```
 
 ### Component Responsibilities
@@ -104,6 +105,7 @@ Fixed Glassmorphism Navbar
 | **About** | `about` | Left | Dashed `<h2>` heading. Orange highlight banner with left accent bar. 6 blue-dot bullet points about Ayush's ML background. |
 | **Experience** | `experience` | Left | Company logo + name, role title (blue), date + location (gray), blue-dot bullet points. Contains real work history (IIT Roorkee, IET, Infosys Springboard, REC Kannauj, CDAC, Oasis Infobyte). |
 | **Projects** | `projects` | Full-Width | Dashed heading. Accordion cards: collapsed = title + Live badge + GitHub button + chevron; expanded = bullet list + tech tag pills. Located below the main columns. |
+| **GithubStats** | `github` | Full-Width | Dashed heading. Displays real-time GitHub readme statistics, top languages, and contribution calendar, dynamically styled for light/dark themes. |
 | **Video Showcase** | — | Right | Responsive aspect-video container with dashed border and icon acting as a placeholder for a future video showcase. |
 | **Skills** | `skills` | Right | Dashed heading "Tech Stack". 6 categories (Languages, ML, Deep Learning & CV, Generative AI & NLP, Frameworks, Tools & MLOps), with each category enclosed in a separate visual box card container. |
 | **Education** | `education` | Right | Institution logo + name, degree (blue), date + location + grade, bullet highlights. Updated with real academic history (IET, REC Kannauj, St. Xavier's). |
@@ -254,6 +256,7 @@ const skillCategories = [
 | **SEO** | `<title>`, `<meta name="description">` updated in `index.html` |
 | **ThemeContext** | Unchanged from original — localStorage persistence, system preference, toggleTheme |
 | **Video Showcase** | Beautiful visual placeholder box for future video embedding (responsive aspect-video, dashed borders, icon, light/dark themes). |
+| **GithubStats** | Dynamic year-wise GitHub contributions calendar using Jogrubers API (2022–2026), natively rendered via SVG with dynamic light (blue) & dark (orange) themes, interactive hover tooltips, and custom loading/error fallback elements. |
 
 ### 🚧 Placeholder / Needs Real Content
 
