@@ -78,8 +78,12 @@ const GithubStats = () => {
   const getRecent30DaysData = () => {
     if (!contributionsData?.contributions) return [];
     
-    // Fallback to today's date in local time
-    const todayStr = new Date().toISOString().split('T')[0];
+    // Fallback to today's date in local time (avoiding UTC offset shifts)
+    const localDate = new Date();
+    const yyyy = localDate.getFullYear();
+    const mm = String(localDate.getMonth() + 1).padStart(2, '0');
+    const dd = String(localDate.getDate()).padStart(2, '0');
+    const todayStr = `${yyyy}-${mm}-${dd}`;
     
     // Filter out future dates and sort chronologically descending to get most recent
     const pastEntries = contributionsData.contributions
@@ -261,25 +265,9 @@ const GithubStats = () => {
               </h3>
               {contributionsData && (
                 <p className="text-xs font-semibold text-gray-800 dark:text-[#e8e6e1]">
-                  Recent activity details & annual history
+                  Recent daily contributions & historical calendar history
                 </p>
               )}
-            </div>
-            
-            {/* Year Selector Buttons */}
-            <div className="flex flex-wrap gap-1.5">
-              {years.map((year) => (
-                <button
-                  key={year}
-                  type="button"
-                  onClick={() => setSelectedYear(year)}
-                  className={`px-3 py-1 rounded text-xs border transition-all duration-150 cursor-pointer ${
-                    selectedYear === year ? activeBtn : inactiveBtn
-                  }`}
-                >
-                  {year}
-                </button>
-              ))}
             </div>
           </div>
 
@@ -431,15 +419,33 @@ const GithubStats = () => {
 
           {/* Section 2: Annual Calendar */}
           <div className="space-y-3">
-            <div className="flex justify-between items-center">
-              <h4 className="text-[11px] font-bold text-gray-700 dark:text-[#e8e6e1]/80 uppercase tracking-wider">
-                Annual Calendar ({selectedYear})
-              </h4>
-              {contributionsData && (
-                <span className="text-[10px] font-semibold text-gray-500 dark:text-[#857f72]">
-                  {totalContributions.toLocaleString()} total contribution{totalContributions !== 1 ? 's' : ''}
-                </span>
-              )}
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <div className="flex items-center gap-2">
+                <h4 className="text-[11px] font-bold text-gray-700 dark:text-[#e8e6e1]/80 uppercase tracking-wider">
+                  Annual Calendar ({selectedYear})
+                </h4>
+                {contributionsData && (
+                  <span className="text-[10px] font-semibold text-gray-500 dark:text-[#857f72]">
+                    ({totalContributions.toLocaleString()} total contribution{totalContributions !== 1 ? 's' : ''})
+                  </span>
+                )}
+              </div>
+              
+              {/* Year Selector Buttons relocated here */}
+              <div className="flex flex-wrap gap-1.5">
+                {years.map((year) => (
+                  <button
+                    key={year}
+                    type="button"
+                    onClick={() => setSelectedYear(year)}
+                    className={`px-3 py-1 rounded text-xs border transition-all duration-150 cursor-pointer ${
+                      selectedYear === year ? activeBtn : inactiveBtn
+                    }`}
+                  >
+                    {year}
+                  </button>
+                ))}
+              </div>
             </div>
 
             {/* Calendar SVG Widget Container */}
