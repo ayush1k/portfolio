@@ -67,10 +67,11 @@ const Education = () => {
                 <img
                   src={entry.logo}
                   alt={`${entry.institution} logo`}
-                  className={`w-8 h-8 rounded-full object-cover border ${logoBorder}`}
+                  className={`w-9 h-9 rounded-full object-contain bg-white p-0.5 border ${logoBorder}`}
+                  style={{ imageRendering: 'high-quality' }}
                 />
               ) : (
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-bold border ${logoBorder} ${logoFallback}`}>
+                <div className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold border ${logoBorder} ${logoFallback}`}>
                   {entry.institution.charAt(0)}
                 </div>
               )}

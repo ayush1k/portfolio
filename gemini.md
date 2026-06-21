@@ -203,7 +203,7 @@ const color = theme === 'dark' ? 'text-[#e8e6e1]' : 'text-gray-900';
 ### Accordion Card Pattern (Projects uses this)
 - Collapsed: `border rounded-lg` card, header row with title + Live badge + GitHub button + chevron SVG
 - Expanded: reveals `<ul>` bullet list + flex-wrap tech tag `<span>` pills
-- Toggle: `useState(false)` per card, chevron rotates `rotate-180` when open
+- Toggle: `useState(false)` per card, chevron rotates `rotate-180` when open.
 
 ### Orange Highlight Banner Pattern (About uses this)
 ```jsx

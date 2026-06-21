@@ -1,11 +1,16 @@
 import React, { useContext } from 'react';
 import { ThemeContext } from '../context/ThemeContext';
+import iitRoorkeeLogo from '../assets/iit-roorkee-logo.png';
+import ietLogo from '../assets/iet-logo.jpeg';
+import infosysSpringboardLogo from '../assets/infosys-springboard-logo.jpeg';
+import reckLogo from '../assets/reck-logo.jpeg';
+import cdacLogo from '../assets/cdac-noida-logo.jpeg';
 
 const experienceData = [
   {
     id: 1,
     company: 'Indian Institute of Technology, Roorkee',
-    logo: null,
+    logo: iitRoorkeeLogo,
     roles: [
       {
         title: 'Intern',
@@ -21,7 +26,7 @@ const experienceData = [
   {
     id: 2,
     company: 'Institute of Engineering and Technology',
-    logo: null,
+    logo: ietLogo,
     roles: [
       {
         title: 'Teaching Assistant (Full-time)',
@@ -48,7 +53,7 @@ const experienceData = [
   {
     id: 3,
     company: 'Infosys Springboard',
-    logo: null,
+    logo: infosysSpringboardLogo,
     roles: [
       {
         title: 'Intern',
@@ -66,7 +71,7 @@ const experienceData = [
   {
     id: 4,
     company: 'Rajkiya Engineering College, Kannauj',
-    logo: null,
+    logo: reckLogo,
     roles: [
       {
         title: 'Training and Placement Cell Co-ordinator (Full-time)',
@@ -84,7 +89,7 @@ const experienceData = [
   {
     id: 5,
     company: 'CDAC, Noida',
-    logo: null,
+    logo: cdacLogo,
     roles: [
       {
         title: 'Intern',
@@ -143,10 +148,11 @@ const Experience = () => {
                 <img
                   src={entry.logo}
                   alt={`${entry.company} logo`}
-                  className={`w-8 h-8 rounded-full object-cover border ${logoBorder}`}
+                  className={`w-9 h-9 rounded-full object-contain bg-white p-0.5 border ${logoBorder}`}
+                  style={{ imageRendering: 'high-quality' }}
                 />
               ) : (
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-bold border ${logoBorder} ${logoFallback}`}>
+                <div className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold border ${logoBorder} ${logoFallback}`}>
                   {entry.company.charAt(0)}
                 </div>
               )}
