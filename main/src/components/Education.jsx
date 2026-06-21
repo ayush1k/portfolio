@@ -1,11 +1,14 @@
 import React, { useContext } from 'react';
 import { ThemeContext } from '../context/ThemeContext';
+import ietLogo from '../assets/iet-logo.jpeg';
+import reckLogo from '../assets/reck-logo.jpeg';
+import stXaviersLogo from '../assets/st-xaviers-logo.png';
 
 const educationData = [
   {
     id: 1,
     institution: 'Institute of Engineering and Technology',
-    logo: null,
+    logo: ietLogo,
     degree: 'Master of Technology - MTech, Artificial Intelligence and Data Science',
     period: 'Aug 2025 – Oct 2027',
     location: '',
@@ -15,7 +18,7 @@ const educationData = [
   {
     id: 2,
     institution: 'Rajkiya Engineering College, Kannauj',
-    logo: null,
+    logo: reckLogo,
     degree: 'Bachelor of Technology - BTech, CSE',
     period: 'Nov 2021 – 2025',
     location: '',
@@ -27,7 +30,7 @@ const educationData = [
   {
     id: 3,
     institution: "St. Xavier's High School - India",
-    logo: null,
+    logo: stXaviersLogo,
     degree: 'PCM+CS',
     period: 'Apr 2006 – Mar 2020',
     location: '',
