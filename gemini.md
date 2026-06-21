@@ -256,7 +256,7 @@ const skillCategories = [
 | **SEO** | `<title>`, `<meta name="description">` updated in `index.html` |
 | **ThemeContext** | Unchanged from original — localStorage persistence, system preference, toggleTheme |
 | **Video Showcase** | Beautiful visual placeholder box for future video embedding (responsive aspect-video, dashed borders, icon, light/dark themes). |
-| **GithubStats** | Dynamic year-wise GitHub contributions calendar using Jogrubers API (2022–2026), natively rendered via SVG with dynamic light (blue) & dark (orange) themes, interactive hover tooltips, and custom loading/error fallback elements. |
+| **GithubStats** | Dynamic year-wise GitHub contributions calendar (2022–2026) and a 30-day daily contributions bar chart (recent activity), natively rendered via SVG with dynamic light (blue) & dark (orange) themes, interactive hover tooltips, and custom loading/error fallback elements. |
 
 ### 🚧 Placeholder / Needs Real Content
 
