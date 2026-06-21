@@ -2,7 +2,7 @@
 
 > **Purpose:** This file is the authoritative "System Context" for AI-assisted sessions on this project.
 > Load it at the start of every session to restore full architectural and design awareness.
-> Last updated: 2026-06-20
+> Last updated: 2026-06-21
 
 ---
 
@@ -82,15 +82,16 @@ Fixed Glassmorphism Navbar
         │   └── <Header id="home"> — name, title, status badges, tagline, email, socials
         └── div.px-4.pb-4
             └── main.grid.grid-cols-1.lg:grid-cols-3.gap-8
-                ├── div.lg:col-span-2 (LEFT — 2/3 width)
-                │   ├── <About id="about">
-                │   └── <Experience id="experience">
-                └── div (RIGHT — 1/3 width)
-                    ├── <Projects id="projects">
-                    ├── <Skills id="skills">
-                    ├── <Education id="education">
-                    ├── <Certificates id="certificates">
-                    └── <Contact id="contact">
+                 ├── div.lg:col-span-2 (LEFT — 2/3 width)
+                 │   ├── <About id="about">
+                 │   ├── <Experience id="experience">
+                 │   └── <Projects id="projects">
+                 └── div (RIGHT — 1/3 width)
+                     ├── <Video Showcase (visual placeholder)>
+                     ├── <Skills id="skills">
+                     ├── <Education id="education">
+                     ├── <Certificates id="certificates">
+                     └── <Contact id="contact">
 ```
 
 ### Component Responsibilities
@@ -102,7 +103,8 @@ Fixed Glassmorphism Navbar
 | **Header** | `home` | Full-width | Name + "ML Engineer" title, animated "Open to Work" + "Interview Ready" badges (pulse dot), headline tagline, email, phone number, social icons (LinkedIn, GitHub, X, Instagram). |
 | **About** | `about` | Left | Dashed `<h2>` heading. Orange highlight banner with left accent bar. 6 blue-dot bullet points about Ayush's ML background. |
 | **Experience** | `experience` | Left | Company logo + name, role title (blue), date + location (gray), blue-dot bullet points. Contains real work history (IIT Roorkee, IET, Infosys Springboard, REC Kannauj, CDAC, Oasis Infobyte). |
-| **Projects** | `projects` | Right | Dashed heading. Accordion cards: collapsed = title + Live badge + GitHub button + chevron; expanded = bullet list + tech tag pills. |
+| **Projects** | `projects` | Left | Dashed heading. Accordion cards: collapsed = title + Live badge + GitHub button + chevron; expanded = bullet list + tech tag pills. Located below Experience. |
+| **Video Showcase** | — | Right | Responsive aspect-video container with dashed border and icon acting as a placeholder for a future video showcase. |
 | **Skills** | `skills` | Right | Dashed heading "Tech Stack". 6 categories (Languages, ML, Deep Learning & CV, Generative AI & NLP, Frameworks, Tools & MLOps). Each: dot label + flex-wrap pill badges. |
 | **Education** | `education` | Right | Institution logo + name, degree (blue), date + location + grade, bullet highlights. Updated with real academic history (IET, REC Kannauj, St. Xavier's). |
 | **Certificates** | `certificates` | Right | Cards with title (blue), issuer + date, "View ↗" link, skill tag pills. Placeholder ready. |
@@ -237,19 +239,21 @@ const skillCategories = [
 | Feature | Notes |
 |---|---|
 | **Design overhaul** | Full visual migration to princesinghai.com aesthetic: glassmorphism navbar, card layout, orange/blue token system, dashed dividers, compact typography |
-| **Two-column grid layout** | `grid-cols-1 lg:grid-cols-3` — left col-span-2 (About + Experience), right col (all other sections) |
+| **Two-column grid layout** | `grid-cols-1 lg:grid-cols-3` — left col-span-2 (About + Experience + Projects), right col (Video Showcase, Skills, Education, Certificates, Contact) |
+| **Video Showcase** | Responsive aspect-video placeholder container, styled for dark and light modes, indicating where the user will embed video. |
 | **Navbar** | Glassmorphism pill, 8 nav links with colored dots, "Open to Work" pulse badge, Sun/Moon theme toggle, mobile hamburger dropdown with outside-click close |
 | **Header** | Resume-style full-width header: name, title, animated badges (Open to Work + Interview Ready), tagline, email, phone number, LinkedIn/GitHub/X/Instagram socials |
 | **About** | Orange highlight banner with left accent bar + 6 blue-dot bullet points (real Ayush content) |
 | **Experience** | Left-column section, updated with real professional experiences & internships (IIT Roorkee, IET, Infosys Springboard, REC Kannauj, CDAC, Oasis Infobyte) |
 | **Skills** | 6 categories, 46 real skills, no emojis, flex-wrap pills, colored dot category labels |
-| **Projects** | Accordion expand/collapse cards with Live badge, GitHub button, bullets, tech tags |
+| **Projects** | Accordion expand/collapse cards with Live badge, GitHub button, bullets, tech tags. Relocated to left column below Experience. |
 | **Education** | Right-column section, updated with real academic history (IET, REC Kannauj, St. Xavier's) |
 | **Certificates** | Right-column section, updated with real credentials (OCI, Google Cloud Skills Boost, IIT Guwahati, LinkedIn Python assessment) |
 | **Contact** | Right-column, compact form + quick links |
 | **Inter font** | Loaded via Google Fonts `<link>` in `index.html` |
 | **SEO** | `<title>`, `<meta name="description">` updated in `index.html` |
 | **ThemeContext** | Unchanged from original — localStorage persistence, system preference, toggleTheme |
+| **Video Showcase** | Beautiful visual placeholder box for future video embedding (responsive aspect-video, dashed borders, icon, light/dark themes). |
 
 ### 🚧 Placeholder / Needs Real Content
 
@@ -267,7 +271,7 @@ const skillCategories = [
 | Header / Home | `home` | Full-width | Home |
 | About | `about` | Left | About |
 | Experience | `experience` | Left | Experience |
-| Projects | `projects` | Right | Projects |
+| Projects | `projects` | Left | Projects |
 | Skills | `skills` | Right | Skills |
 | Education | `education` | Right | Education |
 | Certificates | `certificates` | Right | Certificates |

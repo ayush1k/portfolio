@@ -12,7 +12,8 @@ const experienceData = [
         period: 'Mar 2026 - Present · 4 mos',
         location: 'Remote · Internship',
         bullets: [
-          'Details of ongoing research and projects are confidential.',
+          'Actively contributing to a research-driven project centered around Deep Learning and Computer Vision methodologies.',
+          'Further project methodologies and specific implementation details will be shared upon completion of the internship.',
         ],
       },
     ],
@@ -27,8 +28,9 @@ const experienceData = [
         period: 'Jan 2026 - Present · 6 mos',
         location: 'Lucknow, Uttar Pradesh, India · On-site',
         bullets: [
-          'ICS 453 - Object oriented programming using Python',
-          'ICS 452 - Object oriented programming using Java',
+          'Conducted hands-on laboratory sessions for ICS 453 (Object-Oriented Programming using Python) for a cohort of 80+ students, teaching core programming concepts, software design patterns, and debugging methodologies.',
+          'Led practical sessions for ICS 452 (Object-Oriented Programming using Java) for 80+ students, guiding them through inheritance, polymorphism, interface design, exception handling, and multi-threading.',
+          'Assisted students in resolving programming bottlenecks, graded coding assignments, and provided feedback to improve code efficiency and OOP compliance.',
         ],
       },
       {
@@ -36,7 +38,9 @@ const experienceData = [
         period: 'Aug 2025 - Dec 2025 · 5 mos',
         location: 'Lucknow, Uttar Pradesh, India · On-site',
         bullets: [
-          'ICS 354 - Mini Project',
+          'Instructed and mentored students during their ICS 354 (Mini Project) course, supervising projects across diverse domains including Web/Software Development, Mobile App Development, and Machine Learning.',
+          'Guided students on systems design, tool/framework selection, and clean code practices to build functional prototypes.',
+          'Provided technical consultation and feedback to student groups pursuing innovative, early-stage startup project ideas.',
         ],
       },
     ],
@@ -51,7 +55,10 @@ const experienceData = [
         period: 'Sep 2025 - Nov 2025 · 3 mos',
         location: 'Remote · Internship',
         bullets: [
-          'Completed technical training modules and project work under the Infosys Springboard program.',
+          'Architected and co-developed the Python Parallel Text Handling Processor, a high-performance, multi-threaded text processing pipeline utilizing ThreadPoolExecutor to process 10,000+ text records in parallel at 100+ chunks/second.',
+          'Designed a rule engine with 7+ pre-configured evaluation types and integrated SQLite database storage using SHA-256 hash-based deduplication to optimize search, storage, and processing speed.',
+          'Built an interactive dashboard using Streamlit, Plotly, and Matplotlib to provide live pipeline tracking, rule editing, word clouds, and analytics, along with automated PDF report generation via ReportLab.',
+          'Developed the Storage Improver module to automatically suggest scoring rules based on text pattern analysis, and integrated SMTP-based email alerts for pipeline notifications.',
         ],
       },
     ],
@@ -66,7 +73,10 @@ const experienceData = [
         period: 'May 2023 - May 2025 · 2 yrs 1 mo',
         location: 'Kannauj, Uttar Pradesh, India · On-site',
         bullets: [
-          'Managed the Training and Placement Cell website and social media presence.',
+          'Managed and maintained the college Training and Placement Cell web portal, and grew brand visibility by managing the official LinkedIn and Instagram pages.',
+          'Spearheaded corporate outreach by communicating with 100+ companies to secure campus recruitment drives and internship opportunities for students.',
+          'Organized and coordinated college-wide events including hackathons, quizzes, debate competitions, aptitude preparation sessions, and group discussions.',
+          'Hosted technical seminars and knowledge-sharing sessions featuring industry experts to expose students to current technological trends.',
         ],
       },
     ],
@@ -81,8 +91,9 @@ const experienceData = [
         period: 'Jul 2024 - Sep 2024 · 3 mos',
         location: 'Remote · Internship',
         bullets: [
-          'Gained hands-on experience in ethical hacking and penetration testing using advanced cybersecurity tools.',
-          'Worked in a virtual environment, utilizing virtual machines accessed through Remote Desktop Protocol (RDP).',
+          'Developed a Node.js-based interactive command-line interface (CLI) utility leveraging the truecallerjs package to perform real-time caller information retrievals.',
+          'Implemented support for multiple serialization output formats (JSON, XML, YAML, plain text) and integrated dotenv and JSON-based configuration management for secure Installation ID authentication.',
+          'Gained practical exposure to ethical hacking, security logging, and network analysis by conducting penetration testing inside remote virtual machines via RDP.',
         ],
       },
     ],
