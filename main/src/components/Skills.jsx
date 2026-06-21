@@ -20,10 +20,13 @@ const Skills = () => {
 
   const headingColor  = theme === 'dark' ? 'text-[#e8e6e1]'  : 'text-gray-800';
   const divider       = theme === 'dark' ? 'border-[#2a2a28]' : 'border-gray-200';
-  const catLabelColor = theme === 'dark' ? 'text-[#857f72]'   : 'text-gray-400';
+  const catLabelColor = theme === 'dark' ? 'text-[#857f72]'   : 'text-gray-500';
   const badgeBg       = theme === 'dark'
-    ? 'bg-[#242420] border-[#2a2a28] text-[#c8c4bc] hover:border-orange-500/40 hover:text-[#e8e6e1]'
-    : 'bg-gray-50 border-gray-200 text-gray-700 hover:border-blue-300 hover:text-gray-900';
+    ? 'bg-[#1a1a18] border-[#2a2a28] text-[#c8c4bc] hover:border-orange-500/40 hover:text-[#e8e6e1]'
+    : 'bg-white border-gray-200 text-gray-700 hover:border-blue-300 hover:text-gray-900';
+  const boxBgBorder   = theme === 'dark'
+    ? 'bg-[#242420]/30 border-[#2a2a28]'
+    : 'bg-gray-50/50 border-gray-200';
 
   return (
     <section id="skills" className="scroll-mt-20 space-y-4">
@@ -31,10 +34,10 @@ const Skills = () => {
         Tech Stack
       </h2>
 
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-3">
         {skillCategories.map((cat) => (
-          <div key={cat.label}>
-            <p className={`text-[10px] font-semibold uppercase tracking-widest mb-1.5 flex items-center gap-1.5 ${catLabelColor}`}>
+          <div key={cat.label} className={`border rounded-xl p-3.5 transition-all ${boxBgBorder}`}>
+            <p className={`text-[10px] font-bold uppercase tracking-widest mb-2.5 flex items-center gap-1.5 ${catLabelColor}`}>
               <span className={`text-[8px] ${cat.color}`}>&#9679;</span>
               {cat.label}
             </p>

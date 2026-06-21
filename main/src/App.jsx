@@ -37,14 +37,13 @@ const AppInner = () => {
           </div>
 
           {/* ── Two-column main layout ── */}
-          <div className="px-4 pb-4 md:px-5 md:pb-5 lg:px-5 lg:pb-5">
+          <div className="px-4 pb-4 md:px-5 md:pb-5 lg:px-5 lg:pb-5 space-y-6">
             <main className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
 
               {/* LEFT col — 2/3 */}
               <div className="space-y-6 lg:col-span-2">
                 <About />
                 <Experience />
-                <Projects />
               </div>
 
               {/* RIGHT col — 1/3 */}
@@ -76,6 +75,8 @@ const AppInner = () => {
               </div>
 
             </main>
+
+            <Projects />
           </div>
 
         </div>

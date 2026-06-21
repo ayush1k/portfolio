@@ -81,17 +81,17 @@ Fixed Glassmorphism Navbar
         ├── div.p-4 (full-width)
         │   └── <Header id="home"> — name, title, status badges, tagline, email, socials
         └── div.px-4.pb-4
-            └── main.grid.grid-cols-1.lg:grid-cols-3.gap-8
-                 ├── div.lg:col-span-2 (LEFT — 2/3 width)
-                 │   ├── <About id="about">
-                 │   ├── <Experience id="experience">
-                 │   └── <Projects id="projects">
-                 └── div (RIGHT — 1/3 width)
-                     ├── <Video Showcase (visual placeholder)>
-                     ├── <Skills id="skills">
-                     ├── <Education id="education">
-                     ├── <Certificates id="certificates">
-                     └── <Contact id="contact">
+             ├── main.grid.grid-cols-1.lg:grid-cols-3.gap-8
+             │    ├── div.lg:col-span-2 (LEFT — 2/3 width)
+             │    │   ├── <About id="about">
+             │    │   └── <Experience id="experience">
+             │    └── div (RIGHT — 1/3 width)
+             │        ├── <Video Showcase (visual placeholder)>
+             │        ├── <Skills id="skills">
+             │        ├── <Education id="education">
+             │        ├── <Certificates id="certificates">
+             │        └── <Contact id="contact">
+             └── <Projects id="projects"> (Full Width)
 ```
 
 ### Component Responsibilities
@@ -103,9 +103,9 @@ Fixed Glassmorphism Navbar
 | **Header** | `home` | Full-width | Name + "ML Engineer" title, animated "Open to Work" + "Interview Ready" badges (pulse dot), headline tagline, email, phone number, social icons (LinkedIn, GitHub, X, Instagram). |
 | **About** | `about` | Left | Dashed `<h2>` heading. Orange highlight banner with left accent bar. 6 blue-dot bullet points about Ayush's ML background. |
 | **Experience** | `experience` | Left | Company logo + name, role title (blue), date + location (gray), blue-dot bullet points. Contains real work history (IIT Roorkee, IET, Infosys Springboard, REC Kannauj, CDAC, Oasis Infobyte). |
-| **Projects** | `projects` | Left | Dashed heading. Accordion cards: collapsed = title + Live badge + GitHub button + chevron; expanded = bullet list + tech tag pills. Located below Experience. |
+| **Projects** | `projects` | Full-Width | Dashed heading. Accordion cards: collapsed = title + Live badge + GitHub button + chevron; expanded = bullet list + tech tag pills. Located below the main columns. |
 | **Video Showcase** | — | Right | Responsive aspect-video container with dashed border and icon acting as a placeholder for a future video showcase. |
-| **Skills** | `skills` | Right | Dashed heading "Tech Stack". 6 categories (Languages, ML, Deep Learning & CV, Generative AI & NLP, Frameworks, Tools & MLOps). Each: dot label + flex-wrap pill badges. |
+| **Skills** | `skills` | Right | Dashed heading "Tech Stack". 6 categories (Languages, ML, Deep Learning & CV, Generative AI & NLP, Frameworks, Tools & MLOps), with each category enclosed in a separate visual box card container. |
 | **Education** | `education` | Right | Institution logo + name, degree (blue), date + location + grade, bullet highlights. Updated with real academic history (IET, REC Kannauj, St. Xavier's). |
 | **Certificates** | `certificates` | Right | Cards with title (blue), issuer + date, "View ↗" link, skill tag pills. Placeholder ready. |
 | **Contact** | `contact` | Right | Quick links (Email, LinkedIn, GitHub), then compact 3-field form (Name, Email, Message) with submit button. Submission simulated. |

@@ -7,7 +7,7 @@ import stXaviersLogo from '../assets/st-xaviers-logo.png';
 const educationData = [
   {
     id: 1,
-    institution: 'Institute of Engineering and Technology',
+    institution: 'Institute of Engineering and Technology, Lucknow',
     logo: ietLogo,
     degree: 'Master of Technology - MTech, Artificial Intelligence and Data Science',
     period: 'Aug 2025 – Oct 2027',
@@ -29,7 +29,7 @@ const educationData = [
   },
   {
     id: 3,
-    institution: "St. Xavier's High School - India",
+    institution: "St. Xavier's High School, Varanasi",
     logo: stXaviersLogo,
     degree: 'PCM+CS',
     period: 'Apr 2006 – Mar 2020',

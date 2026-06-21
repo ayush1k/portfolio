@@ -25,7 +25,7 @@ const experienceData = [
   },
   {
     id: 2,
-    company: 'Institute of Engineering and Technology',
+    company: 'Institute of Engineering and Technology, Lucknow',
     logo: ietLogo,
     roles: [
       {
@@ -113,7 +113,9 @@ const experienceData = [
         period: 'Jun 2024 - Jul 2024 · 2 mos',
         location: 'Remote · Internship',
         bullets: [
-          'Worked on multiple web development projects, strengthening front-end development and design skills.',
+          'Developed and deployed multiple front-end web applications, designing user interfaces with responsive frameworks and implementing robust layouts using HTML5, CSS3, and JavaScript.',
+          'Created pixel-perfect and responsive pages, ensuring optimization across cross-browser environments and modern mobile viewports.',
+          'Strengthened overall core web design principles, visual hierarchy guidelines, and structured code modularity during the program.',
         ],
       },
     ],
