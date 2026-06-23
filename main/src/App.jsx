@@ -91,7 +91,7 @@ const AppInner = () => {
 
               </main>
 
-              <Projects />
+              <Projects onOpenChatbot={() => scrollToSection('chatbot')} />
               <GithubStats />
             </div>
 

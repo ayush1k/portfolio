@@ -90,7 +90,7 @@ const projectsData = [
 
 
 /* ── Expandable project card (accordion) ── */
-const ProjectCard = ({ project }) => {
+const ProjectCard = ({ project, onOpenChatbot }) => {
   const { theme } = useContext(ThemeContext);
   const [open, setOpen] = useState(false);
 
@@ -115,17 +115,31 @@ const ProjectCard = ({ project }) => {
           {/* Dot avatar */}
           <span className={`w-4 h-4 rounded-full flex-shrink-0 ${theme === 'dark' ? 'bg-[#3e3416]' : 'bg-orange-200'}`} />
           <h3 className={`font-medium text-xs truncate ${titleColor}`}>{project.title}</h3>
-          {project.liveUrl && project.liveUrl !== '#' && project.liveUrl !== '' && (
-            <a
-              href={project.liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={e => e.stopPropagation()}
-              className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-medium text-orange-500 border border-orange-300 bg-orange-50 hover:bg-orange-100 transition-colors leading-none flex-shrink-0"
+          
+          {project.id === 1 ? (
+            <button
+              onClick={e => {
+                e.stopPropagation();
+                if (onOpenChatbot) onOpenChatbot();
+              }}
+              className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-medium text-orange-500 border border-orange-300 bg-orange-50 hover:bg-orange-100 transition-colors leading-none flex-shrink-0 cursor-pointer"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
               Live
-            </a>
+            </button>
+          ) : (
+            project.liveUrl && project.liveUrl !== '#' && project.liveUrl !== '' && (
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={e => e.stopPropagation()}
+                className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-medium text-orange-500 border border-orange-300 bg-orange-50 hover:bg-orange-100 transition-colors leading-none flex-shrink-0"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
+                Live
+              </a>
+            )
           )}
         </div>
         <div className="flex items-center gap-2 flex-shrink-0 ml-2">
@@ -176,7 +190,8 @@ const ProjectCard = ({ project }) => {
                   key={tech}
                   className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] border font-medium ${techBadge}`}
                 >
-                  {tech}
+                  {tech
+}
                 </span>
               ))}
             </div>
@@ -188,7 +203,7 @@ const ProjectCard = ({ project }) => {
 };
 
 /* ── Projects section (right column) ── */
-const Projects = () => {
+const Projects = ({ onOpenChatbot }) => {
   const { theme } = useContext(ThemeContext);
 
   const headingColor = theme === 'dark' ? 'text-[#e8e6e1]' : 'text-gray-800';
@@ -201,7 +216,7 @@ const Projects = () => {
       </h2>
       <div className="space-y-2">
         {projectsData.map((p) => (
-          <ProjectCard key={p.id} project={p} />
+          <ProjectCard key={p.id} project={p} onOpenChatbot={onOpenChatbot} />
         ))}
       </div>
     </section>
