@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Header from './components/Header';
 import About from './components/About';
@@ -12,11 +12,24 @@ import Contact from './components/Contact';
 import { ThemeProvider, ThemeContext } from './context/ThemeContext';
 import ragBasedAiTwinVideo from './assets/rag-based-ai-twin.mp4';
 import ChatbotWidget from './components/ChatbotWidget';
-import ChatbotPage from './components/ChatbotPage';
+import ChatbotPage, { getBackendUrl } from './components/ChatbotPage';
 
 const AppInner = () => {
   const { theme } = useContext(ThemeContext);
   const [currentPage, setCurrentPage] = useState('home');
+
+  useEffect(() => {
+    // Non-blocking wake up call to the backend on initial load
+    const wakeUpBackend = async () => {
+      try {
+        const url = getBackendUrl();
+        await fetch(`${url}/health`, { method: 'GET', mode: 'cors' });
+      } catch (err) {
+        console.log('Pre-warming backend ping:', err.message);
+      }
+    };
+    wakeUpBackend();
+  }, []);
 
   const scrollToSection = (sectionId) => {
     if (sectionId === 'chatbot') {

@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import { ThemeContext } from '../context/ThemeContext';
-const getBackendUrl = () => {
+
+export const getBackendUrl = () => {
   if (import.meta.env.VITE_API_URL) {
     return import.meta.env.VITE_API_URL;
   }
@@ -34,6 +35,7 @@ export default function ChatbotPage({ onBackToPortfolio }) {
   ]);
   const [inputVal, setInputVal] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [backendStatus, setBackendStatus] = useState('checking'); // 'checking' | 'online' | 'waking' | 'offline'
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
@@ -41,6 +43,90 @@ export default function ChatbotPage({ onBackToPortfolio }) {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [messages, isTyping]);
+
+  useEffect(() => {
+    let active = true;
+    let pollInterval = null;
+    let retries = 0;
+    const maxRetries = 12; // 12 * 5s = 60s total wait time
+
+    const checkStatus = async () => {
+      const url = getBackendUrl();
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 6000); // 6s timeout
+
+        const response = await fetch(`${url}/health`, { 
+          method: 'GET',
+          signal: controller.signal 
+        });
+        clearTimeout(timeoutId);
+
+        if (response.ok) {
+          if (active) {
+            setBackendStatus('online');
+            if (pollInterval) {
+              clearInterval(pollInterval);
+              pollInterval = null;
+            }
+          }
+        } else {
+          // If it returns 502, 503, or 504, it might be waking up
+          if (response.status === 502 || response.status === 503 || response.status === 504) {
+            if (active) {
+              setBackendStatus('waking');
+              if (!pollInterval && retries < maxRetries) {
+                pollInterval = setInterval(() => {
+                  retries++;
+                  if (retries >= maxRetries) {
+                    if (active) {
+                      setBackendStatus('offline');
+                      clearInterval(pollInterval);
+                      pollInterval = null;
+                    }
+                  } else {
+                    checkStatus();
+                  }
+                }, 5000);
+              }
+            }
+          } else {
+            if (active) setBackendStatus('offline');
+          }
+        }
+      } catch (err) {
+        if (active) {
+          // Aborted (timeout) or fetch failed but it could be Render spinning up, we poll
+          if (err.name === 'AbortError' || err.message?.includes('Failed to fetch') || err.message?.includes('NetworkError')) {
+            setBackendStatus('waking');
+            if (!pollInterval && retries < maxRetries) {
+              pollInterval = setInterval(() => {
+                retries++;
+                if (retries >= maxRetries) {
+                  if (active) {
+                    setBackendStatus('offline');
+                    clearInterval(pollInterval);
+                    pollInterval = null;
+                  }
+                } else {
+                  checkStatus();
+                }
+              }, 5000);
+            }
+          } else {
+            setBackendStatus('offline');
+          }
+        }
+      }
+    };
+
+    checkStatus();
+
+    return () => {
+      active = false;
+      if (pollInterval) clearInterval(pollInterval);
+    };
+  }, []);
 
   const handleSend = async (textToSend) => {
     const text = textToSend || inputVal.trim();
@@ -73,6 +159,7 @@ export default function ChatbotPage({ onBackToPortfolio }) {
 
       const data = await response.json();
       setIsTyping(false);
+      setBackendStatus('online'); // Set online since request succeeded
       setMessages((prev) => [
         ...prev,
         { id: Date.now() + 1, sender: 'bot', text: data.answer }
@@ -81,13 +168,21 @@ export default function ChatbotPage({ onBackToPortfolio }) {
       console.error('Chatbot API error:', err);
       setIsTyping(false);
       
-      // Detailed user guidance in case the backend is offline
+      const isLocal = window.location.hostname === 'localhost' || 
+                      window.location.hostname === '127.0.0.1' || 
+                      window.location.hostname.includes('github.dev') || 
+                      window.location.hostname.includes('gitpod.io');
+
+      const errorText = isLocal
+        ? "I couldn't reach my backend server. Please make sure the FastAPI server is running locally on port 8000. \n\nTo start it:\n1. Open a terminal\n2. Navigate to `chatbot/`\n3. Set up and activate your virtual environment: `python3 -m venv .venv && source .venv/bin/activate`\n4. Install requirements: `pip install -r requirements.txt`\n5. Build vectorstore: `python ingest.py`\n6. Start the server: `uvicorn main:app --reload`"
+        : "I couldn't reach my backend server. Since the API is hosted on Render's free tier, the server might be cold-starting/waking up. Please give it 30-60 seconds and try sending your message again.";
+
       setMessages((prev) => [
         ...prev,
         { 
           id: Date.now() + 1, 
           sender: 'bot', 
-          text: "I couldn't reach my backend server. Please make sure the FastAPI server is running locally on port 8000. \n\nTo start it:\n1. Open a terminal\n2. Navigate to `chatbot/`\n3. Set up and activate your virtual environment: `python3 -m venv .venv && source .venv/bin/activate`\n4. Install requirements: `pip install -r requirements.txt`\n5. Build vectorstore: `python ingest.py`\n6. Start the server: `uvicorn main:app --reload`"
+          text: errorText
         }
       ]);
     }
@@ -162,11 +257,33 @@ export default function ChatbotPage({ onBackToPortfolio }) {
                   <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${buttonGradient} flex items-center justify-center text-white text-base font-bold shadow-lg`}>
                     AK
                   </div>
-                  <span className="absolute bottom-0 right-0 block h-3 w-3 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-gray-900 animate-pulse" />
+                  {backendStatus === 'online' && (
+                    <span className="absolute bottom-0 right-0 block h-3 w-3 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-gray-900 animate-pulse" />
+                  )}
+                  {backendStatus === 'waking' && (
+                    <span className="absolute bottom-0 right-0 block h-3 w-3 rounded-full bg-amber-500 ring-2 ring-white dark:ring-gray-900 animate-pulse" />
+                  )}
+                  {backendStatus === 'checking' && (
+                    <span className="absolute bottom-0 right-0 block h-3 w-3 rounded-full bg-gray-400 ring-2 ring-white dark:ring-gray-900 animate-pulse" />
+                  )}
+                  {backendStatus === 'offline' && (
+                    <span className="absolute bottom-0 right-0 block h-3 w-3 rounded-full bg-red-500 ring-2 ring-white dark:ring-gray-900" />
+                  )}
                 </div>
                 <div>
                   <h2 className={`text-base font-bold tracking-tight ${textPrimary}`}>Ayush's AI Twin</h2>
-                  <span className="text-[11px] text-emerald-500 font-semibold uppercase tracking-wider">Online & Ready</span>
+                  {backendStatus === 'online' && (
+                    <span className="text-[11px] text-emerald-500 font-semibold uppercase tracking-wider">Online & Ready</span>
+                  )}
+                  {backendStatus === 'waking' && (
+                    <span className="text-[11px] text-amber-500 font-semibold uppercase tracking-wider animate-pulse">Waking up... (~30s)</span>
+                  )}
+                  {backendStatus === 'checking' && (
+                    <span className="text-[11px] text-gray-400 font-semibold uppercase tracking-wider">Checking connection...</span>
+                  )}
+                  {backendStatus === 'offline' && (
+                    <span className="text-[11px] text-red-500 font-semibold uppercase tracking-wider">Offline</span>
+                  )}
                 </div>
               </div>
 
@@ -262,17 +379,33 @@ export default function ChatbotPage({ onBackToPortfolio }) {
 
           {/* Input Footer */}
           <div className={`p-4 border-t ${divider}`}>
+            {backendStatus === 'waking' && (
+              <div className={`text-[11px] px-3 py-2 rounded-xl mb-3 text-center font-medium animate-pulse ${
+                theme === 'dark' ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' : 'bg-amber-50 text-amber-700 border border-amber-200'
+              }`}>
+                ⚠️ Ayush's AI Twin is currently waking up from sleep. Your first message might take up to 30-50 seconds.
+              </div>
+            )}
+            {backendStatus === 'offline' && (
+              <div className={`text-[11px] px-3 py-2 rounded-xl mb-3 text-center font-medium ${
+                theme === 'dark' ? 'bg-red-500/10 text-red-400 border border-red-500/20' : 'bg-red-50 text-red-700 border border-red-200'
+              }`}>
+                🔴 The backend chatbot server is offline. Please wait or try again later.
+              </div>
+            )}
             <form onSubmit={handleSubmit} className="flex gap-2">
               <input
                 type="text"
                 value={inputVal}
                 onChange={(e) => setInputVal(e.target.value)}
-                placeholder="Ask me about skills, projects, experience, or education..."
-                className={`flex-1 rounded-xl px-4 py-3 text-xs border outline-none transition-all duration-200 ${inputBg}`}
+                placeholder={backendStatus === 'offline' ? "Service offline..." : "Ask me about skills, projects, experience, or education..."}
+                disabled={backendStatus === 'offline'}
+                className={`flex-1 rounded-xl px-4 py-3 text-xs border outline-none transition-all duration-200 ${inputBg} ${backendStatus === 'offline' ? 'opacity-50 cursor-not-allowed' : ''}`}
               />
               <button
                 type="submit"
-                className={`px-5 py-3 rounded-xl text-white bg-gradient-to-r ${buttonGradient} shadow-md cursor-pointer transition-all duration-200 active:scale-95 flex items-center gap-1.5 font-semibold text-xs`}
+                disabled={backendStatus === 'offline'}
+                className={`px-5 py-3 rounded-xl text-white bg-gradient-to-r ${buttonGradient} shadow-md cursor-pointer transition-all duration-200 active:scale-95 flex items-center gap-1.5 font-semibold text-xs ${backendStatus === 'offline' ? 'opacity-50 cursor-not-allowed' : ''}`}
               >
                 Send
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-3.5 h-3.5">
