@@ -131,7 +131,7 @@ const ProjectCard = ({ project, onOpenChatbot }) => {
           <span className={`w-4 h-4 rounded-full flex-shrink-0 ${theme === 'dark' ? 'bg-[#3e3416]' : 'bg-orange-200'}`} />
           <h3 className={`font-medium text-xs truncate ${titleColor}`}>{project.title}</h3>
           
-          {project.id === 1 ? (
+          {project.title === 'RAG-based Digital Twin Portfolio Chatbot' ? (
             <button
               onClick={e => {
                 e.stopPropagation();
