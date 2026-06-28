@@ -5,6 +5,21 @@ import { ThemeContext } from '../context/ThemeContext';
 const projectsData = [
   {
     id: 1,
+    title: 'Plain Language Agent',
+    liveUrl: 'https://plain-language-agent.onrender.com/',
+    githubUrl: 'https://github.com/ayush1k/plain-language-agent',
+    bullets: [
+      'Engineered an Agentic LangGraph Workflow utilizing a structured multi-agent StateGraph (Profiler, Paraphraser, and Critic) that iteratively refines and evaluates text readability until a target Flesch-Kincaid grade level is met.',
+      'Designed a Hybrid dual-model inference pipeline integrating Google Gemini (gemini-2.5-flash) for deep structural review and criticism, combined with Hugging Face Llama-3 (Llama-3-8B-Instruct) for creative copy generation and rewriting.',
+      'Implemented Model Context Protocol (MCP) tool querying by building a local stdio-based MCP server in Node.js to fetch target plain-language rules dynamically based on target grade levels.',
+      'Created an interactive retro-terminal GUI dashboard serving a monospaced web interface to select target grades (Grade 6 for healthcare, Grade 8 for government, Grade 10 for legal), submit requests, and inspect live Flesch-Kincaid delta changes.',
+      'Exposed local REST APIs (POST /api/humanize, GET /health) for programmatically humanizing text and running the compiled StateGraph workflow, built entirely on vanilla Node.js ES Modules with zero compilation overhead.',
+      'Containerized the application using a single-stage Dockerfile deployment configuration optimized for cloud environments and automatic port binding on Render.'
+    ],
+    technologies: ['LangGraph', 'Node.js', 'Google Gemini', 'Llama-3', 'MCP', 'Docker', 'Render'],
+  },
+  {
+    id: 2,
     title: 'RAG-based Digital Twin Portfolio Chatbot',
     liveUrl: '',
     githubUrl: 'https://github.com/ayush1k/RAG-based-twin',
@@ -19,7 +34,7 @@ const projectsData = [
     technologies: ['LangChain', 'FastAPI', 'FAISS', 'Streamlit', 'Hugging Face API', 'Qwen'],
   },
   {
-    id: 2,
+    id: 3,
     title: 'AI Humanize GUI',
     liveUrl: 'https://ai-humanizer-1n0f.onrender.com/',
     githubUrl: 'https://github.com/ayush1k/ai-humanize-gui',
@@ -33,7 +48,7 @@ const projectsData = [
     technologies: ['Node.js', 'Docker', 'Render', 'JavaScript', 'CSS3'],
   },
   {
-    id: 3,
+    id: 4,
     title: 'Financial Management Dashboard',
     liveUrl: '',
     githubUrl: 'https://github.com/ayush1k/Financial-Management-Dashboard',
@@ -47,7 +62,7 @@ const projectsData = [
     technologies: ['React.js', 'Flask', 'Firebase', 'Scikit-learn', 'PyTorch', 'Chart.js', 'Finnhub API'],
   },
   {
-    id: 4,
+    id: 5,
     title: 'Eye Disease Classification using EfficientNetB3',
     liveUrl: '',
     githubUrl: 'https://github.com/ayush1k/Eye-Disease-Classification-EfficientNetB3',
@@ -60,7 +75,7 @@ const projectsData = [
     technologies: ['Python', 'TensorFlow', 'Keras', 'OpenCV', 'Scikit-learn'],
   },
   {
-    id: 5,
+    id: 6,
     title: 'Leaf Detection using Detection Transformers (DETR)',
     liveUrl: '',
     githubUrl: 'https://github.com/ayush1k/leaf-detection-detr',
@@ -73,7 +88,7 @@ const projectsData = [
     technologies: ['Python', 'PyTorch', 'Transformers', 'Hugging Face', 'Matplotlib'],
   },
   {
-    id: 6,
+    id: 7,
     title: 'Python Parallel Text Handling Processor',
     liveUrl: '',
     githubUrl: 'https://github.com/ayush1k/Python-Parallel-Text-Handling-Processor',
