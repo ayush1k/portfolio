@@ -8,6 +8,7 @@ const projectsData = [
     title: 'Plain Language Agent',
     liveUrl: 'https://plain-language-agent.onrender.com/',
     githubUrl: 'https://github.com/ayush1k/plain-language-agent',
+    videoUrl: 'https://youtu.be/17fMWKVvcSg',
     bullets: [
       'Engineered an Agentic LangGraph Workflow utilizing a structured multi-agent StateGraph (Profiler, Paraphraser, and Critic) that iteratively refines and evaluates text readability until a target Flesch-Kincaid grade level is met.',
       'Designed a Hybrid dual-model inference pipeline integrating Google Gemini (gemini-2.5-flash) for deep structural review and criticism, combined with Hugging Face Llama-3 (Llama-3-8B-Instruct) for creative copy generation and rewriting.',
@@ -155,6 +156,19 @@ const ProjectCard = ({ project, onOpenChatbot }) => {
                 Live
               </a>
             )
+          )}
+
+          {project.videoUrl && (
+            <a
+              href={project.videoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={e => e.stopPropagation()}
+              className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-medium text-red-500 border border-red-300 bg-red-50 hover:bg-red-100 transition-colors leading-none flex-shrink-0"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
+              Demo
+            </a>
           )}
         </div>
         <div className="flex items-center gap-2 flex-shrink-0 ml-2">
