@@ -10,7 +10,6 @@ import Education from './components/Education';
 import Certificates from './components/Certificates';
 import Contact from './components/Contact';
 import { ThemeProvider, ThemeContext } from './context/ThemeContext';
-import ragBasedAiTwinVideo from './assets/rag-based-ai-twin.mp4';
 import ChatbotWidget from './components/ChatbotWidget';
 import ChatbotPage, { getBackendUrl } from './components/ChatbotPage';
 
@@ -86,14 +85,13 @@ const AppInner = () => {
                         : 'border-gray-200 bg-gray-50'
                     }`}
                   >
-                    <video 
-                      src={ragBasedAiTwinVideo} 
-                      autoPlay 
-                      muted 
-                      loop 
-                      playsInline 
-                      controls
-                      className="w-full h-full object-cover"
+                    <iframe
+                      src="https://www.youtube-nocookie.com/embed/17fMWKVvcSg?autoplay=1&mute=1&loop=1&playlist=17fMWKVvcSg"
+                      title="Project Showcase Video"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      className="w-full h-full border-0"
                     />
                   </div>
                   <Skills />
