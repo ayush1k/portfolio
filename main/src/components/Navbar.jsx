@@ -31,8 +31,8 @@ const Navbar = ({ setCurrentPage, currentPage }) => {
   const menuRef = useRef(null);
 
   const glass = theme === 'dark'
-    ? 'bg-[#1a1a18]/80 border-[#2a2a28] shadow-[inset_0_1.5px_0_rgba(255,255,255,0.06),0_1px_18px_rgba(0,0,0,0.48)]'
-    : 'bg-white/70 border-white/50 shadow-[inset_0_1.5px_0_rgba(255,255,255,0.75),0_1px_14px_rgba(0,0,0,0.05)]';
+    ? 'bg-[#1a1a18]/85 border-[#2a2a28]/60 shadow-[inset_0_1.5px_0_rgba(255,255,255,0.08),inset_0_-1px_0_rgba(0,0,0,0.4),0_8px_32px_rgba(0,0,0,0.56)] shadow-inner'
+    : 'bg-white/80 border-white/60 shadow-[inset_0_1.5px_0_rgba(255,255,255,0.9),inset_0_-1px_0_rgba(0,0,0,0.03),0_8px_24px_rgba(0,0,0,0.08)] shadow-inner';
 
   const divider = theme === 'dark' ? 'bg-[#2a2a28]' : 'bg-gray-200';
   const logoGrad = theme === 'dark' ? 'from-orange-500 to-amber-600' : 'from-[#179cf0] to-[#0f7fd4]';
@@ -56,7 +56,7 @@ const Navbar = ({ setCurrentPage, currentPage }) => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-20 flex justify-center sm:mt-2 sm:px-2">
       <div className="w-full max-w-6xl" ref={menuRef}>
-        <div className={`relative overflow-hidden sm:rounded-2xl border backdrop-blur-[44px] backdrop-saturate-[160%] ${glass}`}>
+        <div className={`relative overflow-hidden sm:rounded-2xl border backdrop-blur-lg backdrop-saturate-[180%] ${glass}`}>
 
           {/* DESKTOP */}
           <div className="hidden lg:flex items-center gap-2 px-4 py-1.5">

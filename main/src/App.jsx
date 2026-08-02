@@ -47,7 +47,9 @@ const AppInner = () => {
   };
 
   const pageBg  = theme === 'dark' ? 'bg-[#0f0f0e]'  : 'bg-gray-100';
-  const cardBg  = theme === 'dark' ? 'bg-[#1a1a18] border-[#2a2a28]' : 'bg-white border-gray-200';
+  const cardBg  = theme === 'dark'
+    ? 'bg-[#1a1a18] border-[#2a2a28]/40 shadow-2xl shadow-black/50 shadow-inner'
+    : 'bg-white border-gray-200/60 shadow-2xl shadow-black/5 shadow-inner';
 
   return (
     <div className={`min-h-screen antialiased ${pageBg}`}>

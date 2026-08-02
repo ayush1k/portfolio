@@ -82,11 +82,11 @@ const Skills = () => {
   const divider       = theme === 'dark' ? 'border-[#2a2a28]' : 'border-gray-200';
   const catLabelColor = theme === 'dark' ? 'text-[#857f72]'   : 'text-gray-500';
   const badgeBg       = theme === 'dark'
-    ? 'bg-[#1a1a18] border-[#2a2a28] text-[#c8c4bc] hover:border-orange-500/40 hover:text-[#e8e6e1]'
-    : 'bg-white border-gray-200 text-gray-700 hover:border-blue-300 hover:text-gray-900';
+    ? 'bg-[#1a1a18] border-[#2a2a28] text-[#c8c4bc] font-mono hover:border-orange-500/50 hover:text-[#e8e6e1] hover:-translate-y-0.5 hover:shadow-sm hover:shadow-orange-500/10'
+    : 'bg-white border-gray-200 text-gray-700 font-mono hover:border-blue-400 hover:text-gray-900 hover:-translate-y-0.5 hover:shadow-sm hover:shadow-blue-500/10';
   const boxBgBorder   = theme === 'dark'
-    ? 'bg-[#242420]/30 border-[#2a2a28]'
-    : 'bg-gray-50/50 border-gray-200';
+    ? 'bg-[#242420]/30 border-[#2a2a28] hover:border-orange-500/30 hover:shadow-md hover:shadow-black/20 hover:scale-[1.01]'
+    : 'bg-gray-50/50 border-gray-200 hover:border-blue-300/60 hover:shadow-md hover:shadow-gray-200/50 hover:scale-[1.01]';
 
   const getIcon = (label, colorClass) => {
     switch (label) {
@@ -138,7 +138,7 @@ const Skills = () => {
           <motion.div
             key={cat.label}
             variants={cardVariants}
-            className={`border rounded-xl p-3.5 transition-all ${boxBgBorder}`}
+            className={`border rounded-xl p-3.5 transition-all duration-300 ${boxBgBorder}`}
           >
             <p className={`text-[10px] font-bold uppercase tracking-widest mb-2.5 flex items-center gap-1.5 ${catLabelColor}`}>
               {getIcon(cat.label, cat.color)}
@@ -148,7 +148,7 @@ const Skills = () => {
               {cat.skills.map((skill) => (
                 <span
                   key={skill}
-                  className={`inline-flex items-center px-2 py-0.5 rounded-md border text-[11px] font-medium transition-all duration-150 cursor-default ${badgeBg}`}
+                  className={`inline-flex items-center px-2 py-0.5 rounded-md border text-[11px] font-medium transition-all duration-300 cursor-default ${badgeBg}`}
                 >
                   {skill}
                 </span>

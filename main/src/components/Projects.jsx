@@ -133,16 +133,18 @@ const ProjectCard = ({ project, onOpenChatbot }) => {
   const [open, setOpen] = useState(false);
 
   const cardBg      = theme === 'dark' ? 'bg-gradient-to-br from-[#2a2418] via-[#272318] to-[#242016]' : 'bg-orange-50';
-  const cardBorder  = theme === 'dark' ? 'border-[#5c4a1e]'  : 'border-orange-200';
+  const cardBorder  = theme === 'dark'
+    ? 'border-[#5c4a1e] hover:border-orange-500/40'
+    : 'border-orange-200 hover:border-orange-300';
   const titleColor  = theme === 'dark' ? 'text-[#5b9bd5]'    : 'text-black';
   const chevronColor= theme === 'dark' ? 'text-[#857f72]'    : 'text-black';
   const bodyText    = theme === 'dark' ? 'text-[#857f72]'    : 'text-gray-700';
-  const techBadge   = theme === 'dark' ? 'bg-[#242420] border-[#3e3416] text-[#857f72]' : 'bg-white border-orange-200/60 text-black';
+  const techBadge   = theme === 'dark' ? 'bg-[#242420] border-[#3e3416] text-[#857f72] font-mono' : 'bg-white border-orange-200/60 text-black font-mono';
   const hoverRow    = theme === 'dark' ? 'hover:bg-[#2d271a]' : 'hover:bg-orange-100/40';
   const divider     = theme === 'dark' ? 'border-[#3e3416]'  : 'border-orange-200/60';
 
   return (
-    <div className={`border rounded-lg overflow-hidden transition-all hover:shadow-sm ${cardBg} ${cardBorder}`}>
+    <div className={`border rounded-lg overflow-hidden transition-all duration-300 hover:scale-[1.01] hover:shadow-md ${cardBg} ${cardBorder}`}>
       {/* Header row — always visible */}
       <button
         type="button"
