@@ -14,7 +14,7 @@ const experienceData = [
     roles: [
       {
         title: 'Intern',
-        period: 'Mar 2026 - Present · 4 mos',
+        period: 'Mar 2026 - Jul 2026 · 4 mos',
         location: 'Remote · Internship',
         bullets: [
           'Actively contributing to a research-driven project centered around Deep Learning and Computer Vision methodologies.',

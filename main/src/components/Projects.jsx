@@ -5,6 +5,47 @@ import { ThemeContext } from '../context/ThemeContext';
 const projectsData = [
   {
     id: 1,
+    title: 'Local-First Support Agent Network',
+    liveUrl: '',
+    githubUrl: 'https://github.com/ayush1k/local-first-support-agent',
+    bullets: [
+      'Architected an autonomous, privacy-focused support intelligence system for OrbitDesk running 100% locally on standard CPU hardware with zero external API dependencies using LangGraph, Pydantic, and local Hugging Face open-weights models (Qwen2.5-0.5B-Instruct & sentence-transformers/all-MiniLM-L6-v2).',
+      'Formulated an Intent Triage & Router module combining hybrid safety guardrails and local LLM logic to classify incoming queries into answerable, clarification-needed, escalation-required, and out-of-scope categories.',
+      'Engineered a deterministic semantic vector retrieval store, prioritizing knowledge base documentation (/knowledge_base/) as the primary source of truth while strictly filtering out superseded historical support cases.',
+      'Implemented Pydantic schema validation (FinalOutput) and conditional LangGraph retry loops, enforcing maximum retry bounds before executing safe failure fallback nodes.',
+      'Developed an automated PyTest suite (test_routing.py) verifying state graph routing, out-of-scope bypasses, and source citation mapping (e.g. KB-004, CASE-1041) across benchmark datasets.',
+    ],
+    technologies: ['LangGraph', 'Hugging Face', 'Qwen2.5', 'PyTorch', 'Pydantic', 'Python', 'Pytest'],
+  },
+  {
+    id: 2,
+    title: 'Speech Emotion Recognition with RAVDESS',
+    liveUrl: '',
+    githubUrl: 'https://github.com/ayush1k/Speech-Emotion-Recognition-RAVDESS',
+    bullets: [
+      'Engineered an end-to-end speech emotion recognition (SER) pipeline in Python and Scikit-Learn utilizing acoustic feature extraction on the RAVDESS dataset, classifying voice signals into 8 emotional categories (Neutral, Calm, Happy, Sad, Angry, Fearful, Disgust, Surprised).',
+      'Formulated a multi-descriptor audio feature extraction framework using Librosa to compute Mel-Frequency Cepstral Coefficients (MFCCs), Chroma features, and Mel Spectrogram representations into fixed-length spectral feature matrices.',
+      'Trained and benchmarked multiple machine learning classifiers (Support Vector Machines, Random Forest, and Multi-Layer Perceptron neural networks), evaluating performance via confusion matrices and cross-validation accuracy metrics.',
+      'Designed a real-time single-sample inference function and evaluation suite to process arbitrary unseen audio files, extracting acoustic signal descriptors on-the-fly and predicting output emotion probabilities.',
+    ],
+    technologies: ['Python', 'Librosa', 'Scikit-learn', 'NumPy', 'Matplotlib', 'SoundFile'],
+  },
+  {
+    id: 3,
+    title: 'AI-Powered Customer Complaint Management System',
+    liveUrl: '',
+    githubUrl: 'https://github.com/ayush1k/AI-powered-Customer-Complaint-Management-System',
+    bullets: [
+      'Architected an enterprise pharmaceutical complaint intake, risk assessment, and QMS persistence platform featuring a dual-panel reactive AI Copilot interface in React 18, Vite, TypeScript, and Redux Toolkit, unifying form and chat states for instant UI updates.',
+      'Orchestrated a stateful LangGraph agent workflow powered by dual Groq LLM models (llama-3.3-70b-versatile for deep risk scoring and llama-3.1-8b-instant for intent routing) to classify intents and execute specialized document extraction and logging tools.',
+      'Engineered selective state-preserving natural language editing, allowing users to update individual target fields via chat (e.g., updating batch numbers) while strictly maintaining existing complaint fields and metadata intact.',
+      'Implemented automated AI quality auditing features including a live 0–100% Form Completeness Checker, Root Cause Hypothesis Analysis to infer underlying manufacturing defects, and automated CAPA (Corrective and Preventive Action) checklist generation.',
+      'Developed a robust FastAPI backend with SQLAlchemy 2.0 ORM, pypdf document ingestion for handling PDF/email complaints, and a 19-suite automated Pytest integration test harness.',
+    ],
+    technologies: ['FastAPI', 'LangGraph', 'Groq API', 'React', 'Redux Toolkit', 'TypeScript', 'SQLAlchemy', 'Python'],
+  },
+  {
+    id: 4,
     title: 'Plain Language Agent',
     liveUrl: 'https://plain-language-agent.onrender.com/',
     githubUrl: 'https://github.com/ayush1k/plain-language-agent',
@@ -20,7 +61,7 @@ const projectsData = [
     technologies: ['LangGraph', 'Node.js', 'Google Gemini', 'Llama-3', 'MCP', 'Docker', 'Render'],
   },
   {
-    id: 2,
+    id: 5,
     title: 'RAG-based Digital Twin Portfolio Chatbot',
     liveUrl: '',
     githubUrl: 'https://github.com/ayush1k/RAG-based-twin',
@@ -35,7 +76,7 @@ const projectsData = [
     technologies: ['LangChain', 'FastAPI', 'FAISS', 'Streamlit', 'Hugging Face API', 'Qwen'],
   },
   {
-    id: 3,
+    id: 6,
     title: 'AI Humanize GUI',
     liveUrl: 'https://ai-humanizer-1n0f.onrender.com/',
     githubUrl: 'https://github.com/ayush1k/ai-humanize-gui',
@@ -49,7 +90,7 @@ const projectsData = [
     technologies: ['Node.js', 'Docker', 'Render', 'JavaScript', 'CSS3'],
   },
   {
-    id: 4,
+    id: 7,
     title: 'Financial Management Dashboard',
     liveUrl: '',
     githubUrl: 'https://github.com/ayush1k/Financial-Management-Dashboard',
@@ -63,7 +104,7 @@ const projectsData = [
     technologies: ['React.js', 'Flask', 'Firebase', 'Scikit-learn', 'PyTorch', 'Chart.js', 'Finnhub API'],
   },
   {
-    id: 5,
+    id: 8,
     title: 'Eye Disease Classification using EfficientNetB3',
     liveUrl: '',
     githubUrl: 'https://github.com/ayush1k/Eye-Disease-Classification-EfficientNetB3',
@@ -76,7 +117,7 @@ const projectsData = [
     technologies: ['Python', 'TensorFlow', 'Keras', 'OpenCV', 'Scikit-learn'],
   },
   {
-    id: 6,
+    id: 9,
     title: 'Leaf Detection using Detection Transformers (DETR)',
     liveUrl: '',
     githubUrl: 'https://github.com/ayush1k/leaf-detection-detr',
@@ -89,7 +130,7 @@ const projectsData = [
     technologies: ['Python', 'PyTorch', 'Transformers', 'Hugging Face', 'Matplotlib'],
   },
   {
-    id: 7,
+    id: 10,
     title: 'Python Parallel Text Handling Processor',
     liveUrl: '',
     githubUrl: 'https://github.com/ayush1k/Python-Parallel-Text-Handling-Processor',
