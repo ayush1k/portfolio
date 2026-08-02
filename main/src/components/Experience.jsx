@@ -134,67 +134,74 @@ const Experience = () => {
   const bulletText    = theme === 'dark' ? 'text-[#857f72]'  : 'text-gray-600';
   const dotColor      = theme === 'dark' ? 'bg-[#5b9bd5]'    : 'bg-[#179cf0]';
   const divider       = theme === 'dark' ? 'border-[#2a2a28]': 'border-gray-200';
-  const logoBorder    = theme === 'dark' ? 'border-[#2a2a28]': 'border-gray-200';
+
+  const timelineLine  = theme === 'dark' ? 'bg-[#2a2a28]'    : 'bg-gray-200';
+  const nodeBorder    = theme === 'dark'
+    ? 'border-[#2a2a28] group-hover:ring-2 group-hover:ring-orange-500/50 group-hover:border-orange-500/60'
+    : 'border-gray-200 group-hover:ring-2 group-hover:ring-blue-400 group-hover:border-blue-400';
   const logoFallback  = theme === 'dark' ? 'bg-[#2a2a28] text-[#857f72]' : 'bg-gray-100 text-gray-500';
 
+  const cardBg        = theme === 'dark'
+    ? 'bg-[#242420]/30 border-[#2a2a28] group-hover:border-orange-500/40 group-hover:shadow-md group-hover:shadow-black/20'
+    : 'bg-gray-50/50 border-gray-200 group-hover:border-blue-300 group-hover:shadow-md group-hover:shadow-gray-200/50';
+
   return (
-    <section id="experience" className="scroll-mt-20 space-y-3">
+    <section id="experience" className="scroll-mt-20 space-y-4">
       <h2 className={`text-base font-semibold border-b-2 border-dashed pb-2 ${headingColor} ${divider}`}>
         Experience
       </h2>
 
-      <div className="space-y-6">
+      {/* Connected Timeline Container */}
+      <div className="relative pl-6 sm:pl-7 space-y-5">
+        {/* Vertical Timeline Line */}
+        <div className={`absolute left-4 sm:left-4 top-3 bottom-3 w-[2px] rounded-full ${timelineLine}`} />
+
         {experienceData.map((entry) => (
-          <div key={entry.id}>
-            {/* Company row */}
-            <div className="flex items-center gap-2 mb-2">
+          <div key={entry.id} className="relative group">
+            {/* Timeline Node Logo */}
+            <div className="absolute -left-6 sm:-left-7 top-1 z-10">
               {entry.logo ? (
                 <img
                   src={entry.logo}
                   alt={`${entry.company} logo`}
-                  className={`w-9 h-9 rounded-full object-contain bg-white p-0.5 border ${logoBorder}`}
+                  className={`w-8 h-8 rounded-full object-contain bg-white p-0.5 border shadow-xs transition-all duration-300 group-hover:scale-110 ${nodeBorder}`}
                   style={{ imageRendering: 'high-quality' }}
                 />
               ) : (
-                <div className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold border ${logoBorder} ${logoFallback}`}>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border shadow-xs transition-all duration-300 group-hover:scale-110 ${nodeBorder} ${logoFallback}`}>
                   {entry.company.charAt(0)}
                 </div>
               )}
-              <h3 className={`text-base font-semibold ${companyColor}`}>{entry.company}</h3>
             </div>
 
-            {/* Roles */}
-            {entry.roles.map((role, ri) => (
-              <div key={ri} className="mt-2">
-                <div className="flex items-center gap-2">
-                  <h4 className={`text-sm ${roleColor}`}>{role.title}</h4>
+            {/* Content Card Block */}
+            <div className={`p-3.5 rounded-xl border transition-all duration-300 group-hover:translate-x-1.5 ${cardBg}`}>
+              <h3 className={`text-sm font-bold tracking-tight ${companyColor}`}>{entry.company}</h3>
+
+              {/* Roles */}
+              {entry.roles.map((role, ri) => (
+                <div key={ri} className={ri > 0 ? 'mt-3 pt-3 border-t border-dashed ' + divider : 'mt-1'}>
+                  <div className="flex flex-wrap items-baseline justify-between gap-x-2 gap-y-0.5">
+                    <h4 className={`text-xs font-semibold ${roleColor}`}>{role.title}</h4>
+                    <span className={`text-[11px] font-medium ${metaColor}`}>{role.period}</span>
+                  </div>
+                  {role.location && (
+                    <p className={`text-[10px] mt-0.5 ${metaColor}`}>{role.location}</p>
+                  )}
+
+                  {role.bullets && role.bullets.length > 0 && (
+                    <ul className="mt-2 space-y-1.5">
+                      {role.bullets.map((b, bi) => (
+                        <li key={bi} className="flex items-start gap-2">
+                          <span className={`w-1 h-1 rounded-full flex-shrink-0 mt-1.5 ${dotColor}`} />
+                          <span className={`text-xs leading-relaxed ${bulletText}`}>{b}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
-                <p className={`text-xs ${metaColor}`}>
-                  {role.period}{role.location ? ` · ${role.location}` : ''}
-                </p>
-
-                {role.bullets && role.bullets.length > 0 && (
-                  <ul className="mt-2 space-y-1.5">
-                    {role.bullets.map((b, bi) => (
-                      <li key={bi} className="flex items-start gap-2">
-                        <span className={`w-1 h-1 rounded-full flex-shrink-0 mt-1.5 ${dotColor}`} />
-                        <span className={`text-xs leading-relaxed ${bulletText}`}>{b}</span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-
-                {/* Divider between roles */}
-                {ri < entry.roles.length - 1 && (
-                  <div className={`border-b-2 border-dashed mt-4 ${divider}`} />
-                )}
-              </div>
-            ))}
-
-            {/* Divider between companies */}
-            {experienceData.indexOf(entry) < experienceData.length - 1 && (
-              <div className={`border-b-2 border-dashed py-2 ${divider}`} />
-            )}
+              ))}
+            </div>
           </div>
         ))}
       </div>
