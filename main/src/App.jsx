@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Header from './components/Header';
@@ -40,6 +40,8 @@ const itemVariants = {
 const AppInner = () => {
   const { theme } = useContext(ThemeContext);
   const [currentPage, setCurrentPage] = useState('home');
+  const isManualScrollingRef = useRef(false);
+  const manualScrollTimerRef = useRef(null);
 
   useEffect(() => {
     // Non-blocking wake up call to the backend on initial load
@@ -54,6 +56,47 @@ const AppInner = () => {
     wakeUpBackend();
   }, []);
 
+  // IntersectionObserver scrollSpy to track active section dynamically
+  useEffect(() => {
+    if (currentPage === 'chatbot') return;
+
+    const sectionIds = ['home', 'about', 'experience', 'projects', 'skills', 'education', 'certificates', 'contact'];
+    
+    // Small timeout ensures DOM elements are rendered before attaching observer
+    const timer = setTimeout(() => {
+      const elements = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+      if (elements.length === 0) return;
+
+      const observerCallback = (entries) => {
+        if (isManualScrollingRef.current) return;
+
+        const visibleEntries = entries.filter(entry => entry.isIntersecting);
+        if (visibleEntries.length > 0) {
+          visibleEntries.sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+          const topVisible = visibleEntries[0];
+          if (topVisible && topVisible.target.id) {
+            setCurrentPage(topVisible.target.id);
+          }
+        }
+      };
+
+      const observer = new IntersectionObserver(observerCallback, {
+        root: null,
+        rootMargin: '-15% 0px -45% 0px',
+        threshold: [0.1, 0.3, 0.5, 0.7],
+      });
+
+      elements.forEach(el => observer.observe(el));
+
+      return () => {
+        elements.forEach(el => observer.unobserve(el));
+        observer.disconnect();
+      };
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, [currentPage === 'chatbot']);
+
   const scrollToSection = (sectionId) => {
     if (sectionId === 'chatbot') {
       setCurrentPage('chatbot');
@@ -62,12 +105,21 @@ const AppInner = () => {
     }
 
     setCurrentPage(sectionId);
-    
-    // Delay slightly if navigating away from chatbot page to allow DOM to render sections
+
+    // Suppress scrollSpy during smooth scroll navigation
+    isManualScrollingRef.current = true;
+    if (manualScrollTimerRef.current) {
+      clearTimeout(manualScrollTimerRef.current);
+    }
+
     setTimeout(() => {
       const el = document.getElementById(sectionId);
       if (el) el.scrollIntoView({ behavior: 'smooth' });
     }, 50);
+
+    manualScrollTimerRef.current = setTimeout(() => {
+      isManualScrollingRef.current = false;
+    }, 900);
   };
 
   const pageBg  = theme === 'dark' ? 'bg-[#0f0f0e]'  : 'bg-gray-100';

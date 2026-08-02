@@ -234,25 +234,36 @@ const GithubStats = () => {
       <div className="space-y-4">
         {/* Top section: Stats & Languages cards centered and scale-constrained */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          {/* Main GitHub Stats Card */}
-          <div className={`border rounded-xl p-2.5 flex justify-center items-center h-36 w-full sm:w-[310px] ${cardBorder} ${bgClass}`}>
-            <img 
-              src={`https://github-readme-stats.vercel.app/api?username=ayush1k&show_icons=true&theme=transparent&hide_border=true&title_color=${titleColor}&icon_color=${accentColor}&text_color=${textColor}&bg_color=00000000`}
-              alt="Ayush Kumar's GitHub Stats"
-              className="h-full object-contain"
-              style={{ imageRendering: 'high-quality' }}
-            />
-          </div>
+          {loading ? (
+            <>
+              {/* GitHub Stats Card Skeleton */}
+              <div className="h-36 w-full sm:w-[310px] bg-gray-200 dark:bg-[#2a2a28] rounded-xl border border-gray-200 dark:border-[#2a2a28] animate-pulse" />
+              {/* Top Languages Card Skeleton */}
+              <div className="h-36 w-full sm:w-[280px] bg-gray-200 dark:bg-[#2a2a28] rounded-xl border border-gray-200 dark:border-[#2a2a28] animate-pulse" />
+            </>
+          ) : (
+            <>
+              {/* Main GitHub Stats Card */}
+              <div className={`border rounded-xl p-2.5 flex justify-center items-center h-36 w-full sm:w-[310px] ${cardBorder} ${bgClass}`}>
+                <img 
+                  src={`https://github-readme-stats.vercel.app/api?username=ayush1k&show_icons=true&theme=transparent&hide_border=true&title_color=${titleColor}&icon_color=${accentColor}&text_color=${textColor}&bg_color=00000000`}
+                  alt="Ayush Kumar's GitHub Stats"
+                  className="h-full object-contain"
+                  style={{ imageRendering: 'high-quality' }}
+                />
+              </div>
 
-          {/* Top Languages Card */}
-          <div className={`border rounded-xl p-2.5 flex justify-center items-center h-36 w-full sm:w-[280px] ${cardBorder} ${bgClass}`}>
-            <img 
-              src={`https://github-readme-stats.vercel.app/api/top-langs/?username=ayush1k&layout=compact&theme=transparent&hide_border=true&title_color=${titleColor}&text_color=${textColor}&bg_color=00000000`}
-              alt="Ayush Kumar's Top Languages"
-              className="h-full object-contain"
-              style={{ imageRendering: 'high-quality' }}
-            />
-          </div>
+              {/* Top Languages Card */}
+              <div className={`border rounded-xl p-2.5 flex justify-center items-center h-36 w-full sm:w-[280px] ${cardBorder} ${bgClass}`}>
+                <img 
+                  src={`https://github-readme-stats.vercel.app/api/top-langs/?username=ayush1k&layout=compact&theme=transparent&hide_border=true&title_color=${titleColor}&text_color=${textColor}&bg_color=00000000`}
+                  alt="Ayush Kumar's Top Languages"
+                  className="h-full object-contain"
+                  style={{ imageRendering: 'high-quality' }}
+                />
+              </div>
+            </>
+          )}
         </div>
 
         {/* Bottom section: Contribution Activity Dashboard */}
@@ -280,9 +291,23 @@ const GithubStats = () => {
             {/* Bar Chart Container */}
             <div className="relative bar-chart-container border border-dashed border-gray-200 dark:border-[#2a2a28] rounded-lg p-3 overflow-x-auto no-scrollbar flex flex-col items-center">
               {loading ? (
-                <div className="flex flex-col items-center justify-center py-8 space-y-2 w-full">
-                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-orange-500"></div>
-                  <p className={`text-xs ${metaColor}`}>Loading activity stats...</p>
+                <div className="w-full flex flex-col items-center justify-center p-3 animate-pulse">
+                  <div className="w-full max-w-[495px] h-[95px] flex items-end justify-between gap-1 pt-4 pb-2 px-6 border-b border-gray-200 dark:border-[#2a2a28]">
+                    {Array.from({ length: 30 }).map((_, i) => {
+                      const heights = ['h-3', 'h-6', 'h-10', 'h-14', 'h-8', 'h-4', 'h-12', 'h-5'];
+                      return (
+                        <div
+                          key={i}
+                          className={`w-2.5 rounded-sm bg-gray-200 dark:bg-[#2a2a28] ${heights[i % heights.length]}`}
+                        />
+                      );
+                    })}
+                  </div>
+                  <div className="w-full max-w-[495px] flex justify-between px-6 pt-2">
+                    <div className="h-2 w-8 bg-gray-200 dark:bg-[#2a2a28] rounded" />
+                    <div className="h-2 w-8 bg-gray-200 dark:bg-[#2a2a28] rounded" />
+                    <div className="h-2 w-8 bg-gray-200 dark:bg-[#2a2a28] rounded" />
+                  </div>
                 </div>
               ) : error ? (
                 <div className="flex flex-col items-center justify-center py-6 text-center space-y-2 w-full">
@@ -451,9 +476,22 @@ const GithubStats = () => {
             {/* Calendar SVG Widget Container */}
             <div className="relative calendar-container border border-dashed border-gray-200 dark:border-[#2a2a28] rounded-lg p-3 overflow-x-auto no-scrollbar flex flex-col items-center">
               {loading ? (
-                <div className="flex flex-col items-center justify-center py-8 space-y-2 w-full">
-                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-orange-500"></div>
-                  <p className={`text-xs ${metaColor}`}>Loading calendar...</p>
+                <div className="w-full flex flex-col items-center justify-center p-3 animate-pulse">
+                  <div className="w-full max-w-[640px] flex justify-between pb-2 px-2">
+                    {Array.from({ length: 12 }).map((_, i) => (
+                      <div key={i} className="h-2 w-6 bg-gray-200 dark:bg-[#2a2a28] rounded" />
+                    ))}
+                  </div>
+                  <div className="w-full max-w-[640px] overflow-x-auto no-scrollbar py-1">
+                    <div className="grid grid-rows-7 grid-flow-col gap-1 w-max mx-auto">
+                      {Array.from({ length: 364 }).map((_, i) => (
+                        <div
+                          key={i}
+                          className="w-2.5 h-2.5 rounded-xs bg-gray-200 dark:bg-[#2a2a28]"
+                        />
+                      ))}
+                    </div>
+                  </div>
                 </div>
               ) : error ? (
                 <div className="flex flex-col items-center justify-center py-6 text-center space-y-2 w-full">

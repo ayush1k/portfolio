@@ -162,7 +162,12 @@ export default function ChatbotPage({ onBackToPortfolio }) {
       setBackendStatus('online'); // Set online since request succeeded
       setMessages((prev) => [
         ...prev,
-        { id: Date.now() + 1, sender: 'bot', text: data.answer }
+        {
+          id: Date.now() + 1,
+          sender: 'bot',
+          text: data.answer,
+          suggestions: data.suggestions || []
+        }
       ]);
     } catch (err) {
       console.error('Chatbot API error:', err);
@@ -222,6 +227,10 @@ export default function ChatbotPage({ onBackToPortfolio }) {
   const suggestionBtn = theme === 'dark'
     ? 'bg-[#242420] border-[#2a2a28] text-[#c8c4bc] hover:bg-[#2a2a28] hover:text-orange-400'
     : 'bg-white border-gray-200 text-gray-700 hover:bg-blue-50 hover:text-blue-600';
+
+  const dynamicSuggestionPill = theme === 'dark'
+    ? 'bg-[#242420] border-[#3e3416] text-orange-400 hover:bg-[#2a2a28] hover:border-orange-500/50 hover:text-orange-300'
+    : 'bg-white border-blue-200 text-blue-600 hover:bg-blue-50 hover:border-blue-300 hover:text-blue-700';
 
   const inputBg = theme === 'dark'
     ? 'bg-[#242420] border-[#2a2a28] text-white focus:border-orange-500/50 focus:ring-1 focus:ring-orange-500/20'
@@ -338,27 +347,46 @@ export default function ChatbotPage({ onBackToPortfolio }) {
 
           {/* Messages */}
           <div className="flex-1 p-6 overflow-y-auto space-y-4 no-scrollbar">
-            {messages.map((msg) => (
-              <div
-                key={msg.id}
-                className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'} animate-in fade-in duration-200`}
-              >
-                <div className={`flex items-start gap-2.5 max-w-[80%] ${msg.sender === 'user' ? 'flex-row-reverse' : ''}`}>
-                  {msg.sender === 'bot' && (
-                    <div className={`w-8 h-8 rounded-full bg-gradient-to-br ${buttonGradient} text-white font-bold text-xs flex items-center justify-center shadow-md flex-shrink-0`}>
-                      AI
+            {messages.map((msg, idx) => {
+              const isLastBotMessage = msg.sender === 'bot' && idx === messages.length - 1;
+              return (
+                <div key={msg.id} className="space-y-2">
+                  <div
+                    className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'} animate-in fade-in duration-200`}
+                  >
+                    <div className={`flex items-start gap-2.5 max-w-[80%] ${msg.sender === 'user' ? 'flex-row-reverse' : ''}`}>
+                      {msg.sender === 'bot' && (
+                        <div className={`w-8 h-8 rounded-full bg-gradient-to-br ${buttonGradient} text-white font-bold text-xs flex items-center justify-center shadow-md flex-shrink-0`}>
+                          AI
+                        </div>
+                      )}
+                      <div
+                        className={`rounded-2xl px-4 py-3 text-xs shadow-sm leading-relaxed ${
+                          msg.sender === 'user' ? userBubble : botBubble
+                        }`}
+                      >
+                        {msg.text}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Render follow-up suggestions dynamically below the most recent AI response */}
+                  {isLastBotMessage && !isTyping && msg.suggestions && msg.suggestions.length > 0 && (
+                    <div className="flex flex-wrap gap-1.5 ml-10 mt-1.5 animate-in fade-in duration-300">
+                      {msg.suggestions.map((sug, sIdx) => (
+                        <button
+                          key={sIdx}
+                          onClick={() => handleSend(sug)}
+                          className={`text-[11px] px-3 py-1.5 rounded-full border transition-all duration-200 font-medium active:scale-95 cursor-pointer shadow-xs ${dynamicSuggestionPill}`}
+                        >
+                          ✨ {sug}
+                        </button>
+                      ))}
                     </div>
                   )}
-                  <div
-                    className={`rounded-2xl px-4 py-3 text-xs shadow-sm leading-relaxed ${
-                      msg.sender === 'user' ? userBubble : botBubble
-                    }`}
-                  >
-                    {msg.text}
-                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
 
             {isTyping && (
               <div className="flex justify-start animate-in fade-in duration-100">

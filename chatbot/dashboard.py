@@ -169,7 +169,8 @@ with tab1:
                 st.session_state.last_context = context
 
                 # Step 2: Generate grounded answer with full history
-                answer = generate_answer(prompt, context, chat_history=history)
+                res = generate_answer(prompt, context, chat_history=history)
+                answer = res.get("answer", "") if isinstance(res, dict) else str(res)
 
             st.markdown(answer)
 

@@ -6,15 +6,8 @@ Responsibilities:
      API using an OpenAI-compatible chat completions interface.
   2. Enforce a strict system prompt so that the model acts as Ayush Kumar's
      digital twin and answers ONLY from the retrieved context — no hallucination.
-  3. Expose `generate_answer(query, context)` — the single public function
-     called by main.py after the retriever has fetched the relevant chunks.
-
-Architecture note:
-  We use `langchain_huggingface.ChatHuggingFace` wrapping `HuggingFaceEndpoint`
-  (task="conversational"). This routes requests through the HF router's
-  chat/completions API, which is the only task supported by the third-party
-  providers (Together, Novita, Featherless-AI) that HF Serverless maps
-  modern instruction models to.
+  3. Append follow-up suggested questions using `|||` delimiter.
+  4. Expose `generate_answer(query, context)` returning `{"answer": str, "suggestions": list[str]}`.
 """
 
 import os
@@ -46,7 +39,8 @@ SYSTEM_PROMPT = (
     "6. Keep your tone warm, confident, and professional — like you're having a genuine conversation.\n"
     "7. Keep responses concise but complete — aim for 2 to 4 sentences unless the question genuinely requires more.\n"
     "8. When listing experiences, internships, or roles, ALWAYS lead with any roles marked as 'current/ongoing' or ending with 'Present' — these are happening RIGHT NOW. Then list completed roles in reverse-chronological order (most recently ended first).\n"
-    "9. For any role that is currently active (ends with 'Present'), speak about it in the present tense — 'I am currently...', 'Right now I am...', 'I am working on...' — NEVER say 'Earlier' or 'I was' for a role that is still ongoing.\n\n"
+    "9. For any role that is currently active (ends with 'Present'), speak about it in the present tense — 'I am currently...', 'Right now I am...', 'I am working on...' — NEVER say 'Earlier' or 'I was' for a role that is still ongoing.\n"
+    "10. ALWAYS append 2 or 3 short, relevant follow-up questions that the user might want to ask next at the very end of your response. Separate the main response and each follow-up question using the strict delimiter '|||'. Example format: Main answer text here. ||| Tell me about DETR ||| Show me your GitHub\n\n"
     "Context:\n{retrieved_context}"
 )
 
@@ -93,38 +87,30 @@ def _get_chat_model() -> ChatHuggingFace:
     return _chat_model
 
 
-def generate_answer(query: str, context: str, chat_history: list | None = None) -> str:
+def generate_answer(query: str, context: str, chat_history: list | None = None) -> dict:
     """
-    Build a RAG prompt, call Qwen, and return the grounded answer.
-
-    The prompt injects retrieved context into the system turn and maintains
-    multi-turn conversation memory via the chat_history messages placeholder.
+    Build a RAG prompt, call Qwen, and return the grounded answer and follow-up suggestions.
 
     Args:
         query:        The current user question.
         context:      Formatted string of retrieved document chunks from retriever.py.
-        chat_history: List of (user_message, assistant_message) tuples from previous
-                      turns. Defaults to an empty list (fresh conversation).
+        chat_history: List of (user_message, assistant_message) tuples from previous turns.
 
     Returns:
-        The model's text response as a string.
-        Returns a fallback message if the model call fails.
+        A dict: {"answer": str, "suggestions": list[str]}
     """
     model = _get_chat_model()
 
-    # If retrieval returned nothing, tell the model explicitly.
     if not context or context.strip() == "":
         context_block = "No relevant context was found in the knowledge base."
     else:
         context_block = context
 
-    # Convert (user, assistant) history tuples into LangChain message objects
     history_messages = []
     for user_msg, ai_msg in (chat_history or []):
         history_messages.append(HumanMessage(content=user_msg))
         history_messages.append(AIMessage(content=ai_msg))
 
-    # Use chain and pipe operator to invoke the model
     chain = RAG_PROMPT | model | StrOutputParser()
 
     try:
@@ -133,14 +119,31 @@ def generate_answer(query: str, context: str, chat_history: list | None = None) 
             "chat_history": history_messages,
             "query": query
         })
-        return response.strip()
+        raw_text = response.strip()
+
+        # Parse delimiter ||| for follow-up suggestions
+        if "|||" in raw_text:
+            parts = [p.strip() for p in raw_text.split("|||") if p.strip()]
+            main_answer = parts[0] if parts else raw_text
+            suggestions = [p for p in parts[1:] if p]
+        else:
+            main_answer = raw_text
+            suggestions = []
+
+        return {
+            "answer": main_answer,
+            "suggestions": suggestions
+        }
     except Exception as e:
         error_msg = f"[LLM Engine ERROR] Failed to generate response: {e}"
         print(error_msg)
-        return (
-            "I'm sorry, I encountered an error while generating a response. "
-            "Please try again in a moment."
-        )
+        return {
+            "answer": (
+                "I'm sorry, I encountered an error while generating a response. "
+                "Please try again in a moment."
+            ),
+            "suggestions": []
+        }
 
 
 # ---------------------------------------------------------------------------
@@ -156,5 +159,6 @@ if __name__ == "__main__":
     sample_query = "What does Ayush specialise in?"
 
     print(f"[TEST] Query: {sample_query}\n")
-    answer = generate_answer(sample_query, sample_context)
-    print(f"[TEST] Answer:\n{answer}")
+    res = generate_answer(sample_query, sample_context)
+    print(f"[TEST] Answer:\n{res['answer']}")
+    print(f"[TEST] Suggestions:\n{res['suggestions']}")
