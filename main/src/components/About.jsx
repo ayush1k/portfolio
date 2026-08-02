@@ -12,18 +12,6 @@ const SectionHeading = ({ children, theme }) => {
   );
 };
 
-/* ── Bullet point item ────────────────────────────────────── */
-const BulletItem = ({ children, theme }) => {
-  const dotColor  = theme === 'dark' ? 'bg-[#5b9bd5]' : 'bg-[#179cf0]';
-  const textColor = theme === 'dark' ? 'text-[#857f72]' : 'text-gray-600';
-  return (
-    <li className="flex items-start gap-2">
-      <span className={`w-1 h-1 rounded-full flex-shrink-0 mt-1.5 ${dotColor}`} />
-      <span className={`text-xs leading-relaxed ${textColor}`}>{children}</span>
-    </li>
-  );
-};
-
 /* ── About section ────────────────────────────────────────── */
 const About = () => {
   const { theme } = useContext(ThemeContext);
@@ -37,8 +25,16 @@ const About = () => {
     ? 'bg-gradient-to-b from-[#d4bc7a]/60 via-[#d4bc7a]/30 to-transparent'
     : 'bg-gradient-to-b from-orange-400/60 via-orange-300/30 to-transparent';
 
+  const bentoCardBg = theme === 'dark'
+    ? 'bg-[#242420]/30 border-[#2a2a28] hover:border-orange-500/40 hover:shadow-md hover:shadow-black/20'
+    : 'bg-white/50 border-gray-200 hover:border-blue-300 hover:shadow-md hover:shadow-gray-200/50';
+
+  const cardTitle     = theme === 'dark' ? 'text-[#e8e6e1]' : 'text-gray-800';
+  const cardBody      = theme === 'dark' ? 'text-[#857f72]' : 'text-gray-600';
+  const cardHighlight = theme === 'dark' ? 'text-[#c4b07a]' : 'text-gray-900';
+
   return (
-    <section id="about" className="scroll-mt-20 space-y-3">
+    <section id="about" className="scroll-mt-20 space-y-4">
       <SectionHeading theme={theme}>About</SectionHeading>
 
       {/* Highlight banner */}
@@ -67,27 +63,74 @@ const About = () => {
         </div>
       </div>
 
-      {/* Detailed bio bullets */}
-      <ul className="space-y-1.5">
-        <BulletItem theme={theme}>
-          <strong>Python Expert</strong> with deep knowledge of ML/DL frameworks — PyTorch, TensorFlow, Keras, Scikit-learn, OpenCV, NumPy, Pandas.
-        </BulletItem>
-        <BulletItem theme={theme}>
-          Built and fine-tuned <strong>CNN architectures</strong> (EfficientNet, ResNet) and <strong>Transformer models</strong> (DETR, ViT) for real-world Computer Vision tasks including object detection and image classification.
-        </BulletItem>
-        <BulletItem theme={theme}>
-          Designed <strong>RAG pipelines</strong> using LangChain, LangGraph, and Vector Databases for intelligent document retrieval, semantic search, and context-aware QA systems.
-        </BulletItem>
-        <BulletItem theme={theme}>
-          Applied classical ML algorithms end-to-end: Linear/Logistic Regression, Decision Trees, Random Forest, XGBoost, AdaBoost, Gradient Boosting, SVM, K-Means, DBSCAN, PCA.
-        </BulletItem>
-        <BulletItem theme={theme}>
-          Strong MLOps practices — K-Fold CV, Grid/Random Search, Optuna hyperparameter tuning, Docker containerization, Git workflows, and experiment tracking.
-        </BulletItem>
-        <BulletItem theme={theme}>
-          Full-stack capable: <strong>FastAPI &amp; Flask</strong> backends paired with <strong>React.js</strong> frontends for end-to-end AI-powered product development.
-        </BulletItem>
-      </ul>
+      {/* Bento Box Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+        {/* Card 1: Python & Core ML Frameworks (Spans 2 cols) */}
+        <div className={`md:col-span-2 lg:col-span-2 p-3.5 rounded-xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-sm ${bentoCardBg}`}>
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className="w-2 h-2 rounded-full bg-blue-500" />
+            <h3 className={`text-xs font-semibold ${cardTitle}`}>Python Expert &amp; ML Core</h3>
+          </div>
+          <p className={`text-xs leading-relaxed ${cardBody}`}>
+            Deep mastery of Python and leading ML/DL frameworks — <strong className={cardHighlight}>PyTorch</strong>, <strong className={cardHighlight}>TensorFlow</strong>, <strong className={cardHighlight}>Keras</strong>, <strong className={cardHighlight}>Scikit-learn</strong>, <strong className={cardHighlight}>OpenCV</strong>, <strong className={cardHighlight}>NumPy</strong>, and <strong className={cardHighlight}>Pandas</strong>.
+          </p>
+        </div>
+
+        {/* Card 2: Deep Learning & Computer Vision */}
+        <div className={`md:col-span-1 lg:col-span-1 p-3.5 rounded-xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-sm ${bentoCardBg}`}>
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className="w-2 h-2 rounded-full bg-orange-500" />
+            <h3 className={`text-xs font-semibold ${cardTitle}`}>Deep Learning &amp; CV</h3>
+          </div>
+          <p className={`text-xs leading-relaxed ${cardBody}`}>
+            Built and fine-tuned <strong className={cardHighlight}>CNNs</strong> (EfficientNet, ResNet) and <strong className={cardHighlight}>Transformers</strong> (DETR, ViT) for object detection and image classification.
+          </p>
+        </div>
+
+        {/* Card 3: RAG & Agentic Systems */}
+        <div className={`md:col-span-1 lg:col-span-1 p-3.5 rounded-xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-sm ${bentoCardBg}`}>
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className="w-2 h-2 rounded-full bg-emerald-500" />
+            <h3 className={`text-xs font-semibold ${cardTitle}`}>RAG &amp; Agentic AI</h3>
+          </div>
+          <p className={`text-xs leading-relaxed ${cardBody}`}>
+            Designed production <strong className={cardHighlight}>RAG pipelines</strong> using LangChain, LangGraph, and Vector DBs for intelligent document retrieval and semantic search.
+          </p>
+        </div>
+
+        {/* Card 4: Classical Machine Learning */}
+        <div className={`md:col-span-1 lg:col-span-1 p-3.5 rounded-xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-sm ${bentoCardBg}`}>
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className="w-2 h-2 rounded-full bg-violet-500" />
+            <h3 className={`text-xs font-semibold ${cardTitle}`}>Classical ML Engineering</h3>
+          </div>
+          <p className={`text-xs leading-relaxed ${cardBody}`}>
+            End-to-end implementation of regression, decision trees, ensembles (<strong className={cardHighlight}>XGBoost</strong>, AdaBoost), SVMs, clustering, and PCA.
+          </p>
+        </div>
+
+        {/* Card 5: MLOps Practices */}
+        <div className={`md:col-span-1 lg:col-span-1 p-3.5 rounded-xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-sm ${bentoCardBg}`}>
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className="w-2 h-2 rounded-full bg-cyan-500" />
+            <h3 className={`text-xs font-semibold ${cardTitle}`}>MLOps &amp; Engineering</h3>
+          </div>
+          <p className={`text-xs leading-relaxed ${cardBody}`}>
+            Strong MLOps standards — K-Fold CV, Optuna hyperparameter tuning, <strong className={cardHighlight}>Docker</strong> containerization, and Git workflows.
+          </p>
+        </div>
+
+        {/* Card 6: Full-Stack AI & Data Engineering */}
+        <div className={`md:col-span-2 lg:col-span-3 p-3.5 rounded-xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-sm ${bentoCardBg}`}>
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className="w-2 h-2 rounded-full bg-pink-500" />
+            <h3 className={`text-xs font-semibold ${cardTitle}`}>Full-Stack AI &amp; Data Engineering</h3>
+          </div>
+          <p className={`text-xs leading-relaxed ${cardBody}`}>
+            Dual capability bridging <strong className={cardHighlight}>FastAPI &amp; Flask</strong> backends with <strong className={cardHighlight}>React.js</strong> frontends and automated data pipelines for scalable AI product development.
+          </p>
+        </div>
+      </div>
     </section>
   );
 };
