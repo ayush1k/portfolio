@@ -35,6 +35,8 @@ const experienceData = [
         bullets: [
           'Conducted hands-on laboratory sessions for ICS 453 (Object-Oriented Programming using Python) for a cohort of 80+ students, teaching core programming concepts, software design patterns, and debugging methodologies.',
           'Led practical sessions for ICS 452 (Object-Oriented Programming using Java) for 80+ students, guiding them through inheritance, polymorphism, interface design, exception handling, and multi-threading.',
+          'Prepared instructional slide content and interactive course presentations for technical foundations to enhance conceptual understanding.',
+          'Built hands-on Google Colab code examples and interactive notebooks for the technical foundations course, allowing students to experiment with live code implementation.',
           'Assisted students in resolving programming bottlenecks, graded coding assignments, and provided feedback to improve code efficiency and OOP compliance.',
         ],
       },

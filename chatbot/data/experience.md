@@ -10,7 +10,7 @@
 ## Teaching Assistant — IET Lucknow (Jan 2026 – Present)
 * **Type:** Teaching Role (current/ongoing)
 * **Course Coverage:** Conducted laboratory sessions and led practicals for **ICS 453** (Object-Oriented Programming using Python) and **ICS 452** (Object-Oriented Programming using Java) for 80+ students.
-* **Responsibilities:** Mentored students on software design patterns, inheritance, polymorphism, multithreading, exception handling, and code compliance in both languages. Graded programming assignments and gave custom debugging feedback.
+* **Responsibilities:** Mentored students on software design patterns, inheritance, polymorphism, multithreading, exception handling, and code compliance in both languages. Prepared instructional slide content and built interactive Google Colab code examples for technical foundations courses. Graded programming assignments and gave custom debugging feedback.
 
 ## Teaching Assistant — IET Lucknow (Aug 2025 – Dec 2025)
 * **Type:** Teaching Role (completed)

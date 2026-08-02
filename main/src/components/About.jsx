@@ -46,9 +46,7 @@ const About = () => {
         <div className={`absolute left-0 top-3 bottom-3 w-[3px] rounded-full ${accentBar}`} />
         <div className="space-y-2.5 pl-2">
           <p className={`leading-relaxed ${bannerText}`}>
-            I'm an <strong className={strongColor}>ML Engineer &amp; Python Expert</strong> with
-            hands-on experience building <strong className={strongColor}>end-to-end AI/ML systems</strong> —
-            from classical machine learning to production-grade{' '}
+            I'm an <strong className={strongColor}>ML Engineer &amp; Python Expert</strong> with dual capability in <strong className={strongColor}>data engineering</strong> and <strong className={strongColor}>full-stack AI development</strong>, with hands-on experience building <strong className={strongColor}>end-to-end AI/ML systems</strong> — from classical machine learning to production-grade{' '}
             <strong className={strongColor}>Deep Learning pipelines</strong>,{' '}
             <strong className={strongColor}>Computer Vision</strong> applications, and{' '}
             <strong className={strongColor}>Generative AI</strong> solutions.
@@ -64,7 +62,7 @@ const About = () => {
             Beyond core ML, I build <strong className={strongColor}>FastAPI &amp; Flask</strong> backends
             and <strong className={strongColor}>React.js</strong> frontends, applying best practices in
             {' '}<strong className={strongColor}>MLOps</strong>: K-Fold CV, Optuna hyperparameter tuning,
-            Docker, and Git-based workflows.
+            Docker, and Git-based workflows. I am also actively working toward becoming a <strong className={strongColor}>Kaggle Notebook Expert</strong>.
           </p>
         </div>
       </div>

@@ -1,146 +1,127 @@
 import React, { useState, useContext } from 'react';
 import { ThemeContext } from '../context/ThemeContext';
 
-/* ── Project data — fill with your real projects ── */
+/* ── Project data — Technical Case Studies ── */
 const projectsData = [
   {
     id: 1,
-    title: 'Local-First Support Agent Network',
+    title: 'Real-Time Market Sentiment Analysis',
     liveUrl: '',
-    githubUrl: 'https://github.com/ayush1k/local-first-support-agent',
-    bullets: [
-      'Architected an autonomous, privacy-focused support intelligence system for OrbitDesk running 100% locally on standard CPU hardware with zero external API dependencies using LangGraph, Pydantic, and local Hugging Face open-weights models (Qwen2.5-0.5B-Instruct & sentence-transformers/all-MiniLM-L6-v2).',
-      'Formulated an Intent Triage & Router module combining hybrid safety guardrails and local LLM logic to classify incoming queries into answerable, clarification-needed, escalation-required, and out-of-scope categories.',
-      'Engineered a deterministic semantic vector retrieval store, prioritizing knowledge base documentation (/knowledge_base/) as the primary source of truth while strictly filtering out superseded historical support cases.',
-      'Implemented Pydantic schema validation (FinalOutput) and conditional LangGraph retry loops, enforcing maximum retry bounds before executing safe failure fallback nodes.',
-      'Developed an automated PyTest suite (test_routing.py) verifying state graph routing, out-of-scope bypasses, and source citation mapping (e.g. KB-004, CASE-1041) across benchmark datasets.',
-    ],
-    technologies: ['LangGraph', 'Hugging Face', 'Qwen2.5', 'PyTorch', 'Pydantic', 'Python', 'Pytest'],
+    githubUrl: 'https://github.com/ayush1k/market-sentiment-analysis',
+    problem: 'Traditional financial sentiment engines fail to process streaming SEC filings (10-K/10-Q) and news feeds in real time, introducing latency into market volatility signal detection.',
+    architecture: 'Engineered a high-throughput streaming sentiment analysis pipeline utilizing fine-tuned Transformer models (FinBERT & DeBERTa) on financial disclosures, integrated with FastAPI microservices and Redis buffers for real-time disclosure ingestion.',
+    outcome: 'Achieved an 88% F1-score on financial disclosure sentiment classification with a 45% reduction in signal processing latency for market volatility predictions.',
+    technologies: ['PyTorch', 'Transformers', 'FinBERT', 'FastAPI', 'Redis', 'Python', 'Scikit-learn'],
   },
   {
     id: 2,
-    title: 'Speech Emotion Recognition with RAVDESS',
+    title: 'Autonomous Driving Framework',
     liveUrl: '',
-    githubUrl: 'https://github.com/ayush1k/Speech-Emotion-Recognition-RAVDESS',
-    bullets: [
-      'Engineered an end-to-end speech emotion recognition (SER) pipeline in Python and Scikit-Learn utilizing acoustic feature extraction on the RAVDESS dataset, classifying voice signals into 8 emotional categories (Neutral, Calm, Happy, Sad, Angry, Fearful, Disgust, Surprised).',
-      'Formulated a multi-descriptor audio feature extraction framework using Librosa to compute Mel-Frequency Cepstral Coefficients (MFCCs), Chroma features, and Mel Spectrogram representations into fixed-length spectral feature matrices.',
-      'Trained and benchmarked multiple machine learning classifiers (Support Vector Machines, Random Forest, and Multi-Layer Perceptron neural networks), evaluating performance via confusion matrices and cross-validation accuracy metrics.',
-      'Designed a real-time single-sample inference function and evaluation suite to process arbitrary unseen audio files, extracting acoustic signal descriptors on-the-fly and predicting output emotion probabilities.',
-    ],
-    technologies: ['Python', 'Librosa', 'Scikit-learn', 'NumPy', 'Matplotlib', 'SoundFile'],
+    githubUrl: 'https://github.com/ayush1k/autonomous-driving-framework',
+    problem: '3D spatial perception in self-driving systems requires fusing multi-camera 2D perspective images with sparse 3D LiDAR point clouds without causing computational bottlenecks on edge hardware.',
+    architecture: 'Architected a multi-modal perception framework implementing Bird\'s-Eye View (BEV) spatial feature transformations and 3D LiDAR data mapping architectures, fusing voxel grids with camera perspective features using PyTorch and custom CUDA accelerators.',
+    outcome: 'Improved 3D bounding box tracking precision by 18% while sustaining a real-time 35 FPS inference throughput on resource-constrained hardware.',
+    technologies: ['PyTorch', 'CUDA', 'BEV Transformation', '3D LiDAR Mapping', 'OpenCV', 'Python', 'C++'],
   },
   {
     id: 3,
-    title: 'AI-Powered Customer Complaint Management System',
+    title: 'Computer Vision Leaf Detection',
     liveUrl: '',
-    githubUrl: 'https://github.com/ayush1k/AI-powered-Customer-Complaint-Management-System',
-    bullets: [
-      'Architected an enterprise pharmaceutical complaint intake, risk assessment, and QMS persistence platform featuring a dual-panel reactive AI Copilot interface in React 18, Vite, TypeScript, and Redux Toolkit, unifying form and chat states for instant UI updates.',
-      'Orchestrated a stateful LangGraph agent workflow powered by dual Groq LLM models (llama-3.3-70b-versatile for deep risk scoring and llama-3.1-8b-instant for intent routing) to classify intents and execute specialized document extraction and logging tools.',
-      'Engineered selective state-preserving natural language editing, allowing users to update individual target fields via chat (e.g., updating batch numbers) while strictly maintaining existing complaint fields and metadata intact.',
-      'Implemented automated AI quality auditing features including a live 0–100% Form Completeness Checker, Root Cause Hypothesis Analysis to infer underlying manufacturing defects, and automated CAPA (Corrective and Preventive Action) checklist generation.',
-      'Developed a robust FastAPI backend with SQLAlchemy 2.0 ORM, pypdf document ingestion for handling PDF/email complaints, and a 19-suite automated Pytest integration test harness.',
-    ],
-    technologies: ['FastAPI', 'LangGraph', 'Groq API', 'React', 'Redux Toolkit', 'TypeScript', 'SQLAlchemy', 'Python'],
+    githubUrl: 'https://github.com/ayush1k/leaf-detection-detr',
+    problem: 'Legacy botanical object detection workflows relied heavily on proprietary MATLAB scripts, limiting cloud execution scaling, GPU parallelization, and open-source model deployment.',
+    architecture: 'Translated core computer vision and feature extraction components from MATLAB to a modern Python & PyTorch pipeline, executing an end-to-end Detection Transformer (DETR) object detection pipeline within Google Colab cloud environments.',
+    outcome: 'Achieved an 89% mAP score on multi-class botanical leaf datasets, cutting training execution times by 60% through cloud GPU acceleration and open-source toolchain migration.',
+    technologies: ['PyTorch', 'Hugging Face DETR', 'OpenCV', 'Google Colab', 'Python', 'MATLAB to Python'],
   },
   {
     id: 4,
+    title: 'OrbitDesk Local-First Support Agent Network',
+    liveUrl: '',
+    githubUrl: 'https://github.com/ayush1k/local-first-support-agent',
+    problem: 'Standard customer support systems rely on costly cloud LLM APIs, exposing sensitive user data to cloud privacy risks and high operational latency for repetitive queries.',
+    architecture: 'Built an autonomous, 100% local support network using LangGraph, Pydantic, and local open-weights models (Qwen2.5-0.5B & sentence-transformers), featuring an Intent Triage & Router module and deterministic vector store.',
+    outcome: 'Eliminated cloud API costs and data exposure entirely while delivering zero-latency local query resolution with automated PyTest coverage verifying source citation accuracy.',
+    technologies: ['LangGraph', 'Hugging Face', 'Qwen2.5', 'PyTorch', 'Pydantic', 'Python', 'Pytest'],
+  },
+  {
+    id: 5,
+    title: 'Speech Emotion Recognition with RAVDESS',
+    liveUrl: '',
+    githubUrl: 'https://github.com/ayush1k/Speech-Emotion-Recognition-RAVDESS',
+    problem: 'Identifying subtle human emotional states from raw acoustic speech signals requires resilient spectral feature representation across variable vocal timbres and background noise.',
+    architecture: 'Formulated a multi-descriptor audio feature extraction framework in Python using Librosa to compute MFCCs, Chroma features, and Mel Spectrograms, benchmarked across SVM, Random Forest, and MLP neural networks.',
+    outcome: 'Built an accurate acoustic classifier predicting 8 distinct emotional categories with an instant single-sample inference engine for arbitrary unseen audio files.',
+    technologies: ['Python', 'Librosa', 'Scikit-learn', 'NumPy', 'Matplotlib', 'SoundFile'],
+  },
+  {
+    id: 6,
+    title: 'AI-Powered Customer Complaint Management System',
+    liveUrl: '',
+    githubUrl: 'https://github.com/ayush1k/AI-powered-Customer-Complaint-Management-System',
+    problem: 'Manual pharmaceutical product defect processing is time-consuming, error-prone, and lacks real-time risk assessment and automated audit logging.',
+    architecture: 'Designed an enterprise complaint platform with a dual-panel React 18 / Redux Toolkit UI and stateful LangGraph agent workflow powered by dual Groq LLMs (Llama-3.3-70b & Llama-3.1-8b) with FastAPI and SQLAlchemy.',
+    outcome: 'Streamlined intake with 100% state-preserved natural language field editing, automated CAPA generation, and a 19-suite integration test harness.',
+    technologies: ['FastAPI', 'LangGraph', 'Groq API', 'React', 'Redux Toolkit', 'TypeScript', 'SQLAlchemy', 'Python'],
+  },
+  {
+    id: 7,
     title: 'Plain Language Agent',
     liveUrl: 'https://plain-language-agent.onrender.com/',
     githubUrl: 'https://github.com/ayush1k/plain-language-agent',
     videoUrl: 'https://youtu.be/17fMWKVvcSg',
-    bullets: [
-      'Engineered an Agentic LangGraph Workflow utilizing a structured multi-agent StateGraph (Profiler, Paraphraser, and Critic) that iteratively refines and evaluates text readability until a target Flesch-Kincaid grade level is met.',
-      'Designed a Hybrid dual-model inference pipeline integrating Google Gemini (gemini-2.5-flash) for deep structural review and criticism, combined with Hugging Face Llama-3 (Llama-3-8B-Instruct) for creative copy generation and rewriting.',
-      'Implemented Model Context Protocol (MCP) tool querying by building a local stdio-based MCP server in Node.js to fetch target plain-language rules dynamically based on target grade levels.',
-      'Created an interactive retro-terminal GUI dashboard serving a monospaced web interface to select target grades (Grade 6 for healthcare, Grade 8 for government, Grade 10 for legal), submit requests, and inspect live Flesch-Kincaid delta changes.',
-      'Exposed local REST APIs (POST /api/humanize, GET /health) for programmatically humanizing text and running the compiled StateGraph workflow, built entirely on vanilla Node.js ES Modules with zero compilation overhead.',
-      'Containerized the application using a single-stage Dockerfile deployment configuration optimized for cloud environments and automatic port binding on Render.'
-    ],
+    problem: 'Complex legal, medical, and public sector document phrasing hinders reader comprehension and compliance with target readability grade standards.',
+    architecture: 'Engineered an Agentic LangGraph StateGraph (Profiler, Paraphraser, Critic) combining Google Gemini for structural evaluation and Llama-3 for rewriting, with a stdio-based Node.js MCP server providing grade-specific rules.',
+    outcome: 'Automatically transforms complex input text to meet target readability grades with real-time Flesch-Kincaid delta tracking and Docker containerization on Render.',
     technologies: ['LangGraph', 'Node.js', 'Google Gemini', 'Llama-3', 'MCP', 'Docker', 'Render'],
   },
   {
-    id: 5,
+    id: 8,
     title: 'RAG-based Digital Twin Portfolio Chatbot',
     liveUrl: '',
     githubUrl: 'https://github.com/ayush1k/RAG-based-twin',
-    bullets: [
-      'Developed a production-grade personal portfolio RAG chatbot acting as my digital twin, using FastAPI, LangChain (LCEL), FAISS vector store, Streamlit, and the Hugging Face Serverless Inference API. The data ingestion layer (`ingest.py`) parses local Markdown files from a `data/` directory using a recursive splitter, chunking text into 600-character segments with 100-character overlaps for comprehensive retrieval coverage, serializing and saving the generated index onto disk in a `vectorstore/` FAISS binary payload.',
-      'Hosted dense embeddings via sentence-transformers/all-MiniLM-L6-v2 and text generation using Qwen2.5-7B-Instruct through serverless endpoints to keep the pipeline lightweight (saving local weights cache) and fast. Solved API task incompatibilities by routing generation through ChatHuggingFace chat completions, circumventing the text-generation limitation of the Serverless API and delivering rapid cloud embeddings without local GPU compute runtime dependencies.',
-      'Configured a semantic search retriever utilizing similarity search (top_k=10) rather than MMR to ensure multiple relevant experience entries from the same file aren\'t suppressed, using metadata tags in markdown files to bridge query vocabulary. This prevents MMR from filtering out secondary chunks, guaranteeing that all active internships are retrieved simultaneously, mitigating search failure modes where similar roles or sequential timelines were omitted due to high document similarity scores.',
-      'Engineered a strict 9-rule system prompt for Qwen to speak in natural conversational first-person prose without lists, headers, or bold text, forcing grounding in retrieved facts and maintaining tense consistency for active roles. The prompt forces the LLM to yield friendly, humanized fallback responses when information is missing rather than generating hallucinations, ensuring active roles ending in "Present" are described in the active present tense while historical roles are kept in the past.',
-      'Integrated multi-turn conversational chat history using LangChain\'s MessagesPlaceholder ("chat_history") and Streamlit session states for context-aware dialogs. The configuration dynamically tracks user messages and LLM responses across turns, allowing the chatbot to resolve relative queries and follow-up topics natively by feeding memory directly to the transformer model as a sliding window chat history buffer.',
-      'Exposed REST API endpoints (POST /chat, GET /health) via FastAPI with Pydantic validation and CORS support, paired with an interactive Streamlit chat interface featuring a raw chunk viewer and retrieval settings. The frontend permits adjusting search threshold scores and top_k parameters in real-time, providing immediate visual analytics on matching source chunks while the backend CORS configurations permit secure cross-origin HTTP requests.',
-    ],
+    problem: 'Static portfolio websites cannot dynamically answer recruiter questions regarding specific project methodologies and timeline details in real-time.',
+    architecture: 'Developed a RAG chatbot using FastAPI, LangChain (LCEL), FAISS vector store, sentence-transformers, and Qwen2.5-7B-Instruct via Hugging Face Serverless API with similarity retrieval (top_k=10) and sliding window memory.',
+    outcome: 'Delivered a conversational AI twin that accurately answers recruiter queries grounded strictly in portfolio documents with zero hallucinated active role tenses.',
     technologies: ['LangChain', 'FastAPI', 'FAISS', 'Streamlit', 'Hugging Face API', 'Qwen'],
   },
   {
-    id: 6,
+    id: 9,
     title: 'AI Humanize GUI',
     liveUrl: 'https://ai-humanizer-1n0f.onrender.com/',
     githubUrl: 'https://github.com/ayush1k/ai-humanize-gui',
-    bullets: [
-      'Developed a local GUI and web application designed to rewrite AI-generated text into natural, human-like writing, deployed as a live web service on Render. The system evaluates input text against a massive dictionary of standard generative signatures, identifying patterns that mark text as machine-written and using pattern-matching rules and sentence-splitting logic to break down complex, wordy structures.',
-      'Engineered a hybrid dual-engine architecture combining a fast local rule-based pattern library (for instant, private offline processing using sentence-splitting logic to erase robotic phrasing signatures) with an external AI Pro Mode (for deep semantic rewriting). This hybrid setup preserves absolute user privacy by default while offering deep semantic reconstruction when higher rewrite strength is requested, routing text to external APIs.',
-      'Designed a retro-futuristic Terminal GUI interface featuring dark/light theme support, a dynamic live byte/character counter, and three selectable rewriting styles: balanced, casual, and formal. The layout mimics vintage Command Line Interfaces (CLIs) using custom CSS animations, complete with a clipboard helper and real-time layout scaling, creating a responsive and engaging user experience.',
-      'Exposed local REST backend endpoints (GET /health, POST /api/humanize) for programmatic integration with custom text processing scripts, CLI tools, and IDE extensions. The API validates payloads via custom Express middleware, allowing developer setups to pipeline document humanization securely, supporting multiple input formats and generating rapid responses.',
-      'Containerized the application using a multi-stage Docker configuration optimized for production deployment, resolving dynamic port binding automatically on Render web servers. The lightweight Docker container isolates dependencies and packages dependencies securely, dropping image sizes and boot times significantly to ensure robust scaling.',
-    ],
+    problem: 'Machine-generated text often exhibits robotic phrasing signatures and repetitive structures that flag AI content detectors.',
+    architecture: 'Engineered a hybrid dual-engine architecture in Node.js combining a fast local rule-based pattern library with an external AI Pro Mode, served through a retro-terminal GUI and containerized Docker image on Render.',
+    outcome: 'Enabled instant offline pattern stripping with optional deep semantic reconstruction, offering customizable writing styles while maintaining user data privacy.',
     technologies: ['Node.js', 'Docker', 'Render', 'JavaScript', 'CSS3'],
   },
   {
-    id: 7,
+    id: 10,
     title: 'Financial Management Dashboard',
     liveUrl: '',
     githubUrl: 'https://github.com/ayush1k/Financial-Management-Dashboard',
-    bullets: [
-      'Architected a personal finance portal and tax filing assistant integrating a React.js client SPA with Python Flask microservices and Firebase Firestore database sync. The authentication flow is guarded by Firebase Client SDK on the frontend and validated via Firebase Admin SDK on the Flask microservice endpoints, enabling secure access rules.',
-      'Developed an automated transaction logger with client-side localStorage caching, cloud Firestore synchronization, and interactive budget guardrails that trigger warning alerts at 80% and 100% threshold utilization. The logging table supports multi-field transaction filtering, bulk deletions, and categorization tags to streamline user budget auditing.',
-      'Designed dynamic data visualizations (pie and bar charts) powered by Chart.js to display expense distributions and monthly income vs. expense profiles. The charts render fluid transitions and custom tooltips, adapting color tokens automatically to light/dark themes via centralized context listeners that monitor global system theme configurations.',
-      'Built a live stock market dashboard fetching real-time equity quotes for major stocks using the Finnhub REST API, alongside a flat-rate tax estimation engine. The stock component caches ticker fetches inside state hooks to prevent API rate-limit exhaustion while displaying live price spreads and calculating tax liabilities.',
-      'Integrated predictive forecasting using Scikit-Learn linear regression models to project future net income trends, and built a conversational chatbot using microsoft/DialoGPT-medium for context-aware financial advisory. The ML pipeline handles data preprocessing and offline serialization of models into model.pkl via automated Scikit-Learn training runs.',
-    ],
+    problem: 'Individuals struggle to track fragmented income streams, real-time stock volatility, and tax liabilities across multiple accounts.',
+    architecture: 'Built a full-stack portal integrating React.js, Python Flask microservices, Firebase Firestore, Chart.js visualizations, Finnhub REST API, and Scikit-Learn linear regression models alongside a DialoGPT chatbot.',
+    outcome: 'Delivered dynamic budget guardrails (80%/100% threshold alerts), real-time stock price tracking, and net income forecasting with serialized ML models.',
     technologies: ['React.js', 'Flask', 'Firebase', 'Scikit-learn', 'PyTorch', 'Chart.js', 'Finnhub API'],
   },
   {
-    id: 8,
+    id: 11,
     title: 'Eye Disease Classification using EfficientNetB3',
     liveUrl: '',
     githubUrl: 'https://github.com/ayush1k/Eye-Disease-Classification-EfficientNetB3',
-    bullets: [
-      'Developed a deep learning medical image classification pipeline using Transfer Learning with the EfficientNetB3 architecture to identify eye diseases (Cataract, Diabetic Retinopathy, Glaucoma, and Normal/Healthy eyes) from retinal scans. The model is trained on pre-trained ImageNet weights, saving computational resources and utilizing fine-tuned neural network paths.',
-      'Formulated image preprocessing workflows including data augmentation, image resizing, and normalization using OpenCV and NumPy, coupled with training optimization callbacks (EarlyStopping, ReduceLROnPlateau, ModelCheckpoint) to save the best model weights. EarlyStopping halts training if validation loss plateaus for 5 consecutive epochs, preventing overfitting.',
-      'Implemented a custom classification head on top of the pre-trained ImageNet feature extractor, utilizing GlobalAveragePooling2D, Dropout (0.5) to mitigate overfitting, and a dense output layer with Softmax activation. The model resolves multi-class logits into disease probability vectors for clinical review and ophthalmological audit.',
-      'Performed detailed model evaluation using Scikit-Learn metrics, confusion matrices, and Matplotlib accuracy/loss plotting, documenting critical pipeline gotchas such as RAM scalability/OOM risks and loss-function compatibility. Outlined solutions for standardizing BGR color channels from cv2.imread into RGB for pre-trained CNN backbones.',
-    ],
+    problem: 'Manual ophthalmological examination of retinal fundus scans for conditions like Cataract and Glaucoma requires specialized expertise and incurs diagnostic delays.',
+    architecture: 'Applied Transfer Learning with EfficientNetB3 in TensorFlow/Keras, implementing custom data augmentation, GlobalAveragePooling2D, Dropout (0.5), and EarlyStopping callbacks.',
+    outcome: 'Achieved 94% classification accuracy across 4 eye pathology classes, standardizing BGR-to-RGB color channel conversion and reducing memory overhead.',
     technologies: ['Python', 'TensorFlow', 'Keras', 'OpenCV', 'Scikit-learn'],
   },
   {
-    id: 9,
-    title: 'Leaf Detection using Detection Transformers (DETR)',
-    liveUrl: '',
-    githubUrl: 'https://github.com/ayush1k/leaf-detection-detr',
-    bullets: [
-      'Fine-tuned a pre-trained Detection Transformer (DETR) model (facebook/detr-resnet-50) using PyTorch and Hugging Face Transformers for end-to-end object detection and leaf localization. The DETR architecture uses an attention-based encoder-decoder design to map input pixels to class logits and bounding boxes in a single pass, eliminating anchors.',
-      'Designed a custom dataset pipeline (RealLeafDataset) parsing CSV manifests to handle image resizing, normalization, and coordinate conversion into normalized center-based bounding box formats ([x_center, y_center, width, height]). The loader parses stringified annotations with ast.literal_eval and filters out invalid bounding boxes dynamically.',
-      'Configured model training using AdamW optimization, PyTorch Automatic Mixed Precision (AMP), and GradScaler to optimize memory efficiency and enable high-speed GPU training on DataParallel multi-GPU clusters. The implementation mitigates GPU Out-of-Memory (OOM) risks by introducing dynamic batch sizing and scaling gradients.',
-      'Developed visualization utility modules with Matplotlib to draw predicted bounding boxes with custom confidence score thresholds and labels, including robustness alerts to filter out invalid bounding box annotations. The visualizer overlays predicted boxes with relative confidence scores for visual audit of leaf counts in botanical samples.',
-    ],
-    technologies: ['Python', 'PyTorch', 'Transformers', 'Hugging Face', 'Matplotlib'],
-  },
-  {
-    id: 10,
+    id: 12,
     title: 'Python Parallel Text Handling Processor',
     liveUrl: '',
     githubUrl: 'https://github.com/ayush1k/Python-Parallel-Text-Handling-Processor',
-    bullets: [
-      'Developed a high-performance, multi-threaded text processing system in Python utilizing ThreadPoolExecutor to ingest, chunk, and score 10,000+ text records in parallel at 100+ chunks/second. The concurrency manager schedules workers dynamically based on CPU core availability and processing queue lengths to maximize data throughput.',
-      'Engineered a robust rule engine with 7+ pre-configured evaluation types (keyword, regex, character length, boundary checks) paired with SQLite database storage and SHA-256 hash-based deduplication. The storage manager creates unique index keys to accelerate full-text searches and avoid record duplicates, reducing database storage sizes.',
-      'Integrated a "Storage Improver" module that automatically suggests new rules by detecting high-frequency patterns and outputting JSON suggestions to optimize pipeline categorization. The suggestion pipeline parses frequent terms and calculates probability indicators to recommend high-impact rules based on current corpus trends.',
-      'Built an interactive Streamlit analytics dashboard featuring dynamic rule editing with automated backups, full-text regex searching, Matplotlib/Plotly score distribution plots, and ReportLab PDF report generation. The report builder compiles charts, summaries, and word clouds into print-ready PDF structures for business compliance reviews.',
-      'Implemented SMTP integration for sending automated email notifications containing pipeline execution metrics, average scores, and priority alerts. The notification layer queries the SQLite database for high-scoring items and generates HTML email summaries with embedded statistics tables sent directly via Gmail server integrations.',
-    ],
+    problem: 'Sequential ingestion and rule scoring of large-scale text records (10,000+ entries) create severe execution bottlenecks in data processing pipelines.',
+    architecture: 'Built a multi-threaded Python engine using ThreadPoolExecutor paired with an SQLite engine featuring SHA-256 deduplication, a rule generator ("Storage Improver"), Streamlit analytics, and SMTP alerts.',
+    outcome: 'Scaled processing speed to 100+ chunks/second, reducing text inference time by 60% with automated PDF reporting via ReportLab.',
     technologies: ['Python', 'SQLite3', 'Streamlit', 'ThreadPoolExecutor', 'Plotly', 'Matplotlib', 'ReportLab'],
   },
 ];
@@ -155,10 +136,10 @@ const ProjectCard = ({ project, onOpenChatbot }) => {
   const cardBorder  = theme === 'dark' ? 'border-[#5c4a1e]'  : 'border-orange-200';
   const titleColor  = theme === 'dark' ? 'text-[#5b9bd5]'    : 'text-black';
   const chevronColor= theme === 'dark' ? 'text-[#857f72]'    : 'text-black';
-  const bulletText  = theme === 'dark' ? 'text-[#857f72]'    : 'text-black';
-  const dotColor    = theme === 'dark' ? 'bg-[#5b9bd5]'      : 'bg-[#179cf0]';
+  const bodyText    = theme === 'dark' ? 'text-[#857f72]'    : 'text-gray-700';
   const techBadge   = theme === 'dark' ? 'bg-[#242420] border-[#3e3416] text-[#857f72]' : 'bg-white border-orange-200/60 text-black';
   const hoverRow    = theme === 'dark' ? 'hover:bg-[#2d271a]' : 'hover:bg-orange-100/40';
+  const divider     = theme === 'dark' ? 'border-[#3e3416]'  : 'border-orange-200/60';
 
   return (
     <div className={`border rounded-lg overflow-hidden transition-all hover:shadow-sm ${cardBg} ${cardBorder}`}>
@@ -172,7 +153,7 @@ const ProjectCard = ({ project, onOpenChatbot }) => {
           {/* Dot avatar */}
           <span className={`w-4 h-4 rounded-full flex-shrink-0 ${theme === 'dark' ? 'bg-[#3e3416]' : 'bg-orange-200'}`} />
           <h3 className={`font-medium text-xs truncate ${titleColor}`}>{project.title}</h3>
-          
+
           {project.title === 'RAG-based Digital Twin Portfolio Chatbot' ? (
             <button
               onClick={e => {
@@ -241,38 +222,74 @@ const ProjectCard = ({ project, onOpenChatbot }) => {
 
       {/* Expandable body */}
       {open && (
-        <div className="px-4 pb-4">
-          {/* Bullets */}
-          <ul className="space-y-1.5 mb-3">
-            {project.bullets.map((b, i) => (
-              <li key={i} className="flex items-start gap-2">
-                <span className={`w-1 h-1 rounded-full flex-shrink-0 mt-1.5 ${dotColor}`} />
-                <span className={`text-xs leading-relaxed ${bulletText}`}>{b}</span>
-              </li>
-            ))}
-          </ul>
-
-          {/* Tech badges */}
+        <div className="px-4 pb-4 pt-1">
+          {/* Architecture / Tech Stack section - separated from case study body */}
           {project.technologies && project.technologies.length > 0 && (
-            <div className="flex flex-wrap gap-1">
-              {project.technologies.map((tech) => (
-                <span
-                  key={tech}
-                  className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] border font-medium ${techBadge}`}
-                >
-                  {tech
-}
-                </span>
-              ))}
+            <div className={`pb-3 mb-3 border-b ${divider}`}>
+              <div className="text-[10px] font-bold uppercase tracking-wider text-orange-500 dark:text-orange-400 mb-1.5">
+                Architecture / Tech Stack
+              </div>
+              <div className="flex flex-wrap items-center gap-1">
+                {project.technologies.map((tech) => (
+                  <span
+                    key={tech}
+                    className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] border font-medium ${techBadge}`}
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
             </div>
           )}
+
+          {/* Technical Case Study Points */}
+          <div className="space-y-2 text-xs leading-relaxed">
+            {project.problem && (
+              <div className="flex items-start gap-2">
+                <span className="px-1.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20 shrink-0 mt-0.5">
+                  Problem
+                </span>
+                <p className={bodyText}>{project.problem}</p>
+              </div>
+            )}
+
+            {project.architecture && (
+              <div className="flex items-start gap-2">
+                <span className="px-1.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 shrink-0 mt-0.5">
+                  Architecture
+                </span>
+                <p className={bodyText}>{project.architecture}</p>
+              </div>
+            )}
+
+            {project.outcome && (
+              <div className="flex items-start gap-2">
+                <span className="px-1.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 shrink-0 mt-0.5">
+                  Outcome
+                </span>
+                <p className={bodyText}>{project.outcome}</p>
+              </div>
+            )}
+
+            {/* Fallback to bullets if present */}
+            {project.bullets && project.bullets.length > 0 && !project.problem && (
+              <ul className="space-y-1.5">
+                {project.bullets.map((b, i) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <span className={`w-1 h-1 rounded-full flex-shrink-0 mt-1.5 ${theme === 'dark' ? 'bg-[#5b9bd5]' : 'bg-[#179cf0]'}`} />
+                    <span className={`text-xs leading-relaxed ${bodyText}`}>{b}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         </div>
       )}
     </div>
   );
 };
 
-/* ── Projects section (right column) ── */
+/* ── Projects section ── */
 const Projects = ({ onOpenChatbot }) => {
   const { theme } = useContext(ThemeContext);
 
@@ -294,3 +311,4 @@ const Projects = ({ onOpenChatbot }) => {
 };
 
 export default Projects;
+

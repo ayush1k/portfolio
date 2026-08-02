@@ -1,19 +1,79 @@
 import React, { useContext } from 'react';
+import { motion } from 'framer-motion';
 import { ThemeContext } from '../context/ThemeContext';
 
 const skillCategories = [
-  { label: 'Languages',    color: 'text-blue-500',   skills: ['Python', 'JavaScript', 'C', 'SQL'] },
-  { label: 'Machine Learning', color: 'text-violet-500',
-    skills: ['Linear Regression','Logistic Regression','Decision Trees','Random Forest','SVM','Naive Bayes','KNN','K-Means','DBSCAN','PCA','XGBoost','AdaBoost','Gradient Boosting'] },
-  { label: 'Deep Learning & CV', color: 'text-orange-500',
-    skills: ['CNNs','EfficientNet','ResNet','Transformers','DETR','ViT','Transfer Learning','Fine-tuning'] },
-  { label: 'Generative AI & NLP', color: 'text-emerald-500',
-    skills: ['RAG','LLMs','LangChain','LangGraph','Generative AI'] },
-  { label: 'Frameworks & Libraries', color: 'text-rose-500',
-    skills: ['PyTorch','TensorFlow','Keras','Scikit-learn','OpenCV','NumPy','Pandas','Matplotlib','Seaborn','Flask','FastAPI','React.js'] },
-  { label: 'Tools & MLOps', color: 'text-cyan-500',
-    skills: ['Git','Jupyter','Docker','Vector Databases','K-Fold CV','Grid Search','Random Search','Optuna'] },
+  {
+    label: 'Core AI & Deep Learning',
+    color: 'text-blue-500',
+    skills: [
+      'PyTorch',
+      'TensorFlow',
+      'CNNs',
+      'Transformers',
+      'Transfer Learning',
+      'k-Nearest Neighbor',
+      'Random Forest',
+      'Logistic Regression',
+      'Decision Trees',
+      'Support Vector Machines',
+    ],
+  },
+  {
+    label: 'GenAI & LLMs',
+    color: 'text-emerald-500',
+    skills: [
+      'RAG Pipelines',
+      'LangGraph',
+      'GLM 4.7 (Nvidia NIM API)',
+      'Gemini CLI',
+      'Vector Databases',
+    ],
+  },
+  {
+    label: 'Web & Full-Stack',
+    color: 'text-violet-500',
+    skills: [
+      'HTML',
+      'CSS',
+      'Tailwind CSS',
+      'JavaScript',
+      'TypeScript',
+      'React JS',
+      'Next JS',
+      'Node JS',
+      'Express JS',
+      'Framer Motion',
+    ],
+  },
+  {
+    label: 'Engineering & Tools',
+    color: 'text-orange-500',
+    skills: [
+      'Git',
+      'GitHub',
+      'Postman',
+      'Notion',
+      'Figma',
+      'Google Colab',
+    ],
+  },
 ];
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.12,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 15 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.35, ease: 'easeOut' } },
+};
 
 const Skills = () => {
   const { theme } = useContext(ThemeContext);
@@ -30,46 +90,26 @@ const Skills = () => {
 
   const getIcon = (label, colorClass) => {
     switch (label) {
-      case 'Languages':
-        return (
-          <svg className={`w-3.5 h-3.5 ${colorClass}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
-          </svg>
-        );
-      case 'Machine Learning':
-        return (
-          <svg className={`w-3.5 h-3.5 ${colorClass}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-            <circle cx="12" cy="5" r="2.5" />
-            <circle cx="5" cy="12" r="2.5" />
-            <circle cx="19" cy="12" r="2.5" />
-            <circle cx="12" cy="19" r="2.5" />
-            <line x1="12" y1="7.5" x2="12" y2="16.5" />
-            <line x1="7" y1="10.5" x2="10" y2="7.5" />
-            <line x1="17" y1="10.5" x2="14" y2="7.5" />
-            <line x1="7" y1="13.5" x2="10" y2="16.5" />
-            <line x1="17" y1="13.5" x2="14" y2="16.5" />
-          </svg>
-        );
-      case 'Deep Learning & CV':
+      case 'Core AI & Deep Learning':
         return (
           <svg className={`w-3.5 h-3.5 ${colorClass}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
         );
-      case 'Generative AI & NLP':
+      case 'GenAI & LLMs':
         return (
           <svg className={`w-3.5 h-3.5 ${colorClass}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 21l-.813-5.096L3.096 15.087 8.187 14.27 9 9l.813 5.27 5.096.817-5.096.817zM19.071 4.929l-.429 2.686-2.687.43 2.687.43.429 2.686.43-2.686 2.686-.43-2.686-.43-.43-2.686zM6.5 1.5l-.25 1.563-1.562.25 1.562.25.25 1.563.25-1.563 1.563-.25-1.563-.25-.25-1.563z" />
           </svg>
         );
-      case 'Frameworks & Libraries':
+      case 'Web & Full-Stack':
         return (
-          <svg className={`w-3.5 h-3.5 ${colorClass}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+          <svg className={`w-3.5 h-3.5 ${colorClass}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
           </svg>
         );
-      case 'Tools & MLOps':
+      case 'Engineering & Tools':
         return (
           <svg className={`w-3.5 h-3.5 ${colorClass}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
@@ -87,9 +127,19 @@ const Skills = () => {
         Tech Stack
       </h2>
 
-      <div className="flex flex-col gap-3">
+      <motion.div
+        className="flex flex-col gap-3"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: '-50px' }}
+      >
         {skillCategories.map((cat) => (
-          <div key={cat.label} className={`border rounded-xl p-3.5 transition-all ${boxBgBorder}`}>
+          <motion.div
+            key={cat.label}
+            variants={cardVariants}
+            className={`border rounded-xl p-3.5 transition-all ${boxBgBorder}`}
+          >
             <p className={`text-[10px] font-bold uppercase tracking-widest mb-2.5 flex items-center gap-1.5 ${catLabelColor}`}>
               {getIcon(cat.label, cat.color)}
               {cat.label}
@@ -104,11 +154,12 @@ const Skills = () => {
                 </span>
               ))}
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 };
 
 export default Skills;
+
