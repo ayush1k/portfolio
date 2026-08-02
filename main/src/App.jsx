@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Header from './components/Header';
 import About from './components/About';
@@ -12,6 +13,29 @@ import Contact from './components/Contact';
 import { ThemeProvider, ThemeContext } from './context/ThemeContext';
 import ChatbotWidget from './components/ChatbotWidget';
 import ChatbotPage, { getBackendUrl } from './components/ChatbotPage';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.05,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.45,
+      ease: 'easeOut',
+    },
+  },
+};
 
 const AppInner = () => {
   const { theme } = useContext(ThemeContext);
@@ -60,25 +84,30 @@ const AppInner = () => {
       ) : (
         /* Outer page centering */
         <div className="flex justify-center min-h-screen py-4 px-2 lg:py-10">
-          <div className={`w-full max-w-6xl border rounded-2xl mt-14 lg:mt-16 ${cardBg}`}>
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className={`w-full max-w-6xl border rounded-2xl mt-14 lg:mt-16 overflow-hidden ${cardBg}`}
+          >
 
             {/* ── Header (full-width) ── */}
-            <div className="p-4 md:p-5 lg:p-5">
+            <motion.div variants={itemVariants} className="p-4 md:p-5 lg:p-5">
               <Header />
-            </div>
+            </motion.div>
 
             {/* ── Two-column main layout ── */}
             <div className="px-4 pb-4 md:px-5 md:pb-5 lg:px-5 lg:pb-5 space-y-6">
               <main className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
 
                 {/* LEFT col — 2/3 */}
-                <div className="space-y-6 lg:col-span-2">
+                <motion.div variants={itemVariants} className="space-y-6 lg:col-span-2">
                   <About />
                   <Experience />
-                </div>
+                </motion.div>
 
                 {/* RIGHT col — 1/3 */}
-                <div className="space-y-6">
+                <motion.div variants={itemVariants} className="space-y-6">
                   {/* Embedded video showcase */}
                   <div 
                     className={`aspect-video rounded-xl overflow-hidden border flex items-center justify-center transition-colors ${
@@ -100,15 +129,20 @@ const AppInner = () => {
                   <Education />
                   <Certificates />
                   <Contact />
-                </div>
+                </motion.div>
 
               </main>
 
-              <Projects onOpenChatbot={() => scrollToSection('chatbot')} />
-              <GithubStats />
+              <motion.div variants={itemVariants}>
+                <Projects onOpenChatbot={() => scrollToSection('chatbot')} />
+              </motion.div>
+
+              <motion.div variants={itemVariants}>
+                <GithubStats />
+              </motion.div>
             </div>
 
-          </div>
+          </motion.div>
         </div>
       )}
 
