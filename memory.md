@@ -10,9 +10,9 @@ This repository is a full-stack AI engineer portfolio monorepo. It features a mo
 ### Frontend (`/main`)
 - **Framework & Build Tool**: React 19, Vite 7
 - **Styling & Design System**: Tailwind CSS v4 (`@tailwindcss/vite`), Vanilla CSS
-- **Animations & Micro-Interactions**: Framer Motion 12, CSS Transitions
-- **State & Theme Management**: React Context API (`ThemeContext.jsx`)
-- **Typography**: Google Fonts — **Inter** (Primary Reading), **JetBrains Mono** (`.font-mono` for technical badges & code)
+- **Animations & Micro-Interactions**: Framer Motion 12, CSS Transitions (`transition-all duration-300`)
+- **State & Theme Management**: React Context API (`ThemeContext.jsx`), React State & Hooks (`useRef`, `useEffect`)
+- **Typography**: Google Fonts — **Inter** (Primary Reading), **JetBrains Mono** (`.font-mono` for technical badges, code, & architecture tags)
 
 ### Backend (`/chatbot`)
 - **Web Framework**: FastAPI, Uvicorn
@@ -37,22 +37,22 @@ portfolio/
 │   ├── src/
 │   │   ├── assets/                 # Company logos, media assets
 │   │   ├── components/             # React UI Components
-│   │   │   ├── About.jsx           # Bento Box bio layout & domain highlights
+│   │   │   ├── About.jsx           # Asymmetrical Bento Box grid layout & domain highlights
 │   │   │   ├── Certificates.jsx    # Certification grid & verification links
-│   │   │   ├── ChatbotPage.jsx     # Interactive full-screen RAG chatbot view
-│   │   │   ├── ChatbotWidget.jsx   # Floating Action Button (FAB) widget with glow & blur
+│   │   │   ├── ChatbotPage.jsx     # Interactive RAG chatbot view with dynamic follow-up suggestion pills
+│   │   │   ├── ChatbotWidget.jsx   # Floating Action Button (FAB) with blur halo & glowing drop-shadow
 │   │   │   ├── Contact.jsx         # Contact form & social links
-│   │   │   ├── Education.jsx       # Academic background & degrees
-│   │   │   ├── Experience.jsx      # Work history, TA roles, & internships
-│   │   │   ├── GithubStats.jsx     # GitHub statistics & contribution metrics
+│   │   │   ├── Education.jsx       # Interactive Connected Timeline with node logos
+│   │   │   ├── Experience.jsx      # Interactive Connected Timeline with node logos & TA details
+│   │   │   ├── GithubStats.jsx     # GitHub statistics, activity bar chart & calendar with animate-pulse skeleton loaders
 │   │   │   ├── Header.jsx          # Profile avatar, title, & social badges
-│   │   │   ├── Navbar.jsx          # Glassmorphic top navigation & theme toggle
-│   │   │   ├── Projects.jsx        # Expandable project accordion & architecture tags
-│   │   │   └── Skills.jsx          # Categorized tech stack badges with font-mono
+│   │   │   ├── Navbar.jsx          # Glassmorphic top navigation with dynamic scroll-spy active pills
+│   │   │   ├── Projects.jsx        # Expandable project cards with hover scale & font-mono tech badges
+│   │   │   └── Skills.jsx          # Categorized tech stack badges with font-mono & hover physics
 │   │   ├── context/
 │   │   │   └── ThemeContext.jsx    # Dark/light theme provider & persistence
-│   │   ├── App.jsx                 # Main application layout container & page router
-│   │   ├── index.css               # Design tokens, font imports, & custom utilities
+│   │   ├── App.jsx                 # Main layout, scroll-spy observer, & Framer Motion entrance animation
+│   │   ├── index.css               # Design system tokens, font imports, & .font-mono utility
 │   │   └── main.jsx                # React DOM entry point
 │   ├── index.html                  # HTML template with Google Fonts (Inter + JetBrains Mono)
 │   ├── package.json                # Frontend dependencies & Vite scripts
@@ -62,19 +62,17 @@ portfolio/
 │   ├── data/                       # Portfolio Knowledge Base (Markdown & JSON files)
 │   │   ├── experience.md           # Work, TA, and internship history
 │   │   ├── faq.md                  # Frequently asked technical & personal questions
-│   │   ├── knowledge_base.json     # Structured QA database
-│   │   ├── personal_info.md        # Bio, education, contact details
-│   │   ├── projects.md             # Detailed project technical case studies
-│   │   └── skills.md               # Complete technical skill breakdown
+│   │   └── knowledge_base.json     # Structured QA database
 │   ├── vectorstore/                # Persisted FAISS index & metadata store
 │   ├── Dockerfile                  # Container definition for Render deployment
 │   ├── ingest.py                   # Knowledge base ingestion & FAISS index builder
-│   ├── llm_engine.py               # Hugging Face LLM integration & prompt template
-│   ├── main.py                     # FastAPI web server, CORS middleware, & REST endpoints
+│   ├── llm_engine.py               # Hugging Face LLM integration, delimiter parsing, & prompt template
+│   ├── main.py                     # FastAPI web server, CORS middleware, ChatResponse schema & REST endpoints
 │   ├── retriever.py                # Vector similarity search & context retrieval logic
 │   └── requirements.txt            # Python dependencies
 │
-└── memory.md                       # Core architectural reference & development context
+├── memory.md                       # Core architectural reference & development context
+└── codebase_context.txt            # Complete serialized codebase reference
 ```
 
 ---
@@ -87,27 +85,38 @@ portfolio/
 - Light Theme Color Palette: Soft neutral light background (`bg-gray-100`), clean white cards (`bg-white`), crisp gray borders (`border-gray-200`), and vibrant blue/orange accents.
 
 ### Glassmorphism
-- Top navbar (`Navbar.jsx`) uses high-density backdrop blur (`backdrop-blur-lg backdrop-saturate-[180%]`), combined with inner inset shadows (`shadow-inner`, `inset_0_1.5px_0_rgba(...)`) to float gracefully above scrolling page content.
-- Floating Action Button (`ChatbotWidget.jsx`) features a glowing blur halo and soft drop-shadow (`shadow-xl shadow-orange-500/20`).
+- Top navbar (`Navbar.jsx`) uses high-density backdrop blur (`backdrop-blur-lg backdrop-saturate-[180%]`), combined with inner inset highlights (`shadow-inner`, `inset_0_1.5px_0_rgba(...)`) to float gracefully above scrolling page content.
+- Floating Action Button (`ChatbotWidget.jsx`) features a glowing blur halo backdrop and soft drop-shadow (`shadow-xl shadow-orange-500/20`).
 
-### Bento Box Layouts
+### Asymmetrical Bento Box Layouts
 - `About.jsx` uses a responsive asymmetrical CSS grid layout (`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3`).
 - Key domain selling points span distinct grid columns (`md:col-span-2`, `lg:col-span-3`) to create dynamic visual hierarchy without plain text bullet lists.
+
+### Interactive Connected Timeline Layouts
+- `Experience.jsx` and `Education.jsx` feature a connected timeline layout:
+  - Absolute vertical connector line (`w-[2px] bg-[#2a2a28]` / `bg-gray-200`) down the left side.
+  - Institution/Company logos positioned directly on top of the line as chronological nodes (`absolute -left-6 sm:-left-7 top-1 z-10`).
+  - Hovering a timeline item (`group`) translates the main card (`group-hover:translate-x-1.5`) and illuminates the logo node (`group-hover:ring-2 group-hover:ring-orange-500/50 group-hover:scale-110`).
 
 ### Typography Rules
 - **Primary Reading Font**: `Inter`, system UI stack.
 - **Code & Tech Badges**: `JetBrains Mono` applied via custom utility class `.font-mono` defined in `src/index.css`.
 
-### Micro-Interactions
-- Interactive elements (Bento cards, project accordions, skill badges) incorporate smooth hover physics (`hover:-translate-y-0.5`, `hover:-translate-y-1`, `hover:scale-[1.01]`, `hover:shadow-md`, `hover:border-orange-500/40`) with fluid timing (`transition-all duration-300`).
+### Skeleton Loaders
+- `GithubStats.jsx` replaces spinners with modern Tailwind `animate-pulse` skeleton loaders matching top stats cards (`h-36 w-full sm:w-[310px]`), a 30-bar recent activity chart, and a 364-square annual calendar grid.
+
+### Micro-Interactions & Motion
+- Interactive elements (Bento cards, project accordions, skill badges) incorporate smooth hover physics (`hover:-translate-y-0.5`, `hover:-translate-y-1`, `hover:scale-[1.01]`, `hover:shadow-md`) with fluid timing (`transition-all duration-300`).
+- Page entrance uses Framer Motion staggered entrance animations (`containerVariants` with `staggerChildren: 0.15` and `itemVariants` with `y: 20` to `y: 0`).
 
 ---
 
-## 5. State Management
+## 5. State Management & Navigation
 
 - **Theme State**: Handled globally via `ThemeContext.jsx`. The active theme (`dark` or `light`) is saved to `localStorage` and toggled across all components.
-- **Page Navigation**: Controlled in `App.jsx` using `currentPage` local state (`'home'` vs `'chatbot'`). Section scrolling uses smooth native `scrollIntoView`.
-- **Chatbot Conversational History**: Handled inside `ChatbotPage.jsx`. Messages are stored in a state array (`messages`) containing human queries and AI responses. The backend (`llm_engine.py`) accepts multi-turn chat history via LangChain `MessagesPlaceholder(variable_name="chat_history")`.
+- **Scroll-Spy Section Tracking**: `App.jsx` implements an `IntersectionObserver` listening to section IDs (`#home`, `#about`, `#experience`, `#projects`, `#skills`, `#education`, `#certificates`, `#contact`). As the user scrolls, `currentPage` updates dynamically, automatically highlighting the corresponding active pill in `Navbar.jsx`.
+- **Manual Navigation Lock**: When clicking a navbar link, `scrollToSection` sets a 900ms lock (`isManualScrollingRef.current = true`) to suppress observer intermediate triggers while smooth scrolling.
+- **Chatbot Conversational History & Suggestions**: Handled inside `ChatbotPage.jsx`. The assistant response payload includes follow-up suggestions (`data.suggestions: list[str]`), rendered as clickable pill buttons below the latest AI message.
 
 ---
 
@@ -134,23 +143,26 @@ portfolio/
                                 └──► [Qwen2.5-7B-Instruct (HF Serverless API)]
                                                   │
                                                   ▼
-                                       [First-Person RAG Response]
+                                 [Response + ||| + Suggestions]
+                                                  │
+                                                  ▼
+                               [Parsed Dict: {answer, suggestions}]
 ```
 
 ### Ingestion Pipeline (`ingest.py`)
-- Reads all Markdown files from `chatbot/data/`.
-- Splits text into optimal chunks (`CHUNK_SIZE = 600`, `CHUNK_OVERLAP = 100`) to preserve complete contextual units (e.g., individual internships or project case studies).
+- Reads Markdown files from `chatbot/data/`.
+- Splits text into optimal chunks (`CHUNK_SIZE = 600`, `CHUNK_OVERLAP = 100`) to preserve complete contextual units.
 - Encodes chunks into dense 384-dimensional vectors using `sentence-transformers/all-MiniLM-L6-v2`.
-- Persists the vector index to `chatbot/vectorstore/`.
+- Persists vector index to `chatbot/vectorstore/`.
 
-### Retrieval & Generation Pipeline (`retriever.py` -> `llm_engine.py`)
-1. **Retrieval**: `retriever.py` loads the persisted FAISS vectorstore and executes similarity search (`similarity_search(query, k=10)`).
-2. **LLM Engine**: `llm_engine.py` constructs a ChatPromptTemplate with strict system constraints.
-3. **First-Person Persona & Factuality Constraints**:
+### Retrieval & Generation Pipeline (`retriever.py` -> `llm_engine.py` -> `main.py`)
+1. **Retrieval**: `retriever.py` loads the FAISS vectorstore and executes similarity search (`similarity_search(query, k=10)`).
+2. **LLM Engine & Prompting**: `llm_engine.py` constructs a ChatPromptTemplate with strict system constraints.
+3. **First-Person Persona & Delimiter Logic**:
    - **First-Person Identity**: Speaks strictly as Ayush Kumar ("I", "my", "me").
-   - **Zero Hallucination**: Relies exclusively on retrieved context. If information is absent, returns: `"I haven't added that detail to my portfolio documents yet, but you can reach out to the real Ayush directly!"`.
-   - **Ongoing vs Completed Role Tense**: Active roles ending with "Present" are spoken about strictly in the present tense ("I am currently working on...").
-   - **Formatting Constraints**: Paragraph format only — strictly forbids bullet points, markdown headers, or raw list dumping.
+   - **Zero Hallucination**: Relies exclusively on retrieved context.
+   - **Ongoing vs Completed Role Tense**: Active roles ending with "Present" are spoken about in the present tense ("I am currently working on...").
+   - **Follow-up Suggestions**: Appends 2-3 short, relevant follow-up questions at the end of response delimited by `|||`. `llm_engine.py` / `main.py` parses `|||` and returns `ChatResponse(query=..., answer=..., num_chunks_retrieved=..., suggestions=list[str])`.
 
 ---
 
